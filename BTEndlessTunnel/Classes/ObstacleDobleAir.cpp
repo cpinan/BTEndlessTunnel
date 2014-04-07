@@ -10,6 +10,11 @@
 
 using namespace cocos2d;
 
+ObstacleDobleAir::~ObstacleDobleAir()
+{
+    removeAllChildren();
+}
+
 ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("wall_03.png")
 {
     sameCollisionArea = false;
@@ -22,17 +27,22 @@ ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("wall_03.png")
     
     CCRect collideArea;
     
-    collideArea = CCRect(getContentSize().width * 0.05f, getContentSize().height * 0.65f, getContentSize().width * 0.2f, getContentSize().height * 0.2f);
+    collideArea = CCRect(getContentSize().width * 0.05f, getContentSize().height * 0.65f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
     vCollision.push_back(collideArea);
 
-    collideArea = CCRect(getContentSize().width * 0.2f, getContentSize().height * 0.5f, getContentSize().width * 0.2f, getContentSize().height * 0.2f);
+    collideArea = CCRect(getContentSize().width * 0.2f, getContentSize().height * 0.5f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
     vCollision.push_back(collideArea);
     
-    collideArea = CCRect(getContentSize().width * 0.4f, getContentSize().height * 0.35f, getContentSize().width * 0.2f, getContentSize().height * 0.2f);
+    collideArea = CCRect(getContentSize().width * 0.4f, getContentSize().height * 0.35f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
     vCollision.push_back(collideArea);
     
-    collideArea = CCRect(getContentSize().width * 0.6f, getContentSize().height * 0.2f, getContentSize().width * 0.2f, getContentSize().height * 0.2f);
+    collideArea = CCRect(getContentSize().width * 0.6f, getContentSize().height * 0.2f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
     vCollision.push_back(collideArea);
+    
+    _spShadow = CCSprite::create("shadow.png");
+    _spShadow->setPosition(ccp(25, -10));
+    _spShadow->setOpacity(128);
+    addChild(_spShadow, -1);
     
     //vCollision.push_back(collideArea2);
 
@@ -44,7 +54,7 @@ bool ObstacleDobleAir::collision(BaseVehicle &vehicle)
         return false;
     
     float y = vehicle.getPositionY() - vehicle.getPlayerY() - vehicle.getContentSize().height * 0.5f;
-    if(y < MAX_PLAYER_JUMP * 0.5f)
+    if(y < MAX_PLAYER_JUMP * 0.35f)
         return false;
     
     CCRect rectAir = vehicle.getAirCollision();
@@ -62,4 +72,10 @@ bool ObstacleDobleAir::collision(BaseVehicle &vehicle)
     }
     
     return false;
+}
+
+void ObstacleDobleAir::doUpdate(float x, float speed)
+{
+    BaseObstacle::doUpdate(x, speed);
+    _spShadow->setPositionX(_spShadow->getPositionX() - speed);
 }

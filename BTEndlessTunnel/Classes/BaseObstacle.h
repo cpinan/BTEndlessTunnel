@@ -30,6 +30,8 @@ public:
     virtual bool collision(BaseVehicle& vehicle);
     virtual cocos2d::CCRect currentCollisionArea(cocos2d::CCRect area);
     
+    void doUpdate(float x, float speed);
+    
 };
 
 #endif /* defined(__BTEndlessTunnel__BaseObstacle__) */

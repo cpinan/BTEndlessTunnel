@@ -13,6 +13,7 @@
 #include "AppMacros.h"
 #include "Constants.h"
 #include "HomeScene.h"
+#include "GameLayer.h"
 
 #include <vector>
 #include <string>
@@ -59,7 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_SMASH);
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(BG_MUSIC_01);
     
-    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
+    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.6f);
     
 
     // turn on display FPS
@@ -81,14 +82,19 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     CCDirector::sharedDirector()->stopAnimation();
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+#endif
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFICATION_PAUSE_GAME);
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     CCDirector::sharedDirector()->startAnimation();
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+#endif
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
 }

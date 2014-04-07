@@ -11,10 +11,21 @@
 
 #include "cocos2d.h"
 
-class SettingsLayer : public cocos2d::CCLayer
+enum SettingsTags
+{
+    kTagSettingJoypadMode = 0,
+    kTagSettingAccelMode = 1,
+    kTagSettingGoHome = 2
+};
+
+class SettingsLayer : public cocos2d::CCLayerColor
 {
 public:
     SettingsLayer();
+    static cocos2d::CCScene* scene();
+    
+private:
+    void _onOptionPressed(cocos2d::CCObject* pSender);
 };
 
 #endif /* defined(__BTEndlessTunnel__SettingsLayer__) */

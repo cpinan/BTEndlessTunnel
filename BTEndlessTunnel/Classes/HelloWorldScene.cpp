@@ -157,9 +157,7 @@ bool HelloWorld::init()
     _player->setPosition(ccp(250, 115));
     _player->autorelease();
     addChild(_player, -10);
-    
-    SimpleAudioEngine::sharedEngine()->playBackgroundMusic("bg_music.mp3", true);
-    
+        
     scheduleUpdate();
     
     return true;

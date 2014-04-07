@@ -14,19 +14,23 @@
 enum PopUpLoseButtons
 {
     kTagPlayAgain = 0,
-    kTagGoHome = 1
+    kTagGoHome = 1,
+    kTagSendScore = 2
 };
 
 class PopUpLoseLayer : public cocos2d::CCLayer
 {
 public:
     PopUpLoseLayer();
+    void updateScore(float score);
     
 private:
     void _onOptionPressed(cocos2d::CCObject* pSender);
     void _finishHideLayer();
     
 private:
+    cocos2d::CCLabelTTF* _lblHeadTitle;
+    cocos2d::CCLabelTTF* _lblScore;
     bool disable;
 };
 

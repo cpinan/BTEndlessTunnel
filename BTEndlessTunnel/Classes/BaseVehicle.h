@@ -52,7 +52,11 @@ public:
     CC_SYNTHESIZE(float, speed, Speed);
     
 private:
+    void _updateShadow();
+    
+private:
     cocos2d::CCJumpBy* _jumpByAction;
+    cocos2d::CCSprite* _spShadow;
     
 };
 

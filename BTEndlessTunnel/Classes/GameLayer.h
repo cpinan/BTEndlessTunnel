@@ -45,6 +45,10 @@ enum GameDeep
     kDeepPopUpLoseLayer = 99999
 };
 
+#define kScoreFactor 100.0f
+
+#define AIR_AND_TOP_Y 160
+
 #include "cocos2d.h"
 
 #include "BaseVehicle.h"
@@ -73,6 +77,8 @@ public:
     
     void onEnterTransitionDidFinish();
     
+    void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
+    
 private:
     void _createMap();
     void _initLayers();
@@ -87,6 +93,11 @@ private:
     void _gameLogic(float dt);
     
     void _playAgain();
+    
+    void _goHome();
+    
+    void _pauseAllActions();
+    void _resumeAllActions();
     
     
 private:
@@ -108,8 +119,11 @@ private:
     
     cocos2d::CCArray* _arrayObstacles;
     
+    cocos2d::CCMenuItemImage* _menuPause;
+    
     bool _pause;
     bool _gameOver;
+    bool _isJoypad;
     
     float _score;
     float _worldSpeed;
@@ -118,9 +132,11 @@ private:
     int _itemMap;
     
     cocos2d::CCLabelTTF* _lblScore;
+    cocos2d::CCPoint _accelVelocity;
     
 private:
     BaseObstacle* _testObstacle;
+    
     
 };
 

@@ -19,6 +19,8 @@
 
 #include "HomeScene.h"
 
+#include "LocalStorageManager.h"
+
 #include <vector>
 #include <ctime>
 #include <cstdlib>
@@ -78,17 +80,15 @@ vector<int> _vectorMap;
 GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel) : _hudLayer(hudLayer), _gameMode(gameMode)
 {
     
+    _isJoypad = true;
+    
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameLayer::pauseGame), NOTIFICATION_PAUSE_GAME, NULL);
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameLayer::resumeGame), NOTIFICATION_RESUME_GAME, NULL);
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameLayer::_playAgain), NOTIFICATION_PLAY_AGAIN, NULL);
     
-    _testObstacle = new ObstacleDobleAir();
-    _testObstacle->setVisible(false);
-    _testObstacle->autorelease();
-    _testObstacle->setPosition(ccp(200, 145));
-    addChild(_testObstacle, -10);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameLayer::_goHome), NOTIFICATION_GO_HOME, NULL);
     
     _createMap();
     _initLayers();
@@ -109,6 +109,7 @@ GameLayer::~GameLayer()
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_PAUSE_GAME);
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_RESUME_GAME);
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_PLAY_AGAIN);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_GO_HOME);
 
     CC_SAFE_RELEASE(_parallaxBackground);
     CC_SAFE_RELEASE(_parallaxRoof);
@@ -177,6 +178,20 @@ void GameLayer::configureGame(GameLevel gameLevel)
     
     _gameLevel = gameLevel;
     
+    _accelVelocity = CCPointZero;
+    
+    _menuPause = CCMenuItemImage::create("pause.png", "pause.png", this, menu_selector(GameLayer::pauseGame));
+    _menuPause->setVisible(false);
+    _menuPause->setAnchorPoint(ccp(0, 0));
+    _menuPause->setPositionX(40);
+    _menuPause->setPositionY(designResolutionSize.height - 50);
+    
+    CCMenu* menu = CCMenu::create();
+    menu->setAnchorPoint(ccp(0, 0));
+    menu->setPosition(CCPointZero);
+    menu->addChild(_menuPause);
+    addChild(menu, kDeepPauseLayer);
+    
     // setAccelerometerEnabled(true);
     setTouchEnabled(true);
     
@@ -220,15 +235,17 @@ void GameLayer::configureGame(GameLevel gameLevel)
 void GameLayer::_initLayers()
 {
     
-    _lblScore = CCLabelTTF::create("0", "Arial", 25.0f);
+    _lblScore = CCLabelTTF::create("0", "Arial", 20.0f, CCSizeMake(190, 24), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setVisible(false);
-    _lblScore->setContentSize(CCSizeMake(200, 50));
-    _lblScore->setHorizontalAlignment(kCCTextAlignmentLeft);
-    _lblScore->setPosition(ccp(designResolutionSize.width - 70, designResolutionSize.height - 20));
+    _lblScore->setPosition(ccp(310, designResolutionSize.height - 26));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();
+    _pauseLayer->setVisible(false);
+    _pauseLayer->setPosition(ccp(0, -designResolutionSize.height));
+    _pauseLayer->setPositionY(0);
     _pauseLayer->autorelease();
+    addChild(_pauseLayer, kDeepPauseLayer);
     
     _popUpLoseLayer = new PopUpLoseLayer();
     _popUpLoseLayer->setPosition(ccp(0, -designResolutionSize.height));
@@ -300,7 +317,7 @@ void GameLayer::_createObstacle(float x)
     else if(type == 3)
     {
         obstacle = new ObstacleDobleAir();
-        y = 145;
+        y = AIR_AND_TOP_Y;
     }
     else
     {
@@ -406,7 +423,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     else if(type == 7)
     {
         // Crear 3 obstaculos dobles en el aire
-        y = 145;
+        y = AIR_AND_TOP_Y;
         
         for(i = 0; i < 3; i++)
         {
@@ -456,7 +473,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     else if(type == 9)
     {
         // Crear 2 obstaculos dobles en el aire
-        y = 145;
+        y = AIR_AND_TOP_Y;
         
         for(i = 0; i < 2; i++)
         {
@@ -484,9 +501,17 @@ void GameLayer::_createMultipleObstacles(float x, int type)
 
 void GameLayer::didAccelerate(CCAcceleration *pAccelerationValue)
 {
-    //float x = pAccelerationValue->x;
-    //float y = pAccelerationValue->y;
     //float z = pAccelerationValue->z;
+    
+    if(!_pause && !_gameOver)
+    {
+        if(_gameState == kGameReady)
+        {
+            float x = pAccelerationValue->x * _player->getSpeed() * 0.5f;
+            float y = pAccelerationValue->y * _player->getSpeed() * 0.5f;
+            _accelVelocity = ccpMult(ccp(x,y), _player->getSpeed());
+        }
+    }
 }
 
 #pragma mark - Game States Manager
@@ -499,6 +524,13 @@ void GameLayer::playGame()
 
 void GameLayer::runGame()
 {
+    _isJoypad = LocalStorageManager::isUsingJoypad();
+    
+    if(!_isJoypad)
+    {
+        setAccelerometerEnabled(true);
+    }
+    
     unscheduleUpdate();
     SimpleAudioEngine::sharedEngine()->playBackgroundMusic(BG_MUSIC_01, true);
     scheduleUpdate();
@@ -516,7 +548,12 @@ void GameLayer::pauseGame()
             _pause = true;
             _previousGameState = _gameState;
             _gameState = kGamePause;
-            _player->pauseSchedulerAndActions();
+            
+            pauseSchedulerAndActions();
+            _pauseAllActions();
+            
+            _hudLayer->setVisible(false);
+            _pauseLayer->setVisible(true);
         }
     }
 }
@@ -531,13 +568,17 @@ void GameLayer::resumeGame()
         if(_gameState == kGamePause)
         {
             _gameState = _previousGameState;
+            _hudLayer->setVisible(true);
+            _pauseLayer->setVisible(false);
+            _resumeEvents();
         }
     }
 }
 
 void GameLayer::_resumeEvents()
 {
-    _player->resumeSchedulerAndActions();
+    resumeSchedulerAndActions();
+    _resumeAllActions();
     _pause = false;
 }
 
@@ -552,14 +593,22 @@ void GameLayer::_removeNode(CCNode *node)
 
 void GameLayer::_gameLogic(float dt)
 {
-    // Update Control
-    _hudLayer->updateControl(*_player, dt);
+    if(_isJoypad)
+    {
+        // Update Control
+        _hudLayer->updateControl(*_player, dt);
+    }
+    else
+    {
+        // Accelerometer mode
+        _player->doMove(_accelVelocity);
+    }
     
     // Increment map speed
     _worldSpeed += dt * 2;
     
     _score += dt;
-    _lblScore->setString(CCString::createWithFormat("%d", (int) (_score * 100))->getCString());
+    _lblScore->setString(CCString::createWithFormat("%d", (int) (_score * kScoreFactor))->getCString());
     
     
     this->reorderChild(_player, designResolutionSize.height - (_player->getPlayerY() - _player->getContentSize().height * 0.5f));
@@ -633,7 +682,9 @@ void GameLayer::_gameLogic(float dt)
             
             if(blinkTime > 0)
             {
-                for(i = 0; i < obstacle->getNumObjects(); i++)
+                int _totalObjects = obstacle->getNumObjects();
+                _totalObjects = 1;
+                for(i = 0; i < _totalObjects; i++)
                 {
                     CCSprite* alertSprite = CCSprite::createWithTexture(obstacle->getTexture());
                     
@@ -642,7 +693,7 @@ void GameLayer::_gameLogic(float dt)
                     
                     alertSprite->runAction(CCSequence::create(CCBlink::create(blinkTime, 2), CCCallFuncN::create(this, callfuncN_selector(GameLayer::_removeNode)), NULL));
                     
-                    alertSprite->setOpacity(128);
+                    // alertSprite->setOpacity(128);
                     
                     addChild(alertSprite);
                     
@@ -653,7 +704,8 @@ void GameLayer::_gameLogic(float dt)
 
         }
         
-        obstacle->setPositionX(positionX - _worldSpeed * dt);
+        // obstacle->setPositionX(positionX - _worldSpeed * dt);
+        obstacle->doUpdate(positionX, _worldSpeed * dt);
         
         if(obstacle->collision(*_player))
         {
@@ -701,6 +753,17 @@ void GameLayer::_gameLogic(float dt)
 
 }
 
+void GameLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+{
+    if(!_pause && !_gameOver)
+    {
+        if(_gameState == kGameReady)
+        {
+            _player->doJump();
+        }
+    }
+}
+
 #pragma mark - Update method
 
 void GameLayer::update(float dt)
@@ -721,8 +784,13 @@ void GameLayer::update(float dt)
         if(_player->numberOfRunningActions() <= 1)
         {
             _gameState = kGameReady;
+            setTouchEnabled(true);
             _lblScore->setVisible(true);
-            _hudLayer->setVisible(true);
+            if(_isJoypad)
+            {
+                _hudLayer->setVisible(true);
+            }
+            _menuPause->setVisible(true);
         }
         
     }
@@ -738,6 +806,12 @@ void GameLayer::update(float dt)
     {
         if(_player->numberOfRunningActions() == 0)
         {
+            setTouchEnabled(false);
+            if(!_isJoypad)
+                setAccelerometerEnabled(false);
+            _lblScore->setVisible(false);
+            _hudLayer->setVisible(false);
+            _popUpLoseLayer->updateScore(_score * kScoreFactor);
             _popUpLoseLayer->runAction(CCMoveBy::create(0.25f, ccp(0, designResolutionSize.height)));
             unscheduleUpdate();
         }
@@ -789,6 +863,38 @@ void GameLayer::draw()
 
 void GameLayer::_playAgain()
 {
+    SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
     CCScene* scene = HomeScene::scene(kGameModePlayAgain, _gameLevel);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionMoveInT::create(1.0f, scene));
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFadeDown::create(0.5f, scene));
+}
+
+void GameLayer::_goHome()
+{
+    SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+    CCScene* scene = HomeScene::scene(kGameModeHome);
+    CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, scene));
+}
+
+#pragma mark - Pause All Actions and Resume
+
+void GameLayer::_pauseAllActions()
+{
+    CCObject* object;
+    CCARRAY_FOREACH(getChildren(), object)
+    {
+        CCSprite* sprite = (CCSprite*) object;
+        if(sprite != NULL)
+            sprite->pauseSchedulerAndActions();
+    }
+}
+
+void GameLayer::_resumeAllActions()
+{
+    CCObject* object;
+    CCARRAY_FOREACH(getChildren(), object)
+    {
+        CCSprite* sprite = (CCSprite*) object;
+        if(sprite != NULL)
+            sprite->resumeSchedulerAndActions();
+    }
 }

@@ -69,3 +69,8 @@ CCRect BaseObstacle::currentCollisionArea(CCRect area)
     
     return newArea;
 }
+
+void BaseObstacle::doUpdate(float x, float speed)
+{
+    setPositionX(x - speed);
+}

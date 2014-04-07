@@ -30,6 +30,11 @@ BaseVehicle::BaseVehicle(std::string filename)
         _jumpByAction->setTag(kActionJumpTag);
         _jumpByAction->retain();
         
+        _spShadow = CCSprite::create("shadow.png");
+        _spShadow->setPositionX(getContentSize().width * 0.5f);
+        addChild(_spShadow, -1);
+        _updateShadow();
+        
     }
 }
 
@@ -105,10 +110,14 @@ void BaseVehicle::doMove(CCPoint velocity)
     if(newPosition.x < getContentSize().width * 0.5f)
         newPosition.x = getContentSize().width * 0.5f;
     
+    if(newPosition.x > designResolutionSize.width * 0.8f)
+        newPosition.x = designResolutionSize.width * 0.8f;
+    
     if(getActionByTag(kActionJumpTag) == NULL)
         newPosition.y = playerY + getContentSize().height * 0.5f;
     
     setPosition(newPosition);
+    _updateShadow();
 
 }
 
@@ -135,4 +144,9 @@ CCRect BaseVehicle::getAirCollision()
     rect.setRect(x, y, size, size);
     
     return rect;
+}
+
+void BaseVehicle::_updateShadow()
+{
+    _spShadow->setPositionY(playerY - getPositionY() + getContentSize().height * 0.55f);
 }

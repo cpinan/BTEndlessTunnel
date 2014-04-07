@@ -14,7 +14,7 @@
 #define JUMP_BUTTON "handDown.png"
 
 #define RECT_JOYPAD CCRectMake(0, 0, 78, 78)
-#define RECT_JUMP_BUTTON CCRectMake(0, 0, 134, 134)
+#define RECT_JUMP_BUTTON CCRectMake(0, 0, 200, 200)
 
 #define JOYPAD_POSITION ccp(100, 50)
 #define JUMP_POSITION ccp(designResolutionSize.width - 100, 50)

@@ -7,66 +7,67 @@
 //
 
 #include "HomeLayer.h"
+#include "SettingsLayer.h"
 
 using namespace cocos2d;
 
 HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
 {
     disable = false;
-    CCLabelTTF* lblText;
     
     // Easy Mode
-    lblText = CCLabelTTF::create("Easy Mode", "Arial", 20.0f);
-    CCMenuItemLabel* itemEasy = CCMenuItemLabel::create(lblText, this, menu_selector(HomeLayer::_onOptionPressed));
-    itemEasy->setTag(kTagEasyMode);
-    itemEasy->setPosition(ccp(90, 200));
+    CCMenuItemImage* menuItemEasy = CCMenuItemImage::create("btn_easy.png", "btn_easy.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemEasy->setTag(kTagEasyMode);
+    menuItemEasy->setAnchorPoint(ccp(0, 0));
+    menuItemEasy->setPosition(ccp(90, 190));
     
     // Normal Mode
-    lblText = CCLabelTTF::create("Normal Mode", "Arial", 20.0f);
-    CCMenuItemLabel* itemNormal = CCMenuItemLabel::create(lblText, this, menu_selector(HomeLayer::_onOptionPressed));
-    itemNormal->setTag(kTagNormalMode);
-    itemNormal->setPosition(ccp(240, 200));
+    CCMenuItemImage* menuItemNormal = CCMenuItemImage::create("btn_normal.png", "btn_normal.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemNormal->setTag(kTagNormalMode);
+    menuItemNormal->setAnchorPoint(ccp(0, 0));
+    menuItemNormal->setPosition(ccp(menuItemEasy->getPositionX(), 120));
     
     // Hard Mode
-    lblText = CCLabelTTF::create("Hard Mode", "Arial", 20.0f);
-    CCMenuItemLabel* itemHard = CCMenuItemLabel::create(lblText, this, menu_selector(HomeLayer::_onOptionPressed));
-    itemHard->setTag(kTagHardMode);
-    itemHard->setPosition(ccp(390, 200));
-    
-    // Credits
-    lblText = CCLabelTTF::create("Credits", "Arial", 20.0f);
-    CCMenuItemLabel* itemCredits = CCMenuItemLabel::create(lblText, this, menu_selector(HomeLayer::_onOptionPressed));
-    itemCredits->setTag(kTagCredits);
-    itemCredits->setPosition(ccp(90, 140));
+    CCMenuItemImage* menuItemHard = CCMenuItemImage::create("btn_hard.png", "btn_hard.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemHard->setTag(kTagHardMode);
+    menuItemHard->setAnchorPoint(ccp(0, 0));
+    menuItemHard->setPosition(ccp(menuItemEasy->getPositionX(), 50));
     
     // Leaderboards
-    lblText = CCLabelTTF::create("Leaderboard", "Arial", 20.0f);
-    CCMenuItemLabel* itemLeaderboard = CCMenuItemLabel::create(lblText, this, menu_selector(HomeLayer::_onOptionPressed));
-    itemLeaderboard->setTag(kTagLeaderboard);
-    itemLeaderboard->setPosition(ccp(250, 140));
+    CCMenuItemImage* menuItemLeaderboard = CCMenuItemImage::create("leaderboard.png", "leaderboard.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemLeaderboard->setTag(kTagLeaderboard);
+    menuItemLeaderboard->setAnchorPoint(ccp(0, 0));
+    menuItemLeaderboard->setPosition(ccp(350, 245));
     
     // Achievements
-    lblText = CCLabelTTF::create("Achievements", "Arial", 20.0f);
-    CCMenuItemLabel* itemAchievements = CCMenuItemLabel::create(lblText, this, menu_selector(HomeLayer::_onOptionPressed));
-    itemAchievements->setTag(kTagAchievements);
-    itemAchievements->setPosition(ccp(100, 90));
+    CCMenuItemImage* menuItemAchievements = CCMenuItemImage::create("achievements.png", "achievements.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemAchievements->setTag(kTagAchievements);
+    menuItemAchievements->setAnchorPoint(ccp(0, 0));
+    menuItemAchievements->setPosition(ccp(menuItemLeaderboard->getPositionX(), 165));
     
     // Settings
-    lblText = CCLabelTTF::create("Settings", "Arial", 20.0f);
-    CCMenuItemLabel* itemSettings = CCMenuItemLabel::create(lblText, this, menu_selector(HomeLayer::_onOptionPressed));
-    itemSettings->setTag(kTagSettings);
-    itemSettings->setPosition(ccp(250, 90));
+    CCMenuItemImage* menuItemSettings = CCMenuItemImage::create("settings.png", "settings.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemSettings->setTag(kTagSettings);
+    menuItemSettings->setAnchorPoint(ccp(0, 0));
+    menuItemSettings->setPosition(ccp(menuItemLeaderboard->getPositionX(), 85));
+    
+    // Credits
+    CCMenuItemImage* menuItemCredits = CCMenuItemImage::create("about.png", "about.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemCredits->setTag(kTagSettings);
+    menuItemCredits->setAnchorPoint(ccp(0, 0));
+    menuItemCredits->setPosition(ccp(menuItemLeaderboard->getPositionX(), 5));
     
     // Menu
     CCMenu* menu = CCMenu::create();
+    menu->setAnchorPoint(ccp(0, 0));
     menu->setPosition(CCPointZero);
-    menu->addChild(itemEasy);
-    menu->addChild(itemNormal);
-    menu->addChild(itemHard);
-    menu->addChild(itemCredits);
-    menu->addChild(itemLeaderboard);
-    menu->addChild(itemAchievements);
-    menu->addChild(itemSettings);
+    menu->addChild(menuItemEasy);
+    menu->addChild(menuItemNormal);
+    menu->addChild(menuItemHard);
+    menu->addChild(menuItemLeaderboard);
+    menu->addChild(menuItemAchievements);
+    menu->addChild(menuItemSettings);
+    menu->addChild(menuItemCredits);
     
     addChild(menu);
     
@@ -101,6 +102,10 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
             _gameLayer->configureGame(kGameLevelHard);
             break;
             
+        case kTagSettings:
+            CCDirector::sharedDirector()->pushScene(CCTransitionMoveInT::create(0.5f, SettingsLayer::scene()));
+            break;
+            
         default:
             break;
     }
@@ -108,11 +113,13 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
     if(runGame)
     {
         disable = true;
+        
         CCSequence* sequence = CCSequence::create(
                                 CCMoveBy::create(0.5f, ccp(0, -designResolutionSize.height)),
                                 CCCallFuncN::create(this, callfuncN_selector(HomeLayer::_finishHideLayer))                                               ,
                                                   NULL
                                                   );
+        this->runAction(CCFadeOut::create(0.45f));
         this->runAction(sequence);
     }
     
