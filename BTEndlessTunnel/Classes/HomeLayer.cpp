@@ -53,7 +53,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     
     // Credits
     CCMenuItemImage* menuItemCredits = CCMenuItemImage::create("about.png", "about.png", this, menu_selector(HomeLayer::_onOptionPressed));
-    menuItemCredits->setTag(kTagSettings);
+    menuItemCredits->setTag(kTagCredits);
     menuItemCredits->setAnchorPoint(ccp(0, 0));
     menuItemCredits->setPosition(ccp(menuItemLeaderboard->getPositionX(), 5));
     

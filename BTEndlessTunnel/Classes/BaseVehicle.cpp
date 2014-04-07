@@ -40,7 +40,7 @@ BaseVehicle::BaseVehicle(std::string filename)
 
 BaseVehicle::~BaseVehicle()
 {
-    
+    CC_SAFE_RELEASE(_jumpByAction);
 }
 
 void BaseVehicle::doJump()

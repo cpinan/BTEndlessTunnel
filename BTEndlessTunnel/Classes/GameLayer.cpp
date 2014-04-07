@@ -221,9 +221,6 @@ void GameLayer::configureGame(GameLevel gameLevel)
     
     _gameState = kGameStarting;
     
-    _arrayObstacles = CCArray::create();
-    _arrayObstacles->retain();
-    
     _pause = false;
     _gameOver = false;
     
@@ -811,6 +808,7 @@ void GameLayer::update(float dt)
                 setAccelerometerEnabled(false);
             _lblScore->setVisible(false);
             _hudLayer->setVisible(false);
+            _menuPause->setVisible(false);
             _popUpLoseLayer->updateScore(_score * kScoreFactor);
             _popUpLoseLayer->runAction(CCMoveBy::create(0.25f, ccp(0, designResolutionSize.height)));
             unscheduleUpdate();

@@ -74,10 +74,12 @@ void SettingsLayer::_onOptionPressed(CCObject *pSender)
             
         case kTagSettingJoypadMode:
             LocalStorageManager::setControlType(true);
+            CCMessageBox("Joypad Mode activated", "Settings");
             break;
             
         case kTagSettingAccelMode:
             LocalStorageManager::setControlType(false);
+            CCMessageBox("Accelerometer Mode activated", "Settings");
             break;
     }
 }
