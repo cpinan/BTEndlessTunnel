@@ -8,6 +8,7 @@
 
 #include "HomeLayer.h"
 #include "SettingsLayer.h"
+#include "NativeUtils.h"
 
 using namespace cocos2d;
 
@@ -104,6 +105,14 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
             
         case kTagSettings:
             CCDirector::sharedDirector()->pushScene(CCTransitionMoveInT::create(0.5f, SettingsLayer::scene()));
+            break;
+            
+        case kTagLeaderboard:
+            NativeUtils::showLeaderboards();
+            break;
+            
+        case kTagAchievements:
+            NativeUtils::showAchievements();
             break;
             
         default:
