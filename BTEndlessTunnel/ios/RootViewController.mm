@@ -27,13 +27,23 @@
 }
 */
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    GPPSignIn *signIn = [GPPSignIn sharedInstance];
+    // You set kClientID in a previous step
+    signIn.clientID = kClientID;
+    signIn.scopes = [NSArray arrayWithObjects:
+                     @"https://www.googleapis.com/auth/games",
+                     @"https://www.googleapis.com/auth/appstate",
+                     nil];
+    signIn.language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    signIn.delegate = self;
+    signIn.shouldFetchGoogleUserID =YES;
+    
 }
  
-*/
 // Override to allow orientations other than the default portrait orientation.
 // This method is deprecated on ios6
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
