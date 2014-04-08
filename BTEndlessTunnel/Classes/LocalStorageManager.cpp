@@ -109,3 +109,15 @@ void LocalStorageManager::unlockAchievement(const char *achievementID)
     defaults()->flush();
 }
 
+void LocalStorageManager::setScoreInLevel(float score, int level)
+{
+    CCString* key = CCString::createWithFormat(USER_SCORE_IN_LEVEL, level);
+    defaults()->setFloatForKey(key->getCString(), score);
+    defaults()->flush();
+}
+
+float LocalStorageManager::getScoreInLevel(int level)
+{
+    CCString* key = CCString::createWithFormat(USER_SCORE_IN_LEVEL, level);
+    return defaults()->getFloatForKey(key->getCString(), 0);
+}

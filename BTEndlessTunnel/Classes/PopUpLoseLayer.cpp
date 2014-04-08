@@ -107,18 +107,22 @@ void PopUpLoseLayer::updateScore(int level, float score)
         LocalStorageManager::unlockAchievement(ACH_GET_TOTAL_SCORE_100000_OR_MORE);
     }
     
-    
-    if(level == kGameLevelEasy)
+    if(longScore > (long) LocalStorageManager::getScoreInLevel(level))
     {
-        Utils::submitScore(LEAD_EASY_MODE, longScore);
-    }
-    else if (level == kGameLevelNormal)
-    {
-        Utils::submitScore(LEAD_NORMAL_MODE, longScore);
-    }
-    else if(level == kGameLevelHard)
-    {
-        Utils::submitScore(LEAD_HARD_MODE, longScore);
+        if(level == kGameLevelEasy)
+        {
+            Utils::submitScore(LEAD_EASY_MODE, longScore);
+        }
+        else if (level == kGameLevelNormal)
+        {
+            Utils::submitScore(LEAD_NORMAL_MODE, longScore);
+        }
+        else if(level == kGameLevelHard)
+        {
+            Utils::submitScore(LEAD_HARD_MODE, longScore);
+        }
+        
+        LocalStorageManager::setScoreInLevel(score, level);
     }
     
 }
