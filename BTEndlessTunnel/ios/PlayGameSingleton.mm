@@ -13,7 +13,7 @@
 #include "ViewSingleLeaderboard.h"
 #include "ViewLeaderboardPicker.h"
 #include "ViewAchievements.h"
-#include "IADViewController.h"
+//#include "IADViewController.h"
 
 #include "cocos2d.h"
 
@@ -23,7 +23,7 @@ using namespace cocos2d;
 ViewSingleLeaderboard* viewSingleLeaderboard = 0;
 ViewLeaderboardPicker* viewLeaderboardPicker = 0;
 ViewAchievements* viewAchiemevents = 0;
-IADViewController* iadView = 0;
+//IADViewController* iadView = 0;
 
 #pragma mark - Destructor and Constructor
 PlayGameSingleton::~PlayGameSingleton()
@@ -303,7 +303,7 @@ void PlayGameSingleton::signOut()
 
 #pragma mark - Advertisement
 void PlayGameSingleton::showAd()
-{
+{/*
     if(!iadView)
         iadView = [[IADViewController alloc] init];
     
@@ -314,13 +314,14 @@ void PlayGameSingleton::showAd()
         rootController = window.rootViewController;
     
     [((UIViewController *) rootController).view addSubview: iadView.view];
+  */
 }
 
 void PlayGameSingleton::hideAd()
 {
-    [iadView hide];
-    [iadView.view removeFromSuperview];
-    [iadView release];
-    iadView = 0;
+    //[iadView hide];
+    //[iadView.view removeFromSuperview];
+    //[iadView release];
+    //iadView = 0;
 }
 

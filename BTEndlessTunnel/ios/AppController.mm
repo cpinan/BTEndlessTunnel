@@ -86,7 +86,7 @@ static AppDelegate s_sharedApplication;
 
     cocos2d::CCApplication::sharedApplication()->run();
     
-    PlayGameSingleton::sharedInstance().showAd();
+    // PlayGameSingleton::sharedInstance().showAd();
     
     return YES;
 }
