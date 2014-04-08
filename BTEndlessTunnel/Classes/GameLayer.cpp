@@ -81,7 +81,7 @@ vector<int> _vectorMap;
 
 GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel) : _hudLayer(hudLayer), _gameMode(gameMode)
 {
-    
+    _obstaclesJumped = 0;
     _obstaclesAvoided = 0;
     _isJoypad = true;
     
@@ -550,7 +550,6 @@ void GameLayer::runGame()
     unscheduleUpdate();
     SimpleAudioEngine::sharedEngine()->playBackgroundMusic(BG_MUSIC_01, true);
     scheduleUpdate();
-    schedule(schedule_selector(GameLayer::_checkAchievements), 1.0f / 1.0f);
 }
 
 void GameLayer::pauseGame()
@@ -739,8 +738,7 @@ void GameLayer::_gameLogic(float dt)
                 obstacle->setPassPlayerSFX(true);
                 if(obstacle->getObstacType() == kJumpObstacle)
                 {
-                    Utils::incrementAchievement(ACH_JUMP_50_OBSTACLES, 1);
-                    Utils::incrementAchievement(ACH_JUMP_1000_OBSTACLES, 1);
+                    _obstaclesJumped++;
                 }
                 _obstaclesAvoided++;
                 SimpleAudioEngine::sharedEngine()->playEffect("swoosh.mp3");
@@ -829,7 +827,7 @@ void GameLayer::update(float dt)
     {
         if(_player->numberOfRunningActions() == 0)
         {
-            
+            _checkAchievements();
             _obstaclesAvoided = 0;
             
             setTouchEnabled(false);
@@ -849,91 +847,90 @@ void GameLayer::update(float dt)
 void GameLayer::_checkAchievements()
 {
     
-    if(_gameState == kGameReady)
+    long longScore = (long) (_score * kScoreFactor);
+    
+    // Obstacles avoidment
+    
+    if(_gameLevel == kGameLevelEasy && _obstaclesAvoided >= 100)
     {
-        if(!_pause && !_gameOver)
+        
+        if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE))
         {
-            
-            long longScore = (long) (_score * kScoreFactor);
-            
-            // Obstacles avoidment
-            
-            if(_gameLevel == kGameLevelEasy && _obstaclesAvoided >= 100)
-            {
-                
-                if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE))
-                {
-                    Utils::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE);
-                    LocalStorageManager::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE);
-                }
-                
-            }
-            else if(_gameLevel == kGameLevelNormal && _obstaclesAvoided >= 50)
-            {
-                
-                if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE))
-                {
-                    Utils::unlockAchievement(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE);
-                    LocalStorageManager::unlockAchievement(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE);
-                }
-                
-            }
-            else if(_gameLevel == kGameLevelHard && _obstaclesAvoided >= 25)
-            {
-                
-                if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE))
-                {
-                    Utils::unlockAchievement(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE);
-                    LocalStorageManager::unlockAchievement(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE);
-                }
-                
-            }
-            else if(_gameLevel == kGameLevelHard && _obstaclesAvoided >= 100)
-            {
-                
-                if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE))
-                {
-                    Utils::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE);
-                    LocalStorageManager::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE);
-                }
-                
-            }
-            
-            //
-            
-            if(!LocalStorageManager::isAchievementUnlocked(ACH_MORE_THAN_3000) && longScore > 3000)
-            {
-                Utils::unlockAchievement(ACH_MORE_THAN_3000);
-                LocalStorageManager::unlockAchievement(ACH_MORE_THAN_3000);
-            }
-            
-            if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_10000_OR_MORE_IN_EASY_MODE) && _gameLevel == kGameLevelEasy && longScore >= 500)
-            {
-                Utils::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
-                LocalStorageManager::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
-                
-            }
-            else if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE) && _gameLevel == kGameLevelNormal && longScore >= 8000)
-            {
-                Utils::unlockAchievement(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE);
-                LocalStorageManager::unlockAchievement(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE);
-                
-            }
-            else if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_5000_OR_MORE_IN_HARD_MODE) && _gameLevel == kGameLevelHard && longScore >= 5000)
-            {
-                Utils::unlockAchievement(ACH_GET_5000_OR_MORE_IN_HARD_MODE);
-                LocalStorageManager::unlockAchievement(ACH_GET_5000_OR_MORE_IN_HARD_MODE);
-            }
-            
-            if(!LocalStorageManager::isAchievementUnlocked(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000) && !_isJoypad && longScore >= 3000)
-            {
-                Utils::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000);
-                LocalStorageManager::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000);
-            }
-
-            
+            Utils::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE);
+            LocalStorageManager::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE);
         }
+        
     }
+    else if(_gameLevel == kGameLevelNormal && _obstaclesAvoided >= 50)
+    {
+        
+        if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE))
+        {
+            Utils::unlockAchievement(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE);
+            LocalStorageManager::unlockAchievement(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE);
+        }
+        
+    }
+    else if(_gameLevel == kGameLevelHard && _obstaclesAvoided >= 25)
+    {
+        
+        if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE))
+        {
+            Utils::unlockAchievement(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE);
+            LocalStorageManager::unlockAchievement(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE);
+        }
+        
+    }
+    else if(_gameLevel == kGameLevelHard && _obstaclesAvoided >= 100)
+    {
+        
+        if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE))
+        {
+            Utils::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE);
+            LocalStorageManager::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE);
+        }
+        
+    }
+    
+    //
+    
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_MORE_THAN_3000) && longScore > 3000)
+    {
+        Utils::unlockAchievement(ACH_MORE_THAN_3000);
+        LocalStorageManager::unlockAchievement(ACH_MORE_THAN_3000);
+    }
+    
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_10000_OR_MORE_IN_EASY_MODE) && _gameLevel == kGameLevelEasy && longScore >= 500)
+    {
+        Utils::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
+        LocalStorageManager::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
+        
+    }
+    else if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE) && _gameLevel == kGameLevelNormal && longScore >= 8000)
+    {
+        Utils::unlockAchievement(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE);
+        LocalStorageManager::unlockAchievement(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE);
+        
+    }
+    else if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_5000_OR_MORE_IN_HARD_MODE) && _gameLevel == kGameLevelHard && longScore >= 5000)
+    {
+        Utils::unlockAchievement(ACH_GET_5000_OR_MORE_IN_HARD_MODE);
+        LocalStorageManager::unlockAchievement(ACH_GET_5000_OR_MORE_IN_HARD_MODE);
+    }
+    
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000) && !_isJoypad && longScore >= 3000)
+    {
+        Utils::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000);
+        LocalStorageManager::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000);
+    }
+    
+    if(_obstaclesJumped > 0)
+    {
+        Utils::incrementAchievement(ACH_JUMP_50_OBSTACLES, _obstaclesJumped);
+        Utils::incrementAchievement(ACH_JUMP_1000_OBSTACLES, _obstaclesJumped);
+    }
+    
+    _obstaclesJumped = 0;
     
 }
 

@@ -133,6 +133,7 @@ private:
     
     int _itemMap;
     int _obstaclesAvoided;
+    int _obstaclesJumped;
     
     cocos2d::CCLabelTTF* _lblScore;
     cocos2d::CCPoint _accelVelocity;
