@@ -57,6 +57,9 @@ public:
     void trySilentAuthentication();
     bool isSignedIn();
     
+    void showAd();
+    void hideAd();
+    
 private:
     void* rootController;
 };

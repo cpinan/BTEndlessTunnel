@@ -38,26 +38,20 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     CCMenuItemImage* menuItemLeaderboard = CCMenuItemImage::create("leaderboard.png", "leaderboard.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemLeaderboard->setTag(kTagLeaderboard);
     menuItemLeaderboard->setAnchorPoint(ccp(0, 0));
-    menuItemLeaderboard->setPosition(ccp(350, 245));
+    menuItemLeaderboard->setPosition(ccp(350, 165));
     
     // Achievements
     CCMenuItemImage* menuItemAchievements = CCMenuItemImage::create("achievements.png", "achievements.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemAchievements->setTag(kTagAchievements);
     menuItemAchievements->setAnchorPoint(ccp(0, 0));
-    menuItemAchievements->setPosition(ccp(menuItemLeaderboard->getPositionX(), 165));
+    menuItemAchievements->setPosition(ccp(menuItemLeaderboard->getPositionX(), 85));
     
     // Settings
     CCMenuItemImage* menuItemSettings = CCMenuItemImage::create("settings.png", "settings.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemSettings->setTag(kTagSettings);
     menuItemSettings->setAnchorPoint(ccp(0, 0));
-    menuItemSettings->setPosition(ccp(menuItemLeaderboard->getPositionX(), 85));
-    
-    // Credits
-    CCMenuItemImage* menuItemCredits = CCMenuItemImage::create("about.png", "about.png", this, menu_selector(HomeLayer::_onOptionPressed));
-    menuItemCredits->setTag(kTagCredits);
-    menuItemCredits->setAnchorPoint(ccp(0, 0));
-    menuItemCredits->setPosition(ccp(menuItemLeaderboard->getPositionX(), 5));
-    
+    menuItemSettings->setPosition(ccp(menuItemLeaderboard->getPositionX(), 5));
+
     // Menu
     CCMenu* menu = CCMenu::create();
     menu->setAnchorPoint(ccp(0, 0));
@@ -68,10 +62,8 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menu->addChild(menuItemLeaderboard);
     menu->addChild(menuItemAchievements);
     menu->addChild(menuItemSettings);
-    menu->addChild(menuItemCredits);
     
     addChild(menu);
-    
 }
 
 HomeLayer::~HomeLayer()

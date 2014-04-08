@@ -316,6 +316,8 @@
 		07E8782718F46656002E38F1 /* ViewLeaderboardPicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E8782218F46656002E38F1 /* ViewLeaderboardPicker.mm */; };
 		07E8782818F46656002E38F1 /* ViewSingleLeaderboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E8782418F46656002E38F1 /* ViewSingleLeaderboard.mm */; };
 		07E8782C18F46688002E38F1 /* NativeUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E8782918F46688002E38F1 /* NativeUtils.cpp */; };
+		07E8782E18F48F89002E38F1 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E8782D18F48F89002E38F1 /* iAd.framework */; };
+		07E8783118F48FC8002E38F1 /* IADViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E8783018F48FC8002E38F1 /* IADViewController.mm */; };
 		07EC9DFA18EB19B200E2C037 /* HomeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EC9DF818EB19B200E2C037 /* HomeScene.cpp */; };
 		07EC9DFD18EB19BF00E2C037 /* HomeLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EC9DFB18EB19BF00E2C037 /* HomeLayer.cpp */; };
 		07EC9E0018EB19DB00E2C037 /* SettingsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EC9DFE18EB19DB00E2C037 /* SettingsLayer.cpp */; };
@@ -971,6 +973,9 @@
 		07E8782918F46688002E38F1 /* NativeUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeUtils.cpp; path = Classes/NativeUtils.cpp; sourceTree = "<group>"; };
 		07E8782A18F46688002E38F1 /* NativeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeUtils.h; path = Classes/NativeUtils.h; sourceTree = "<group>"; };
 		07E8782B18F46688002E38F1 /* PlayGameConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayGameConstants.h; path = Classes/PlayGameConstants.h; sourceTree = "<group>"; };
+		07E8782D18F48F89002E38F1 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		07E8782F18F48FC8002E38F1 /* IADViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IADViewController.h; path = ios/IADViewController.h; sourceTree = "<group>"; };
+		07E8783018F48FC8002E38F1 /* IADViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = IADViewController.mm; path = ios/IADViewController.mm; sourceTree = "<group>"; };
 		07EC9DF818EB19B200E2C037 /* HomeScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HomeScene.cpp; path = Classes/HomeScene.cpp; sourceTree = "<group>"; };
 		07EC9DF918EB19B200E2C037 /* HomeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeScene.h; path = Classes/HomeScene.h; sourceTree = "<group>"; };
 		07EC9DFB18EB19BF00E2C037 /* HomeLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HomeLayer.cpp; path = Classes/HomeLayer.cpp; sourceTree = "<group>"; };
@@ -994,6 +999,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07E8782E18F48F89002E38F1 /* iAd.framework in Frameworks */,
 				07E8781C18F465EA002E38F1 /* libc++.dylib in Frameworks */,
 				07E8781A18F465E0002E38F1 /* SystemConfiguration.framework in Frameworks */,
 				07E8781818F465D7002E38F1 /* Security.framework in Frameworks */,
@@ -1062,6 +1068,7 @@
 		07CBA27C18DCAFB8004E8B35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07E8782D18F48F89002E38F1 /* iAd.framework */,
 				07E8781B18F465EA002E38F1 /* libc++.dylib */,
 				07E8781918F465E0002E38F1 /* SystemConfiguration.framework */,
 				07E8781718F465D7002E38F1 /* Security.framework */,
@@ -1138,6 +1145,8 @@
 				07CBA2AA18DCAFB9004E8B35 /* RootViewController.h */,
 				07CBA2AB18DCAFB9004E8B35 /* RootViewController.mm */,
 				07CBA2AD18DCAFB9004E8B35 /* main.m */,
+				07E8782F18F48FC8002E38F1 /* IADViewController.h */,
+				07E8783018F48FC8002E38F1 /* IADViewController.mm */,
 			);
 			name = ios;
 			sourceTree = "<group>";
@@ -2549,6 +2558,7 @@
 				07AC274A18E5017100F6AEA0 /* SneakyButton.cpp in Sources */,
 				07CBA61318DCAFC0004E8B35 /* cpVect.c in Sources */,
 				07CBA4D918DCAFBE004E8B35 /* CCControlLoader.cpp in Sources */,
+				07E8783118F48FC8002E38F1 /* IADViewController.mm in Sources */,
 				07CBA30D18DCAFB9004E8B35 /* CCSet.cpp in Sources */,
 				07CBA58418DCAFBF004E8B35 /* AtlasAttachmentLoader.cpp in Sources */,
 				07CBA3FC18DCAFBC004E8B35 /* CCScriptSupport.cpp in Sources */,

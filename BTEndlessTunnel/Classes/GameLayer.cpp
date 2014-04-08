@@ -190,7 +190,7 @@ void GameLayer::configureGame(GameLevel gameLevel)
     _menuPause->setVisible(false);
     _menuPause->setAnchorPoint(ccp(0, 0));
     _menuPause->setPositionX(40);
-    _menuPause->setPositionY(designResolutionSize.height - 50);
+    _menuPause->setPositionY(_lblScore->getPositionY());
     
     CCMenu* menu = CCMenu::create();
     menu->setAnchorPoint(ccp(0, 0));
@@ -239,8 +239,9 @@ void GameLayer::_initLayers()
 {
     
     _lblScore = CCLabelTTF::create("0", "Arial", 20.0f, CCSizeMake(190, 24), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
+    _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
-    _lblScore->setPosition(ccp(310, designResolutionSize.height - 26));
+    _lblScore->setPosition(ccp(230, designResolutionSize.height - 85));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();
