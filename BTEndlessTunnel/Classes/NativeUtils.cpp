@@ -140,3 +140,24 @@ void NativeUtils::showLeaderboard(const char* leaderboardID)
     PlayGameSingleton::sharedInstance().showSingleLeaderboard(leaderboardID);
 #endif
 }
+
+void NativeUtils::initAd()
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    PlayGameSingleton::sharedInstance().initAd();
+#endif
+}
+
+void NativeUtils::showAd()
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    PlayGameSingleton::sharedInstance().showAd();
+#endif
+}
+
+void NativeUtils::hideAd()
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    PlayGameSingleton::sharedInstance().hideAd();
+#endif
+}

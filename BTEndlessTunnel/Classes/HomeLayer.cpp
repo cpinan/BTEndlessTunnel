@@ -64,6 +64,9 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menu->addChild(menuItemSettings);
     
     addChild(menu);
+    
+    NativeUtils::showAd();
+    
 }
 
 HomeLayer::~HomeLayer()
@@ -113,6 +116,7 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
     
     if(runGame)
     {
+        NativeUtils::hideAd();
         disable = true;
         
         CCSequence* sequence = CCSequence::create(

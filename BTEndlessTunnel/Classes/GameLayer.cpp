@@ -28,6 +28,8 @@
 #include <cstdlib>
 #include <algorithm>
 
+#include "NativeUtils.h"
+
 using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace std;
@@ -241,7 +243,7 @@ void GameLayer::_initLayers()
     _lblScore = CCLabelTTF::create("0", "Arial", 20.0f, CCSizeMake(190, 24), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
-    _lblScore->setPosition(ccp(230, designResolutionSize.height - 85));
+    _lblScore->setPosition(ccp(230, designResolutionSize.height - 60));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();
@@ -569,8 +571,11 @@ void GameLayer::pauseGame()
             pauseSchedulerAndActions();
             _pauseAllActions();
             
+            _menuPause->setVisible(false);
             _hudLayer->setVisible(false);
             _pauseLayer->setVisible(true);
+            
+            NativeUtils::showAd();
         }
     }
 }
@@ -584,9 +589,12 @@ void GameLayer::resumeGame()
     {
         if(_gameState == kGamePause)
         {
+            NativeUtils::hideAd();
+            
             _gameState = _previousGameState;
             _hudLayer->setVisible(true);
             _pauseLayer->setVisible(false);
+            _menuPause->setVisible(true);
             _resumeEvents();
         }
     }
@@ -839,6 +847,7 @@ void GameLayer::update(float dt)
             _menuPause->setVisible(false);
             _popUpLoseLayer->updateScore(_gameLevel, _score * kScoreFactor);
             _popUpLoseLayer->runAction(CCMoveBy::create(0.25f, ccp(0, designResolutionSize.height)));
+            NativeUtils::showAd();
             unscheduleUpdate();
         }
     }

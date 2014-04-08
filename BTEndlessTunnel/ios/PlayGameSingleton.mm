@@ -13,6 +13,7 @@
 #include "ViewSingleLeaderboard.h"
 #include "ViewLeaderboardPicker.h"
 #include "ViewAchievements.h"
+#include "AdMobBannerView.h"
 //#include "IADViewController.h"
 
 #include "cocos2d.h"
@@ -23,6 +24,7 @@ using namespace cocos2d;
 ViewSingleLeaderboard* viewSingleLeaderboard = 0;
 ViewLeaderboardPicker* viewLeaderboardPicker = 0;
 ViewAchievements* viewAchiemevents = 0;
+AdMobBannerView* adMobBannerView = 0;
 //IADViewController* iadView = 0;
 
 #pragma mark - Destructor and Constructor
@@ -302,10 +304,10 @@ void PlayGameSingleton::signOut()
 }
 
 #pragma mark - Advertisement
-void PlayGameSingleton::showAd()
-{/*
-    if(!iadView)
-        iadView = [[IADViewController alloc] init];
+void PlayGameSingleton::initAd()
+{
+    if(!adMobBannerView)
+        adMobBannerView = [[AdMobBannerView alloc] init];
     
     
     UIWindow *window =  [[UIApplication sharedApplication] keyWindow];
@@ -313,15 +315,20 @@ void PlayGameSingleton::showAd()
     if(!rootController)
         rootController = window.rootViewController;
     
-    [((UIViewController *) rootController).view addSubview: iadView.view];
-  */
+    [((UIViewController *) rootController).view addSubview: adMobBannerView.view];
+}
+
+
+void PlayGameSingleton::showAd()
+{
+    [adMobBannerView show];
 }
 
 void PlayGameSingleton::hideAd()
 {
-    //[iadView hide];
-    //[iadView.view removeFromSuperview];
-    //[iadView release];
-    //iadView = 0;
+    [adMobBannerView hide];
+    //[adMobBannerView.view removeFromSuperview];
+    //[adMobBannerView release];
+    //adMobBannerView = 0;
 }
 
