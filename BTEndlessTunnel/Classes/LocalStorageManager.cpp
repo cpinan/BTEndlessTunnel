@@ -98,4 +98,14 @@ void LocalStorageManager::setScore(float score)
     setTotalScore(score);
 }
 
+bool LocalStorageManager::isAchievementUnlocked(const char *achievementID)
+{
+    return defaults()->getBoolForKey(achievementID, false);
+}
+
+void LocalStorageManager::unlockAchievement(const char *achievementID)
+{
+    defaults()->setBoolForKey(achievementID, true);
+    defaults()->flush();
+}
 

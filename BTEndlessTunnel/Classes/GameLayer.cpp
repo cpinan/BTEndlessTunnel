@@ -20,6 +20,8 @@
 #include "HomeScene.h"
 
 #include "LocalStorageManager.h"
+#include "Utils.h"
+#include "PlayGameConstants.h"
 
 #include <vector>
 #include <ctime>
@@ -80,6 +82,7 @@ vector<int> _vectorMap;
 GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel) : _hudLayer(hudLayer), _gameMode(gameMode)
 {
     
+    _obstaclesAvoided = 0;
     _isJoypad = true;
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameLayer::pauseGame), NOTIFICATION_PAUSE_GAME, NULL);
@@ -106,6 +109,9 @@ void GameLayer::onEnterTransitionDidFinish()
 
 GameLayer::~GameLayer()
 {
+    
+    unscheduleAllSelectors();
+    
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_PAUSE_GAME);
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_RESUME_GAME);
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_PLAY_AGAIN);
@@ -521,16 +527,30 @@ void GameLayer::playGame()
 
 void GameLayer::runGame()
 {
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_FIRST_TIME_PLAYING_THE_GAME))
+    {
+        Utils::unlockAchievement(ACH_FIRST_TIME_PLAYING_THE_GAME);
+        LocalStorageManager::unlockAchievement(ACH_FIRST_TIME_PLAYING_THE_GAME);
+    }
+    
     _isJoypad = LocalStorageManager::isUsingJoypad();
     
     if(!_isJoypad)
     {
+        
+        if(!LocalStorageManager::isAchievementUnlocked(ACH_PLAY_IN_ACCELEROMETER_MODE))
+        {
+            Utils::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE);
+            LocalStorageManager::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE);
+        }
+        
         setAccelerometerEnabled(true);
     }
     
     unscheduleUpdate();
     SimpleAudioEngine::sharedEngine()->playBackgroundMusic(BG_MUSIC_01, true);
     scheduleUpdate();
+    schedule(schedule_selector(GameLayer::_checkAchievements), 1.0f / 1.0f);
 }
 
 void GameLayer::pauseGame()
@@ -717,6 +737,12 @@ void GameLayer::_gameLogic(float dt)
             if(!obstacle->getPassPlayerSFX() && obstacle->getPositionX() + obstacle->getContentSize().width * 1.0f < _player->getPositionX())
             {
                 obstacle->setPassPlayerSFX(true);
+                if(obstacle->getObstacType() == kJumpObstacle)
+                {
+                    Utils::incrementAchievement(ACH_JUMP_50_OBSTACLES, 1);
+                    Utils::incrementAchievement(ACH_JUMP_1000_OBSTACLES, 1);
+                }
+                _obstaclesAvoided++;
                 SimpleAudioEngine::sharedEngine()->playEffect("swoosh.mp3");
             }
             
@@ -794,7 +820,7 @@ void GameLayer::update(float dt)
     else if(_gameState == kGameReady)
     {
         if(!_gameOver)
-        {            
+        {
             _gameLogic(dt);
         }
         
@@ -803,18 +829,112 @@ void GameLayer::update(float dt)
     {
         if(_player->numberOfRunningActions() == 0)
         {
+            
+            _obstaclesAvoided = 0;
+            
             setTouchEnabled(false);
             if(!_isJoypad)
                 setAccelerometerEnabled(false);
             _lblScore->setVisible(false);
             _hudLayer->setVisible(false);
             _menuPause->setVisible(false);
-            _popUpLoseLayer->updateScore(_score * kScoreFactor);
+            _popUpLoseLayer->updateScore(_gameLevel, _score * kScoreFactor);
             _popUpLoseLayer->runAction(CCMoveBy::create(0.25f, ccp(0, designResolutionSize.height)));
             unscheduleUpdate();
         }
     }
 
+}
+
+void GameLayer::_checkAchievements()
+{
+    
+    if(_gameState == kGameReady)
+    {
+        if(!_pause && !_gameOver)
+        {
+            
+            long longScore = (long) (_score * kScoreFactor);
+            
+            // Obstacles avoidment
+            
+            if(_gameLevel == kGameLevelEasy && _obstaclesAvoided >= 100)
+            {
+                
+                if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE))
+                {
+                    Utils::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE);
+                    LocalStorageManager::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_EASY_MODE);
+                }
+                
+            }
+            else if(_gameLevel == kGameLevelNormal && _obstaclesAvoided >= 50)
+            {
+                
+                if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE))
+                {
+                    Utils::unlockAchievement(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE);
+                    LocalStorageManager::unlockAchievement(ACH_AVOID_50_OBSTACLES_IN_NORMAL_MODE);
+                }
+                
+            }
+            else if(_gameLevel == kGameLevelHard && _obstaclesAvoided >= 25)
+            {
+                
+                if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE))
+                {
+                    Utils::unlockAchievement(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE);
+                    LocalStorageManager::unlockAchievement(ACH_AVOID_25_OBSTACLES_IN_HARD_MODE);
+                }
+                
+            }
+            else if(_gameLevel == kGameLevelHard && _obstaclesAvoided >= 100)
+            {
+                
+                if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE))
+                {
+                    Utils::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE);
+                    LocalStorageManager::unlockAchievement(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE);
+                }
+                
+            }
+            
+            //
+            
+            if(!LocalStorageManager::isAchievementUnlocked(ACH_MORE_THAN_3000) && longScore > 3000)
+            {
+                Utils::unlockAchievement(ACH_MORE_THAN_3000);
+                LocalStorageManager::unlockAchievement(ACH_MORE_THAN_3000);
+            }
+            
+            if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_10000_OR_MORE_IN_EASY_MODE) && _gameLevel == kGameLevelEasy && longScore >= 500)
+            {
+                Utils::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
+                LocalStorageManager::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
+                
+            }
+            else if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE) && _gameLevel == kGameLevelNormal && longScore >= 8000)
+            {
+                Utils::unlockAchievement(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE);
+                LocalStorageManager::unlockAchievement(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE);
+                
+            }
+            else if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_5000_OR_MORE_IN_HARD_MODE) && _gameLevel == kGameLevelHard && longScore >= 5000)
+            {
+                Utils::unlockAchievement(ACH_GET_5000_OR_MORE_IN_HARD_MODE);
+                LocalStorageManager::unlockAchievement(ACH_GET_5000_OR_MORE_IN_HARD_MODE);
+            }
+            
+            if(!LocalStorageManager::isAchievementUnlocked(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000) && !_isJoypad && longScore >= 3000)
+            {
+                Utils::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000);
+                LocalStorageManager::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000);
+            }
+
+            
+        }
+    }
+    
 }
 
 #pragma mark - Draw Method
@@ -825,35 +945,7 @@ void GameLayer::draw()
     
     if(DRAW_COLLISIONS)
     {
-        if(_testObstacle == NULL)
-            return;
-        
-        int i;
-        CCRect area;
-        float left, top, right, bottom;
-        
-        std::vector<CCRect> areas = _testObstacle->getVCollision();
-        
-        if(areas.size() > 0)
-        {
-            for(i = 0; i < areas.size(); i++)
-            {
-                area = _testObstacle->currentCollisionArea(areas[i]);
-                
-                left = area.getMinX();
-                top = area.getMinY();
-                right = area.getMaxX();
-                bottom = area.getMaxY();
-                
-                CCPoint origin = ccp(left, top);
-                CCPoint destination = ccp(right, bottom);
-                ccDrawSolidRect(origin, destination, ccc4f(0.0f, 1.0f, 0.0f, 0.5f));
-                
-                
-            }
-        }
     }
-
     
 }
 

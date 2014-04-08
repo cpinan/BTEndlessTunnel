@@ -99,6 +99,8 @@ private:
     void _pauseAllActions();
     void _resumeAllActions();
     
+    void _checkAchievements();
+    
     
 private:
     BaseVehicle* _player;    
@@ -130,12 +132,10 @@ private:
     float _minDistanceObstaclesX;
     
     int _itemMap;
+    int _obstaclesAvoided;
     
     cocos2d::CCLabelTTF* _lblScore;
     cocos2d::CCPoint _accelVelocity;
-    
-private:
-    BaseObstacle* _testObstacle;
     
     
 };

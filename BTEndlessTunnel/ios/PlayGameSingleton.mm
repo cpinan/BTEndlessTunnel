@@ -288,7 +288,6 @@ void PlayGameSingleton::authenticate()
 bool PlayGameSingleton::isSignedIn()
 {
     bool signedIn = [GPGManager sharedInstance].isSignedIn;
-    CCLog("signedIn: %d", signedIn);
     return signedIn;
 }
 

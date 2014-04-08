@@ -22,7 +22,7 @@ class PopUpLoseLayer : public cocos2d::CCLayer
 {
 public:
     PopUpLoseLayer();
-    void updateScore(float score);
+    void updateScore(int level, float score);
     
 private:
     void _onOptionPressed(cocos2d::CCObject* pSender);
