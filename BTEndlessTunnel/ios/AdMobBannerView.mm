@@ -31,8 +31,8 @@
     bannerView_.rootViewController = self;
     bannerView_.adSize = kGADAdSizeSmartBannerLandscape;
     
-    //cocos2d::CCSize size = cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getFrameSize();
-    //bannerView_.frame = CGRectMake(0, 0, size.width, size.height * 0.1f);
+    cocos2d::CCSize size = cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getFrameSize();
+    bannerView_.frame = CGRectMake(0, 0, size.width, size.height * 0.15f);
     
     [self.view addSubview:bannerView_];
     [bannerView_ loadRequest:[GADRequest request]];
