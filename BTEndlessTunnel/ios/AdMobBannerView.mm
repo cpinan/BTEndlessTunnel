@@ -24,17 +24,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"View Did Load AdMobBanner");
     // Do any additional setup after loading the view.
     
     bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
     bannerView_.adUnitID = [NSString stringWithUTF8String:MY_BANNER_UNIT_ID];
     bannerView_.rootViewController = self;
     bannerView_.adSize = kGADAdSizeSmartBannerLandscape;
-    
-    cocos2d::CCSize size = cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getFrameSize();
-    bannerView_.frame = CGRectMake(0, 0, size.width, size.height * 0.15f);
+    bannerView_.translatesAutoresizingMaskIntoConstraints = YES;
     
     [self.view addSubview:bannerView_];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:bannerView_ attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    //cocos2d::CCSize size = cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getFrameSize();
+    //bannerView_.frame = CGRectMake(0, 0, size.width, size.height * 0.1f);
+    
     [bannerView_ loadRequest:[GADRequest request]];
 }
 
