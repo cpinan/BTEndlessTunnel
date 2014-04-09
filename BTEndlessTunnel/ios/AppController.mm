@@ -28,6 +28,22 @@
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        // Yes, do something
+        /*
+         [NSThread detachNewThreadSelector:@selector(playServicesAuthenticate) toTarget:self withObject:nil];
+        */
+        PlayGameSingleton::sharedInstance().authenticate();
+    }
+    else if (buttonIndex == 1)
+    {
+        // No
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     // Override point for customization after application launch.
@@ -49,7 +65,17 @@ static AppDelegate s_sharedApplication;
     if(!PlayGameSingleton::sharedInstance().isSignedIn())
     {
         PlayGameSingleton::sharedInstance().trySilentAuthentication();
-        [NSThread detachNewThreadSelector:@selector(playServicesAuthenticate) toTarget:self withObject:nil];
+        
+        UIAlertView *alert = [[UIAlertView alloc] init];
+        
+        [alert setTitle:@"Confirm"];
+        [alert setMessage:@"Do you want sign in on Google Play Games?"];
+        [alert setDelegate:self];
+        [alert addButtonWithTitle:@"Yes"];
+        [alert addButtonWithTitle:@"No"];
+        [alert show];
+        [alert release];
+        
     }
 
     // Add the view controller's view to the window and display.

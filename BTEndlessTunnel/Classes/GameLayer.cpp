@@ -960,6 +960,7 @@ void GameLayer::draw()
 
 void GameLayer::_playAgain()
 {
+    NativeUtils::hideAd();
     SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
     CCScene* scene = HomeScene::scene(kGameModePlayAgain, _gameLevel);
     CCDirector::sharedDirector()->replaceScene(CCTransitionFadeDown::create(0.5f, scene));

@@ -16,6 +16,8 @@
 #include "AdMobBannerView.h"
 //#include "IADViewController.h"
 
+#import <UIKit/UIKit.h>
+
 #include "cocos2d.h"
 
 using namespace cocos2d;
@@ -35,7 +37,6 @@ PlayGameSingleton::~PlayGameSingleton()
 
 PlayGameSingleton::PlayGameSingleton()
 {
-    
 }
 
 #pragma mark - Singleton
