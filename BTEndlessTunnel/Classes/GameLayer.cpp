@@ -30,6 +30,8 @@
 
 #include "NativeUtils.h"
 
+#define SP_FLOOR "floor_X.png"
+
 using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace std;
@@ -167,12 +169,12 @@ void GameLayer::_createMap()
     // Parallax Floor
     _parallaxFloor = CCArray::createWithCapacity(MAX_PARALLAX);
     _parallaxFloor->retain();
-    CCSprite* spFloor = CCSprite::create("floor_parallax.png");
+    CCSprite* spFloor = CCSprite::create(SP_FLOOR);
     x = 0;
     y = 0;
     for(i = 0; i < MAX_PARALLAX; i++)
     {
-        spFloor = CCSprite::create("floor_parallax.png");
+        spFloor = CCSprite::create(SP_FLOOR);
         spFloor->setAnchorPoint(ccp(0, 0));
         spFloor->setPosition(ccp(x, y));
         _parallaxFloor->addObject(spFloor);
@@ -255,6 +257,7 @@ void GameLayer::_initLayers()
     
     _popUpLoseLayer = new PopUpLoseLayer();
     _popUpLoseLayer->setPosition(ccp(0, -designResolutionSize.height));
+    // _popUpLoseLayer->setPositionY(0);
     _popUpLoseLayer->autorelease();
     addChild(_popUpLoseLayer, kDeepPopUpLoseLayer);
     

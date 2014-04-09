@@ -62,21 +62,7 @@ static AppDelegate s_sharedApplication;
     
     [GPGManager sharedInstance].achievementUnlockedToastPlacement = kGPGToastPlacementTop;
     
-    if(!PlayGameSingleton::sharedInstance().isSignedIn())
-    {
-        PlayGameSingleton::sharedInstance().trySilentAuthentication();
-        
-        UIAlertView *alert = [[UIAlertView alloc] init];
-        
-        [alert setTitle:@"Confirm"];
-        [alert setMessage:@"Do you want sign in on Google Play Games?"];
-        [alert setDelegate:self];
-        [alert addButtonWithTitle:@"Yes"];
-        [alert addButtonWithTitle:@"No"];
-        [alert show];
-        [alert release];
-        
-    }
+    PlayGameSingleton::sharedInstance().trySilentAuthentication();
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
@@ -113,6 +99,22 @@ static AppDelegate s_sharedApplication;
     cocos2d::CCApplication::sharedApplication()->run();
     
     PlayGameSingleton::sharedInstance().initAd();
+    
+    /*
+    if(!PlayGameSingleton::sharedInstance().isSignedIn())
+    {
+        UIAlertView *alert = [[UIAlertView alloc] init];
+        
+        [alert setTitle:@"Confirm"];
+        [alert setMessage:@"Do you want sign in on Google Play Games?"];
+        [alert setDelegate:self];
+        [alert addButtonWithTitle:@"Yes"];
+        [alert addButtonWithTitle:@"No"];
+        [alert show];
+        [alert release];
+        
+    }
+    */
     
     return YES;
 }

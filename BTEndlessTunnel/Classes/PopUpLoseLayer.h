@@ -29,8 +29,11 @@ private:
     void _finishHideLayer();
     
 private:
+    long _score;
     cocos2d::CCLabelTTF* _lblHeadTitle;
     cocos2d::CCLabelTTF* _lblScore;
+    cocos2d::CCLabelTTF* _lblMaxScore;
+    cocos2d::CCLabelTTF* _lblTotalScore;
     bool disable;
 };
 

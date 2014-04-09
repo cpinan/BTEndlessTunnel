@@ -51,10 +51,7 @@ void PlayGameSingleton::showSingleLeaderboard(const char* leaderBoardID)
 {
     
     if(!isSignedIn())
-    {
         authenticate();
-        return;
-    }
     
     if(!viewSingleLeaderboard)
         viewSingleLeaderboard = [[ViewSingleLeaderboard alloc] init];
@@ -105,10 +102,7 @@ void PlayGameSingleton::showLeaderboards()
 {
     
     if(!isSignedIn())
-    {
         authenticate();
-        return;
-    }
     
     if(!viewLeaderboardPicker)
         viewLeaderboardPicker = [[ViewLeaderboardPicker alloc] init];
@@ -166,10 +160,7 @@ void PlayGameSingleton::showAchievements()
 {
     
     if(!isSignedIn())
-    {
         authenticate();
-        return;
-    }
     
     if(!viewAchiemevents)
         viewAchiemevents = [[ViewAchievements alloc] init];
@@ -197,10 +188,7 @@ void PlayGameSingleton::revealAchievement(const char *achievementID)
 {
     
     if(!isSignedIn())
-    {
         authenticate();
-        return;
-    }
     
     GPGAchievement* revealMe = [GPGAchievement achievementWithId:[NSString stringWithUTF8String:achievementID]];
     
@@ -220,10 +208,7 @@ void PlayGameSingleton::unlockAchievement(const char *achievementID)
 {
     
     if(!isSignedIn())
-    {
         authenticate();
-        return;
-    }
     
     // [GPGManager sharedInstance].achievementUnlockedToastPlacement = kGPGToastPlacementTop;
     // Specify our offset to be 20 points
@@ -256,10 +241,7 @@ void PlayGameSingleton::incrementAchievement(int numSteps, const char *achieveme
 {
     
     if(!isSignedIn())
-    {
         authenticate();
-        return;
-    }
     
     GPGAchievement* incrementMe = [GPGAchievement achievementWithId:[NSString stringWithUTF8String:achievementID]];
     
