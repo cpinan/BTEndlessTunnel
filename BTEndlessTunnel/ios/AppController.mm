@@ -17,8 +17,6 @@
 #import "RootViewController.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 
-#import <GoogleOpenSource/GoogleOpenSource.h>
-
 @implementation AppController
 
 @synthesize window;
@@ -31,7 +29,7 @@
 static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    
     // Override point for customization after application launch.
     
     //
@@ -53,7 +51,7 @@ static AppDelegate s_sharedApplication;
         PlayGameSingleton::sharedInstance().trySilentAuthentication();
         [NSThread detachNewThreadSelector:@selector(playServicesAuthenticate) toTarget:self withObject:nil];
     }
-
+    
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
@@ -63,13 +61,13 @@ static AppDelegate s_sharedApplication;
                                       sharegroup: nil
                                    multiSampling: NO
                                  numberOfSamples:0 ];
-
+    
     // Use RootViewController manage EAGLView
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
     viewController.wantsFullScreenLayout = YES;
     viewController.view = __glView;
     [__glView setMultipleTouchEnabled: YES];
-
+    
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
@@ -83,9 +81,9 @@ static AppDelegate s_sharedApplication;
     }
     
     [window makeKeyAndVisible];
-
+    
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
-
+    
     cocos2d::CCApplication::sharedApplication()->run();
     
     PlayGameSingleton::sharedInstance().initAd();
@@ -139,7 +137,7 @@ static AppDelegate s_sharedApplication;
     /*
      Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
      */
-     cocos2d::CCDirector::sharedDirector()->purgeCachedData();
+    cocos2d::CCDirector::sharedDirector()->purgeCachedData();
 }
 
 
@@ -147,30 +145,7 @@ static AppDelegate s_sharedApplication;
     [super dealloc];
 }
 
-<<<<<<< HEAD
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
-}
-
-- (void)finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error
-{
-    NSLog(@"Finished with auth.");
-    if (error == nil && auth) {
-        NSLog(@"Success signing in to Google! Auth object is %@", auth);
-        
-        // Eventually, you'll want to do something here.
-        
-    } else {
-        NSLog(@"Failed to log into Google\n\tError=%@\n\tAuthObj=%@",error,auth);
-    }
-}
-
-=======
 #pragma mark - Google Play Game Services
->>>>>>> FETCH_HEAD
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
