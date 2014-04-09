@@ -8,19 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		046DE98018E91A3000F7989F /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 046DE97F18E91A3000F7989F /* audio */; };
-		0484A36018F26BE000247035 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A35F18F26BE000247035 /* AddressBook.framework */; };
-		0484A36218F26BE900247035 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A36118F26BE900247035 /* AssetsLibrary.framework */; };
-		0484A36418F26BF000247035 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A36318F26BF000247035 /* CoreData.framework */; };
-		0484A36618F26BF900247035 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A36518F26BF900247035 /* CoreLocation.framework */; };
-		0484A36818F26BFF00247035 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A36718F26BFF00247035 /* CoreMotion.framework */; };
-		0484A36A18F26C0F00247035 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A36918F26C0F00247035 /* CoreText.framework */; };
-		0484A36C18F26C1800247035 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A36B18F26C1800247035 /* MediaPlayer.framework */; };
-		0484A36E18F26C2400247035 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A36D18F26C2400247035 /* Security.framework */; };
-		0484A37018F26C2D00247035 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A36F18F26C2D00247035 /* SystemConfiguration.framework */; };
-		0484A37218F26C3600247035 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A37118F26C3600247035 /* libc++.dylib */; };
-		0484A37618F26CBC00247035 /* GooglePlus.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A37518F26CBC00247035 /* GooglePlus.bundle */; };
-		0484A37818F26CCB00247035 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A37718F26CCB00247035 /* GooglePlus.framework */; };
-		0484A37A18F26F5300247035 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0484A37918F26F5300247035 /* GoogleOpenSource.framework */; };
 		07AC273B18E500DA00F6AEA0 /* HudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AC273918E500DA00F6AEA0 /* HudLayer.cpp */; };
 		07AC273E18E500E100F6AEA0 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AC273C18E500E100F6AEA0 /* GameLayer.cpp */; };
 		07AC274A18E5017100F6AEA0 /* SneakyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AC274218E5017100F6AEA0 /* SneakyButton.cpp */; };
@@ -348,19 +335,6 @@
 
 /* Begin PBXFileReference section */
 		046DE97F18E91A3000F7989F /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = audio; path = Resources/audio; sourceTree = "<group>"; };
-		0484A35F18F26BE000247035 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
-		0484A36118F26BE900247035 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		0484A36318F26BF000247035 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		0484A36518F26BF900247035 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		0484A36718F26BFF00247035 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		0484A36918F26C0F00247035 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		0484A36B18F26C1800247035 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		0484A36D18F26C2400247035 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		0484A36F18F26C2D00247035 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		0484A37118F26C3600247035 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
-		0484A37518F26CBC00247035 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = BTEndlessTunnel/ios/GooglePlus.bundle; sourceTree = "<group>"; };
-		0484A37718F26CCB00247035 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = BTEndlessTunnel/ios/GooglePlus.framework; sourceTree = "<group>"; };
-		0484A37918F26F5300247035 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = BTEndlessTunnel/ios/GoogleOpenSource.framework; sourceTree = "<group>"; };
 		07AC273918E500DA00F6AEA0 /* HudLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HudLayer.cpp; path = Classes/HudLayer.cpp; sourceTree = "<group>"; };
 		07AC273A18E500DA00F6AEA0 /* HudLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HudLayer.h; path = Classes/HudLayer.h; sourceTree = "<group>"; };
 		07AC273C18E500E100F6AEA0 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLayer.cpp; path = Classes/GameLayer.cpp; sourceTree = "<group>"; };
@@ -1045,22 +1019,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-				0484A37A18F26F5300247035 /* GoogleOpenSource.framework in Frameworks */,
-				0484A37818F26CCB00247035 /* GooglePlus.framework in Frameworks */,
-				0484A37618F26CBC00247035 /* GooglePlus.bundle in Frameworks */,
-				0484A37218F26C3600247035 /* libc++.dylib in Frameworks */,
-				0484A37018F26C2D00247035 /* SystemConfiguration.framework in Frameworks */,
-				0484A36E18F26C2400247035 /* Security.framework in Frameworks */,
-				07CBA27E18DCAFB8004E8B35 /* QuartzCore.framework in Frameworks */,
-				0484A36C18F26C1800247035 /* MediaPlayer.framework in Frameworks */,
-				0484A36A18F26C0F00247035 /* CoreText.framework in Frameworks */,
-				0484A36818F26BFF00247035 /* CoreMotion.framework in Frameworks */,
-				0484A36618F26BF900247035 /* CoreLocation.framework in Frameworks */,
-				0484A36418F26BF000247035 /* CoreData.framework in Frameworks */,
-				0484A36218F26BE900247035 /* AssetsLibrary.framework in Frameworks */,
-				0484A36018F26BE000247035 /* AddressBook.framework in Frameworks */,
-=======
 				07E8781A18F465E0002E38F1 /* SystemConfiguration.framework in Frameworks */,
 				07E8792718F49D54002E38F1 /* StoreKit.framework in Frameworks */,
 				07E8792518F49D4E002E38F1 /* MessageUI.framework in Frameworks */,
@@ -1081,19 +1039,13 @@
 				07E8780A18F465A5002E38F1 /* AddressBook.framework in Frameworks */,
 				07E8780718F4657A002E38F1 /* GooglePlayGames.bundle in Frameworks */,
 				07E8780818F4657A002E38F1 /* GooglePlus.bundle in Frameworks */,
->>>>>>> FETCH_HEAD
 				07CBA28218DCAFB8004E8B35 /* OpenAL.framework in Frameworks */,
 				07CBA61B18DCAFC0004E8B35 /* libwebsockets.a in Frameworks */,
 				07CBA3F518DCAFBC004E8B35 /* libwebp.a in Frameworks */,
 				07CBA28818DCAFB9004E8B35 /* UIKit.framework in Frameworks */,
 				07CBA3F318DCAFBC004E8B35 /* libcurl.a in Frameworks */,
-<<<<<<< HEAD
-				07CBA28618DCAFB9004E8B35 /* AVFoundation.framework in Frameworks */,
-				07CBA28C18DCAFB9004E8B35 /* CoreGraphics.framework in Frameworks */,
-=======
 				07E8780518F46566002E38F1 /* GooglePlayGames.framework in Frameworks */,
 				07E8780618F46566002E38F1 /* GooglePlus.framework in Frameworks */,
->>>>>>> FETCH_HEAD
 				07CBA28018DCAFB8004E8B35 /* OpenGLES.framework in Frameworks */,
 				07CBA28A18DCAFB9004E8B35 /* Foundation.framework in Frameworks */,
 				07E8791818F49D02002E38F1 /* libGoogleAdMobAds.a in Frameworks */,
@@ -1140,21 +1092,6 @@
 		07CBA27C18DCAFB8004E8B35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				0484A37918F26F5300247035 /* GoogleOpenSource.framework */,
-				0484A37718F26CCB00247035 /* GooglePlus.framework */,
-				0484A37518F26CBC00247035 /* GooglePlus.bundle */,
-				0484A37118F26C3600247035 /* libc++.dylib */,
-				0484A36F18F26C2D00247035 /* SystemConfiguration.framework */,
-				0484A36D18F26C2400247035 /* Security.framework */,
-				0484A36B18F26C1800247035 /* MediaPlayer.framework */,
-				0484A36918F26C0F00247035 /* CoreText.framework */,
-				0484A36718F26BFF00247035 /* CoreMotion.framework */,
-				0484A36518F26BF900247035 /* CoreLocation.framework */,
-				0484A36318F26BF000247035 /* CoreData.framework */,
-				0484A36118F26BE900247035 /* AssetsLibrary.framework */,
-				0484A35F18F26BE000247035 /* AddressBook.framework */,
-=======
 				07E8792618F49D54002E38F1 /* StoreKit.framework */,
 				07E8792418F49D4E002E38F1 /* MessageUI.framework */,
 				07E8792218F49D48002E38F1 /* CoreTelephony.framework */,
@@ -1170,7 +1107,6 @@
 				07E8780D18F465B2002E38F1 /* CoreData.framework */,
 				07E8780B18F465AB002E38F1 /* AssetsLibrary.framework */,
 				07E8780918F465A5002E38F1 /* AddressBook.framework */,
->>>>>>> FETCH_HEAD
 				07CBA27D18DCAFB8004E8B35 /* QuartzCore.framework */,
 				07CBA27F18DCAFB8004E8B35 /* OpenGLES.framework */,
 				07CBA28118DCAFB8004E8B35 /* OpenAL.framework */,

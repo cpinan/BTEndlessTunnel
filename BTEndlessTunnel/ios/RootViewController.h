@@ -7,11 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GooglePlus/GooglePlus.h>
 
-@interface RootViewController : UIViewController <GPPSignInDelegate> {
+@interface RootViewController : UIViewController{
 }
 
 @end
-
-static NSString * const kClientID = @"893066960841.apps.googleusercontent.com";
