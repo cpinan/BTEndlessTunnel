@@ -42,6 +42,12 @@ public:
     
     static void setScore(float score);
     
+    static void setScoreInLevel(float score, int level);
+    static float getScoreInLevel(int level);
+    
+    static bool isAchievementUnlocked(const char* achievementID);
+    static void unlockAchievement(const char* achievementID);
+    
 };
 
 #endif /* defined(__BTEndlessTunnel__LocalStorageManager__) */

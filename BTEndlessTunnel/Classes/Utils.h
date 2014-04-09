@@ -11,4 +11,12 @@
 
 #include "cocos2d.h"
 
+class Utils
+{
+public:
+    static void unlockAchievement(const char* achievementID);
+    static void incrementAchievement(const char* achievementID, int numSteps);
+    static void submitScore(const char* leaderboardID, float score);
+};
+
 #endif /* defined(__BTEndlessTunnel__Utils__) */

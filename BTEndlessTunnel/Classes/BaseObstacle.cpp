@@ -19,6 +19,7 @@ BaseObstacle::BaseObstacle(std::string filename)
         sameCollisionArea = false;
         distanceObjects = 0;
         numObjects = 1;
+        obstacType = kNormalObstacle;
         setTag(1);
     }
 }

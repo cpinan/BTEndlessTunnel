@@ -12,6 +12,12 @@
 #include "cocos2d.h"
 #include "BaseVehicle.h"
 
+enum ObstacleType
+{
+    kNormalObstacle = 0,
+    kJumpObstacle = 1
+};
+
 class BaseObstacle : public cocos2d::CCSprite
 {
 public:
@@ -26,6 +32,8 @@ public:
     
     CC_SYNTHESIZE(int, numObjects, NumObjects);
     CC_SYNTHESIZE(float, distanceObjects, DistanceObjects);
+    
+    CC_SYNTHESIZE(ObstacleType, obstacType, ObstacType);
     
     virtual bool collision(BaseVehicle& vehicle);
     virtual cocos2d::CCRect currentCollisionArea(cocos2d::CCRect area);

@@ -12,6 +12,7 @@ using namespace cocos2d;
 
 ObstacleDoble::ObstacleDoble() : BaseObstacle("wall_01.png")
 {
+    obstacType = kJumpObstacle;
     sameCollisionArea = false;
     
     // CCRect collideArea = CCRect(0, 0, getContentSize().width, getContentSize().height);
