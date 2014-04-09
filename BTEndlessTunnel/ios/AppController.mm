@@ -29,7 +29,7 @@
 static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+
     // Override point for customization after application launch.
     
     //
@@ -51,7 +51,7 @@ static AppDelegate s_sharedApplication;
         PlayGameSingleton::sharedInstance().trySilentAuthentication();
         [NSThread detachNewThreadSelector:@selector(playServicesAuthenticate) toTarget:self withObject:nil];
     }
-    
+
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
@@ -61,13 +61,13 @@ static AppDelegate s_sharedApplication;
                                       sharegroup: nil
                                    multiSampling: NO
                                  numberOfSamples:0 ];
-    
+
     // Use RootViewController manage EAGLView
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
     viewController.wantsFullScreenLayout = YES;
     viewController.view = __glView;
     [__glView setMultipleTouchEnabled: YES];
-    
+
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
@@ -81,9 +81,9 @@ static AppDelegate s_sharedApplication;
     }
     
     [window makeKeyAndVisible];
-    
+
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
-    
+
     cocos2d::CCApplication::sharedApplication()->run();
     
     PlayGameSingleton::sharedInstance().initAd();
@@ -137,7 +137,7 @@ static AppDelegate s_sharedApplication;
     /*
      Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
      */
-    cocos2d::CCDirector::sharedDirector()->purgeCachedData();
+     cocos2d::CCDirector::sharedDirector()->purgeCachedData();
 }
 
 
