@@ -38,6 +38,7 @@ public:
     virtual void dead();
     virtual void doJump();
     virtual void doMove(cocos2d::CCPoint velocity);
+    virtual void setLimits(float limitBotY, float height);
     
     virtual cocos2d::CCRect getGroundCollision();
     virtual cocos2d::CCRect getAirCollision();
@@ -57,6 +58,9 @@ private:
 private:
     cocos2d::CCJumpBy* _jumpByAction;
     cocos2d::CCSprite* _spShadow;
+    
+    float _limitBottomY;
+    float _limitTopY;
     
 };
 

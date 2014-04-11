@@ -15,6 +15,8 @@
 #include "HomeScene.h"
 #include "GameLayer.h"
 
+#include "HelloWorldScene.h"
+
 #include <vector>
 #include <string>
 
@@ -45,14 +47,23 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     vector<string> searchPaths;
     
-    if(frameSize.height > mediumResource.size.height)
+    /*
+    if(frameSize.height > smallResource.size.height)
     {
-        
+        searchPaths.push_back(mediumResource.directory);
+        pDirector->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
     }
+    else
+    {
+        searchPaths.push_back(smallResource.directory);
+        pDirector->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
+    }
+    */
     
-    searchPaths.push_back("480x320");
+    searchPaths.push_back(mediumResource.directory);
+    pDirector->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
+    
     searchPaths.push_back("audio");
-    
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
     
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_JUMP);
@@ -60,7 +71,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_SMASH);
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(BG_MUSIC_01);
     
-    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.6f);
+    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(BG_MUSIC_VOLUME);
     
 
     // turn on display FPS
@@ -71,7 +82,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
     CCScene *pScene = HomeScene::scene(kGameModeHome);
-
+    // CCScene *pScene = HelloWorld::scene();
     // run
     pDirector->runWithScene(pScene);
 

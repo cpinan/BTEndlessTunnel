@@ -9,7 +9,11 @@
 #ifndef BTEndlessTunnel_Constants_h
 #define BTEndlessTunnel_Constants_h
 
+#include "cocos2d.h"
+
+#define SP_SHADOW "shadow.png"
 #define SHOW_FPS true
+#define WIN_SIZE CCDirector::sharedDirector()->getWinSize()
 
 // Definición de ID's para Local Storage
 
@@ -35,13 +39,18 @@
 
 // Game constants
 #define MAX_PARALLAX 5
-#define START_X_OBSTACLES designResolutionSize.width * 2.0f
-#define START_WORLD_SPEED 250.0f
 #define MAX_OBSTACLES 10
+
+#define START_X_OBSTACLES WIN_SIZE.width * 1.5f
+#define START_WORLD_SPEED 250.0f
 #define MIN_DISTANCE_OBSTACLES 200
+
 #define DRAW_COLLISIONS false
 
 // Admob
 #define MY_BANNER_UNIT_ID "ca-app-pub-3855348217239115/3776780188"
+
+// Music and Sound
+#define BG_MUSIC_VOLUME 0.5f
 
 #endif

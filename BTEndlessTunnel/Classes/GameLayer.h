@@ -38,16 +38,20 @@ enum GameLevel
 
 enum GameDeep
 {
-    kDeepBackground = -999999,
-    kDeepGameElements = -9999,
-    kDeepScore = 999,
-    kDeepPauseLayer = 9999,
-    kDeepPopUpLoseLayer = 99999
+    kDeepSky = -9999,
+    kDeepCloud = -9900,
+    kDeepBGBack = -9500,
+    kDeepBGMid = -9250,
+    kDeepBGFront = -9000,
+    kDeepTracks = -8500,
+    kDeepGameElements = -2500,
+    kDeepGameFinish = 500,
+    kDeepScore = 1000,
+    kDeepPauseLayer = 2500,
+    kDeepPopUpLoseLayer = 3500
 };
 
 #define kScoreFactor 100.0f
-
-#define AIR_AND_TOP_Y 160
 
 #include "cocos2d.h"
 
@@ -115,8 +119,11 @@ private:
     GameMode _gameMode;
     GameLevel _gameLevel;
     
-    cocos2d::CCArray* _parallaxBackground;
-    cocos2d::CCArray* _parallaxRoof;
+    cocos2d::CCSprite* _spCloud;
+    cocos2d::CCArray* _parallaxBGBack;
+    cocos2d::CCArray* _parallaxBGMid;
+    cocos2d::CCArray* _parallaxBGFront;
+    
     cocos2d::CCArray* _parallaxFloor;
     
     cocos2d::CCArray* _arrayObstacles;
@@ -134,6 +141,13 @@ private:
     int _itemMap;
     int _obstaclesAvoided;
     int _obstaclesJumped;
+    
+    float _playerStartY;
+    float _wallHeight;
+    
+    float OBSTACLE_SIMPLE_BOT_Y;
+    float OBSTACLE_SIMPLE_TOP_Y;
+    float OBSTACLE_DOBLE_AIR_Y;
     
     cocos2d::CCLabelTTF* _lblScore;
     cocos2d::CCPoint _accelVelocity;

@@ -23,59 +23,63 @@ PopUpLoseLayer::PopUpLoseLayer()
     _score = 0;
     disable = false;
     
+    CCPoint origin = ccp(WIN_SIZE.width * 0.5f, WIN_SIZE.height * 0.5f);
+    
     // BGWhite
-    CCSprite* bg_white = CCSprite::create("bg_white.png");
-    bg_white->setPosition(ccp(designResolutionSize.width * 0.5f, designResolutionSize.height * 0.5f));
-    addChild(bg_white);
+    CCSprite* bg = CCSprite::create("bg_white.png");
+    bg->setPosition(origin);
+    addChild(bg);
+    
+    float w = bg->getContentSize().width;
+    float h = bg->getContentSize().height;
+    CCPoint o = ccp(w * 0.5f, h * 0.5f);
     
     // Head title
     _lblHeadTitle = CCLabelTTF::create("Finish!", "Arial", 16.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    _lblHeadTitle->setAnchorPoint(ccp(0, 0));
-    _lblHeadTitle->setPosition(ccp(144, designResolutionSize.height - 73));
+    _lblHeadTitle->setPosition(ccp(o.x, o.y + h * 0.35f));
     _lblHeadTitle->setColor(ccc3(0, 0, 0));
-    addChild(_lblHeadTitle);
+    bg->addChild(_lblHeadTitle);
     
     // Badge and record
     CCSprite* spBadge = CCSprite::create("badge.png");
-    spBadge->setAnchorPoint(ccp(0, 0));
-    spBadge->setPosition(ccp(163, designResolutionSize.height -  150));
-    addChild(spBadge, 10);
+    spBadge->setPosition(ccp(o.x - spBadge->getContentSize().width * 1.2f, o.y + h * 0.05f));
+    bg->addChild(spBadge, 10);
     
     _lblScore = CCLabelTTF::create("0", "Arial", 16.0f, CCSizeMake(130, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
     _lblScore->setColor(ccc3(0, 0, 0));
     _lblScore->setAnchorPoint(ccp(0, 0));
-    _lblScore->setPosition(ccp(223, spBadge->getPositionY() + 8));
-    addChild(_lblScore);
+    _lblScore->setPosition(ccp(o.x, o.y));
+    bg->addChild(_lblScore);
     
-    _lblMaxScore = CCLabelTTF::create("Max Score: 0", "Arial", 16.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+    _lblMaxScore = CCLabelTTF::create("Best: 0", "Arial", 16.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
     _lblMaxScore->setColor(ccc3(0, 0, 0));
     _lblMaxScore->setAnchorPoint(ccp(0, 0));
-    _lblMaxScore->setPosition(ccp(160, spBadge->getPositionY() + 50));
-    addChild(_lblMaxScore);
+    _lblMaxScore->setPosition(ccp(o.x - w * 0.3f, o.y + h * 0.2f));
+    bg->addChild(_lblMaxScore);
     
     _lblTotalScore = CCLabelTTF::create("Total Score: 0", "Arial", 16.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
     _lblTotalScore->setColor(ccc3(0, 0, 0));
     _lblTotalScore->setAnchorPoint(ccp(0, 0));
-    _lblTotalScore->setPosition(ccp(_lblMaxScore->getPositionX(), spBadge->getPositionY() - 30));
-    addChild(_lblTotalScore);
+    _lblTotalScore->setPosition(ccp(o.x - w * 0.3f, o.y - h * 0.15f));
+    bg->addChild(_lblTotalScore);
     
     // Send score button
     CCMenuItemImage* itemScore = CCMenuItemImage::create("play_game.png", "play_game.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
     itemScore->setTag(kTagSendScore);
     itemScore->setAnchorPoint(ccp(0, 0));
-    itemScore->setPosition(ccp(161, designResolutionSize.height - 250));
+    itemScore->setPosition(ccp(o.x - w * 0.35f, o.y - h * 0.35f));
     
     // Home button
     CCMenuItemImage* itemHome = CCMenuItemImage::create("home.png", "home.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
     itemHome->setTag(kTagGoHome);
     itemHome->setAnchorPoint(ccp(0, 0));
-    itemHome->setPosition(ccp(222, itemScore->getPositionY()));
+    itemHome->setPosition(ccp(itemScore->getPositionX() + itemScore->getContentSize().width * 1.6f, itemScore->getPositionY()));
     
     // Play again button
     CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("play_again.png", "play_again.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
     itemPlayAgain->setTag(kTagPlayAgain);
     itemPlayAgain->setAnchorPoint(ccp(0, 0));
-    itemPlayAgain->setPosition(ccp(282, itemScore->getPositionY()));
+    itemPlayAgain->setPosition(ccp(itemHome->getPositionX() + itemScore->getContentSize().width * 1.6f, itemScore->getPositionY()));
     
     // Menu
     CCMenu* menu = CCMenu::create();
@@ -86,7 +90,7 @@ PopUpLoseLayer::PopUpLoseLayer()
     menu->addChild(itemHome);
     menu->addChild(itemPlayAgain);
     
-    addChild(menu);
+    bg->addChild(menu);
     
 }
 
@@ -142,12 +146,9 @@ void PopUpLoseLayer::updateScore(int level, float score)
         LocalStorageManager::setScoreInLevel(score, level);
         scoreInLevel = score;
         _lblHeadTitle->setString("New Record!");
-        _lblMaxScore->setString("");
     }
-    else
-    {
-        _lblMaxScore->setString(CCString::createWithFormat("Best: %lu", scoreInLevel)->getCString());
-    }
+    
+    _lblMaxScore->setString(CCString::createWithFormat("Best: %lu", scoreInLevel)->getCString());
     
     _lblTotalScore->setString(CCString::createWithFormat("Total Score: %lu", totalScore)->getCString());
 }

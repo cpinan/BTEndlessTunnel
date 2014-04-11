@@ -9,6 +9,7 @@
 #include "BaseVehicle.h"
 #include "SimpleAudioEngine.h"
 #include "AppMacros.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -17,6 +18,9 @@ BaseVehicle::BaseVehicle(std::string filename)
 {
     if(initWithFile(filename.c_str()))
     {
+        _limitBottomY = 0;
+        _limitTopY = 0;
+        
         defaultTexture = NULL;
         jumpAnimation = NULL;
         idleAnimation = NULL;
@@ -30,7 +34,7 @@ BaseVehicle::BaseVehicle(std::string filename)
         _jumpByAction->setTag(kActionJumpTag);
         _jumpByAction->retain();
         
-        _spShadow = CCSprite::create("shadow.png");
+        _spShadow = CCSprite::create(SP_SHADOW);
         _spShadow->setPositionX(getContentSize().width * 0.5f);
         addChild(_spShadow, -1);
         _updateShadow();
@@ -55,7 +59,7 @@ void BaseVehicle::doJump()
         }
         runAction(_jumpByAction);
         state = kStateJump;
-        SimpleAudioEngine::sharedEngine()->playEffect("jump.mp3");
+        SimpleAudioEngine::sharedEngine()->playEffect(SFX_JUMP);
     }
 }
 
@@ -65,7 +69,7 @@ void BaseVehicle::dead()
     {
         stopAllActions();
         setTexture(deadTexture);
-        SimpleAudioEngine::sharedEngine()->playEffect("smash.mp3");
+        SimpleAudioEngine::sharedEngine()->playEffect(SFX_SMASH);
         
         float x = getPositionX() + designResolutionSize.width * 1.5f;
         
@@ -92,9 +96,9 @@ void BaseVehicle::doMove(CCPoint velocity)
     }
     else
     {
-        if(playerY + velocity.y > 120)
+        if(playerY + velocity.y > _limitTopY)
             velocity.y = 0;
-        else if(playerY + velocity.y < 70)
+        else if(playerY + velocity.y < _limitBottomY)
             velocity.y = 0;
     }
     
@@ -102,16 +106,16 @@ void BaseVehicle::doMove(CCPoint velocity)
     
     playerY += velocity.y;
     
-    if(playerY > 120)
-        playerY = 120;
-    else if(playerY < 70)
-        playerY = 70;
+    if(playerY > _limitTopY)
+        playerY = _limitTopY;
+    else if(playerY < _limitBottomY)
+        playerY = _limitBottomY;
     
     if(newPosition.x < getContentSize().width * 0.5f)
         newPosition.x = getContentSize().width * 0.5f;
     
-    if(newPosition.x > designResolutionSize.width * 0.8f)
-        newPosition.x = designResolutionSize.width * 0.8f;
+    if(newPosition.x > WIN_SIZE.width * 0.8f)
+        newPosition.x = WIN_SIZE.width * 0.8f;
     
     if(getActionByTag(kActionJumpTag) == NULL)
         newPosition.y = playerY + getContentSize().height * 0.5f;
@@ -149,4 +153,10 @@ CCRect BaseVehicle::getAirCollision()
 void BaseVehicle::_updateShadow()
 {
     _spShadow->setPositionY(playerY - getPositionY() + getContentSize().height * 0.55f);
+}
+
+void BaseVehicle::setLimits(float limitBotY, float height)
+{
+    _limitBottomY = limitBotY;
+    _limitTopY = _limitBottomY + height;
 }

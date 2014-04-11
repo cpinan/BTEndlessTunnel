@@ -28,28 +28,21 @@ public:
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(HelloWorld);
     
-    virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
-    
     void draw();
     
 private:
     
-    void _createMapWall(float x);
-    void _createWall(float x);
     void _removeNode(cocos2d::CCNode* node);
     
 private:
-    float _score;
     float _parallaxSpeedX;
     
-    BaseVehicle* _player;
-    HudLayer* _hudLayer;
-    
+    //BaseVehicle* _player;
     std::vector<int> _vectorMap;
     int _currentItemMap;
     
+    cocos2d::CCSprite* _spClouds;    
     cocos2d::CCArray* _parallaxBackground;
-    cocos2d::CCArray* _parallaxRoof;
     cocos2d::CCArray* _parallaxFloor;
     cocos2d::CCArray* _arrayObstacles;
     

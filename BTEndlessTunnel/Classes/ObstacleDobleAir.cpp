@@ -7,6 +7,7 @@
 //
 
 #include "ObstacleDobleAir.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 
@@ -39,7 +40,7 @@ ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("wall_03.png")
     collideArea = CCRect(getContentSize().width * 0.6f, getContentSize().height * 0.2f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
     vCollision.push_back(collideArea);
     
-    _spShadow = CCSprite::create("shadow.png");
+    _spShadow = CCSprite::create(SP_SHADOW);
     _spShadow->setPosition(ccp(25, -10));
     _spShadow->setOpacity(128);
     addChild(_spShadow, -1);

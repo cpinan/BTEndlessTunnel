@@ -9,9 +9,6 @@
 #ifndef __BTEndlessTunnel__HudLayer__
 #define __BTEndlessTunnel__HudLayer__
 
-
-#include "SneakyInputCocos2dx/SneakyButton.h"
-#include "SneakyInputCocos2dx/SneakyButtonSkinnedBase.h"
 #include "SneakyInputCocos2dx/SneakyJoystick.h"
 #include "SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h"
 
@@ -27,7 +24,6 @@ public:
     
 private:
     SneakyJoystick* joypad;
-    SneakyButton* jumpButton;
     
 };
 

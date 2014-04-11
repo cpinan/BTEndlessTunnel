@@ -15,44 +15,44 @@ using namespace cocos2d;
 
 PauseLayer::PauseLayer()
 {
+    CCPoint origin = ccp(WIN_SIZE.width * 0.5f, WIN_SIZE.height * 0.5f);
+    
     // BGWhite
-    CCSprite* bg_white = CCSprite::create("bg_white.png");
-    bg_white->setPosition(ccp(designResolutionSize.width * 0.5f, designResolutionSize.height * 0.5f));
-    addChild(bg_white);
+    CCSprite* bg = CCSprite::create("bg_white.png");
+    bg->setPosition(origin);
+    addChild(bg);
+    
+    float w = bg->getContentSize().width;
+    float h = bg->getContentSize().height;
+    CCPoint o = ccp(w * 0.5f, h * 0.5f);
     
     // Pause Text
     CCLabelTTF* lblPause = CCLabelTTF::create("PAUSE", "Arial", 16.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    lblPause->setAnchorPoint(ccp(0, 0));
-    lblPause->setPosition(ccp(144, designResolutionSize.height - 73));
+    lblPause->setPosition(ccp(o.x, o.y + h * 0.25f));
     lblPause->setColor(ccc3(0, 0, 0));
-    addChild(lblPause);
+    bg->addChild(lblPause);
     
     // Jump image
     CCSprite* spJump = CCSprite::create("moto_jump3.png");
-    spJump->setAnchorPoint(ccp(0, 0));
-    spJump->setPositionX(201);
-    spJump->setPositionY(designResolutionSize.height - 160);
-    addChild(spJump);
+    spJump->setPosition(o);
+    bg->addChild(spJump);
     
     // Buttons
     
     // Send score button
     CCMenuItemImage* itemResume = CCMenuItemImage::create("resume.png", "resume.png", this, menu_selector(PauseLayer::_onOptionPressed));
     itemResume->setTag(kTagPauseResumeGame);
-    itemResume->setAnchorPoint(ccp(0, 0));
-    itemResume->setPosition(ccp(161, designResolutionSize.height - 230));
+    itemResume->setPosition(ccp(o.x - w * 0.25f, o.y - h * 0.25f));
     
     // Home button
     CCMenuItemImage* itemHome = CCMenuItemImage::create("home.png", "home.png", this, menu_selector(PauseLayer::_onOptionPressed));
     itemHome->setTag(kTagPauseGoHome);
-    itemHome->setAnchorPoint(ccp(0, 0));
-    itemHome->setPosition(ccp(222, itemResume->getPositionY()));
+    itemHome->setPosition(ccp(itemResume->getPositionX() + itemResume->getContentSize().width * 1.5f, itemResume->getPositionY()));
     
     // Play again button
     CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("play_again.png", "play_again.png", this, menu_selector(PauseLayer::_onOptionPressed));
     itemPlayAgain->setTag(kTagPausePlayAgain);
-    itemPlayAgain->setAnchorPoint(ccp(0, 0));
-    itemPlayAgain->setPosition(ccp(282, itemResume->getPositionY()));
+    itemPlayAgain->setPosition(ccp(itemHome->getPositionX() + itemResume->getContentSize().width * 1.5f, itemResume->getPositionY()));
     
     // Menu
     CCMenu* menu = CCMenu::create();
@@ -63,7 +63,7 @@ PauseLayer::PauseLayer()
     menu->addChild(itemHome);
     menu->addChild(itemPlayAgain);
     
-    addChild(menu);
+    bg->addChild(menu);
     
 }
 

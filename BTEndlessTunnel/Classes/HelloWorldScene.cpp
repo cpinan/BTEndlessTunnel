@@ -8,6 +8,7 @@
 #include "ObstacleDobleAir.h"
 
 #include "VehicleFrog.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -30,7 +31,6 @@ CCScene* HelloWorld::scene()
 HelloWorld::~HelloWorld()
 {
     CC_SAFE_RELEASE(_parallaxBackground);
-    CC_SAFE_RELEASE(_parallaxRoof);
     CC_SAFE_RELEASE(_parallaxFloor);
     CC_SAFE_RELEASE(_arrayObstacles);
 }
@@ -76,22 +76,32 @@ bool HelloWorld::init()
     _parallaxSpeedX = START_WORLD_SPEED;
 
     int i = 0;
-    float x, y;
+    float x = 0, y = 0;
     
-    // HudLayer
-    _hudLayer = new HudLayer();
-    _hudLayer->autorelease();
-    addChild(_hudLayer, 99999);
+    // Cielo
+    CCSprite* spCielo;
+    for(i = 0; i < 2; i++)
+    {
+        spCielo = CCSprite::create("cielo.png");
+        spCielo->setAnchorPoint(CCPointZero);
+        spCielo->setPosition(ccp(x, WIN_SIZE.height - spCielo->getContentSize().height));
+        addChild(spCielo, -9999);
+        x += spCielo->getContentSize().width;
+    }
+    
+    _spClouds = CCSprite::create("nube.png");
+    _spClouds->setPosition(ccp(WIN_SIZE.width * 0.7f, WIN_SIZE.height - _spClouds->getContentSize().height * 2.3f));
+    addChild(_spClouds, -1000);
     
     // Parallax Background
     _parallaxBackground = CCArray::createWithCapacity(MAX_PARALLAX);
     _parallaxBackground->retain();
-    CCSprite* bgParallax = CCSprite::create("bg_parallax.png");
+    CCSprite* bgParallax = CCSprite::create("fondo.png");
     x = 0;
-    y = designResolutionSize.height - bgParallax->getContentSize().height;
+    y = WIN_SIZE.height - bgParallax->getContentSize().height * 0.9f;
     for(i = 0; i < MAX_PARALLAX; i++)
     {
-        bgParallax = CCSprite::create("bg_parallax.png");
+        bgParallax = CCSprite::create("fondo.png");
         bgParallax->setAnchorPoint(ccp(0, 0));
         bgParallax->setPosition(ccp(x, y));
         _parallaxBackground->addObject(bgParallax);
@@ -99,31 +109,16 @@ bool HelloWorld::init()
         x += bgParallax->getContentSize().width;
     }
     
-    // Parallax Roof
-    _parallaxRoof = CCArray::createWithCapacity(MAX_PARALLAX);
-    _parallaxRoof->retain();
-    CCSprite* spRoof = CCSprite::create("bg_techo_parallax.png");
-    x = 0;
-    y = designResolutionSize.height - spRoof->getContentSize().height;
-    for(i = 0; i < MAX_PARALLAX; i++)
-    {
-        spRoof = CCSprite::create("bg_techo_parallax.png");
-        spRoof->setAnchorPoint(ccp(0, 0));
-        spRoof->setPosition(ccp(x, y));
-        _parallaxRoof->addObject(spRoof);
-        addChild(spRoof, -90);
-        x += spRoof->getContentSize().width;
-    }
     
     // Parallax Floor
     _parallaxFloor = CCArray::createWithCapacity(MAX_PARALLAX);
     _parallaxFloor->retain();
-    CCSprite* spFloor = CCSprite::create("floor_parallax.png");
+    CCSprite* spFloor = CCSprite::create("pista.png");
     x = 0;
     y = 0;
     for(i = 0; i < MAX_PARALLAX; i++)
     {
-        spFloor = CCSprite::create("floor_parallax.png");
+        spFloor = CCSprite::create("pista.png");
         spFloor->setAnchorPoint(ccp(0, 0));
         spFloor->setPosition(ccp(x, y));
         _parallaxFloor->addObject(spFloor);
@@ -135,121 +130,17 @@ bool HelloWorld::init()
     _arrayObstacles = CCArray::create();
     _arrayObstacles->retain();
     
-    x = START_X_OBSTACLES;
-    y = 145;
-    // 115 Obstacle Simple Bot And ObstacleDoble terrain
-    // 145 Obstacle Simple Top and ObstacleDoble air
-
-    for(i = 0; i < MAX_OBSTACLES; i++)
-    {
-        // _createWall(x);
-        _createMapWall(x);
-        x += MIN_DISTANCE_OBSTACLES;
-    }
-
-    // 115 ObstacleDoble terrain
-    // 145 ObstacleDobleAir
-    
     // Create player
     
-    
+    /*
     _player = new VehicleFrog();
     _player->setPosition(ccp(250, 115));
     _player->autorelease();
     addChild(_player, -10);
-        
+        */
     scheduleUpdate();
     
     return true;
-}
-
-void HelloWorld::_createMapWall(float x)
-{
-    BaseObstacle* obstacle;
-    float y;
-    int z = 0;
-    
-    int type = _vectorMap[_currentItemMap];
-    
-    if(type == 0)
-    {
-        obstacle = new ObstacleSimple();
-        y = 115;
-        z = 100;
-    }
-    else if(type == 1)
-    {
-        obstacle = new ObstacleSimple();
-        y = 145;
-        z = 145;
-    }
-    else if(type == 2)
-    {
-        obstacle = new ObstacleDoble();
-        y = 115;
-        z = designResolutionSize.height * 0.5f;
-    }
-    else
-    {
-        obstacle = new ObstacleDobleAir();
-        y = 145;
-    }
-    
-    obstacle->setPosition(ccp(x, y));
-    
-    obstacle->autorelease();
-    _arrayObstacles->addObject(obstacle);
-    addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
-    
-    _currentItemMap++;
-    if(_currentItemMap > _vectorMap.size())
-        _currentItemMap = 0;
-}
-
-void HelloWorld::_createWall(float x)
-{
-    BaseObstacle* obstacle;
-    float y;
-    float random = CCRANDOM_0_1() * 7;
-    int z = 0;
-    
-    if(random <= 2)
-    {
-        float rnd = CCRANDOM_0_1() * 8;
-        obstacle = new ObstacleSimple();
-        
-        if(rnd <= 3)
-        {
-            y = 115;//115;
-            z = 100;
-        }
-        else
-        {
-            y = 145;
-            z = 145;
-        }
-        
-        
-    }
-    else if(random <= 4)
-    {
-        obstacle = new ObstacleDoble();
-        y = 115;
-        z = designResolutionSize.height * 0.5f;
-    }
-    else
-    {
-        obstacle = new ObstacleDobleAir();
-        y = 145;
-    }
-    
-    
-    obstacle->setPosition(ccp(x, y));
-    
-    obstacle->autorelease();
-    _arrayObstacles->addObject(obstacle);
-    addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
-    
 }
 
 void HelloWorld::update(float dt)
@@ -258,21 +149,11 @@ void HelloWorld::update(float dt)
     if(!gameOver)
     {
         
-        // Update Control
-        _hudLayer->updateControl(*_player, dt);
-        
         // Increment map speed
         _parallaxSpeedX += dt * 2;
         
-        _score += dt;
-        _lblScore->setString(CCString::createWithFormat("%d", (int) (_score * 100))->getCString());
-
-        
-        this->reorderChild(_player, designResolutionSize.height - (_player->getPlayerY() - _player->getContentSize().height * 0.5f));
-        
         CCObject* object;
         CCSprite* sprite;
-        BaseObstacle* obstacle;
         float spriteWidth;
         
         // Bucle for _parallaxBackground
@@ -285,21 +166,6 @@ void HelloWorld::update(float dt)
             {
                 float diff = spriteWidth + sprite->getPositionX();
                 sprite->setPositionX((_parallaxBackground->count() - 1) * spriteWidth + diff);
-            }
-            sprite->setPositionX(sprite->getPositionX() - _parallaxSpeedX * dt);
-            
-        }
-        
-        // Bucle for _parallaxRoof
-        CCARRAY_FOREACH(_parallaxRoof, object)
-        {
-            sprite = (CCSprite*) object;
-            spriteWidth = sprite->getContentSize().width;
-            
-            if(sprite->getPositionX() <= -spriteWidth)
-            {
-                float diff = spriteWidth + sprite->getPositionX();
-                sprite->setPositionX((_parallaxRoof->count() - 1) * spriteWidth + diff);
             }
             sprite->setPositionX(sprite->getPositionX() - _parallaxSpeedX * dt);
             
@@ -320,105 +186,13 @@ void HelloWorld::update(float dt)
             
         }
         
-        CCArray* _removeObstacles = CCArray::create();
-        
-        // Move obstacles, detect collisions, play sfx and remove
-        CCARRAY_FOREACH(_arrayObstacles, object)
-        {
-            obstacle = (BaseObstacle*) object;
-            float positionX = obstacle->getPositionX();
-            
-            // Show object
-            if(!obstacle->getIsObjectAlerted() && positionX - obstacle->getContentSize().width < designResolutionSize.width * 1.1f)
-            {
-                
-                obstacle->setIsObjectAlerted(true);
-                
-                CCSprite* alertSprite = CCSprite::createWithTexture(obstacle->getTexture());
-                
-                alertSprite->setPositionX(designResolutionSize.width - obstacle->getContentSize().width * 1.5f);
-                alertSprite->setPositionY(obstacle->getPositionY());
-                
-                alertSprite->runAction(CCSequence::create(CCBlink::create(0.3f * (START_WORLD_SPEED / _parallaxSpeedX), 3), CCCallFuncN::create(this, callfuncN_selector(HelloWorld::_removeNode)), NULL));
-                
-                alertSprite->setOpacity(128);
-                
-                addChild(alertSprite);
-                
-            }
-            
-            obstacle->setPositionX(positionX - _parallaxSpeedX * dt);
-            
-            if(obstacle->collision(*_player))
-            {
-                _player->dead();
-                this->reorderChild(_player, 9999);
-                
-                gameOver = true;
-                unscheduleUpdate();
-                SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
-                break;
-            }
-            else
-            {
-                if(!obstacle->getPassPlayerSFX() && obstacle->getPositionX() + obstacle->getContentSize().width * 1.0f < _player->getPositionX())
-                {
-                    obstacle->setPassPlayerSFX(true);
-                    SimpleAudioEngine::sharedEngine()->playEffect("swoosh.mp3");
-                }
-                else if(obstacle->getPositionX() < -obstacle->getContentSize().width * 0.5f)
-                {
-                    _removeObstacles->addObject(obstacle);
-                }
-            }
-            
-        }
-        
-        // Remove and Add objects
-        
-        CCARRAY_FOREACH(_removeObstacles, object)
-        {
-            obstacle = (BaseObstacle*) object;
-            _arrayObstacles->removeObject(obstacle);
-            obstacle->removeFromParent();
-
-            BaseObstacle* lastObstacle = (BaseObstacle*) _arrayObstacles->lastObject();
-            
-            float rnd = CCRANDOM_0_1() + 0.5f;
-            
-            if(rnd > 1.0f)
-                rnd = 1.0f;
-            
-            if(rnd < 0.3f)
-                rnd = 0.3f;
-            
-            rnd = 1.0f;
-            
-            /*
-            if(_score > 40)
-                rnd = 0.6f;
-            else if(_score > 20)
-                rnd = 0.8f;*/
-            
-            float x = lastObstacle->getPositionX() + MIN_DISTANCE_OBSTACLES * rnd;
-            
-            _createMapWall(x);
-            
-            // _createWall(x);
-        }
+        if(_spClouds->getPositionX() <= -_spClouds->getContentSize().width * 0.5f)
+            _spClouds->setPositionX(WIN_SIZE.width + _spClouds->getContentSize().width * 0.7f);
+        _spClouds->setPositionX(_spClouds->getPositionX() - _parallaxSpeedX * dt * 0.5f);
         
     }
 
     
-}
-
-void HelloWorld::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
-{
-    if(gameOver)
-    {
-        CCScene* scene = HelloWorld::scene();
-        CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(1.0f, scene, true));
-    }
 }
 
 void HelloWorld::draw()
@@ -459,36 +233,8 @@ void HelloWorld::draw()
                         
                     }
                 }
-
-                /*
-                if(obstacle->getTypeObstacle() == kObstacleTypeSingle)
-                {
-                    
-                    area = obstacle->boundingBox();
-                    
-                    left = area.getMinX();
-                    top = area.getMinY() + getContentSize().height * 0.0f;
-                    right = area.getMaxX();
-                    bottom = top + obstacle->getContentSize().height * 0.38f;
-                    
-                    CCPoint origin = ccp(left, top);
-                    CCPoint destination = ccp(right, bottom);
-                    ccDrawSolidRect(origin, destination, ccc4f(0.0f, 0.0f, 1.0f, 0.5f));
-                 
-                }*/
-                
             }
         }
-        
-        // Verde
-        CCPoint originPlayer1 = ccp(_player->getGroundCollision().getMinX(), _player->getGroundCollision().getMinY());
-        CCPoint destinationPlayer1 = ccp(_player->getGroundCollision().getMaxX(), _player->getGroundCollision().getMaxY());
-        ccDrawSolidRect(originPlayer1, destinationPlayer1, ccc4f(1.0f, 0.0, 0, 0.5f));
-        
-        // Rojo
-        CCPoint originPlayer = ccp(_player->getAirCollision().getMinX(), _player->getAirCollision().getMinY());
-        CCPoint destinationPlayer = ccp(_player->getAirCollision().getMaxX(), _player->getAirCollision().getMaxY());
-        ccDrawSolidRect(originPlayer, destinationPlayer, ccc4f(0.0f, 1.0f, 0, 0.5f));
         
     }
     

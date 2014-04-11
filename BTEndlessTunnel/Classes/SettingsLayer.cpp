@@ -9,6 +9,7 @@
 #include "SettingsLayer.h"
 #include "AppMacros.h"
 #include "LocalStorageManager.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 
@@ -28,32 +29,31 @@ SettingsLayer::SettingsLayer()
     if(initWithColor(ccc4(255, 255, 255, 255)))
     {
         
+        CCPoint origin = ccp(WIN_SIZE.width * 0.5f, WIN_SIZE.height * 0.5f);
+        
         CCMenu* menu = CCMenu::create();
         menu->setPosition(CCPointZero);
         menu->setAnchorPoint(ccp(0, 0));
         
         // Joypad Mode
         CCMenuItemImage* itemJoypad = CCMenuItemImage::create("joypad_mode.png", "joypad_mode.png", this, menu_selector(SettingsLayer::_onOptionPressed));
-        itemJoypad->setAnchorPoint(ccp(0, 1.0f));
         itemJoypad->setTag(kTagSettingJoypadMode);
-        itemJoypad->setPositionX(42);
-        itemJoypad->setPositionY(designResolutionSize.height - 50);
+        itemJoypad->setPositionX(origin.x - itemJoypad->getContentSize().width * 0.5f);
+        itemJoypad->setPositionY(origin.y + itemJoypad->getContentSize().height * 0.1f);
         menu->addChild(itemJoypad);
         
         // Accel Mode
         CCMenuItemImage* itemAccel = CCMenuItemImage::create("accel_mode.png", "accel_mode.png", this, menu_selector(SettingsLayer::_onOptionPressed));
-        itemAccel->setAnchorPoint(ccp(0, 1.0f));
         itemAccel->setTag(kTagSettingAccelMode);
-        itemAccel->setPositionX(226);
+        itemAccel->setPositionX(origin.x + itemAccel->getContentSize().width * 0.5f);
         itemAccel->setPositionY(itemJoypad->getPositionY());
         menu->addChild(itemAccel);
         
         // Home button
         CCMenuItemImage* itemHome = CCMenuItemImage::create("home.png", "home.png", this, menu_selector(SettingsLayer::_onOptionPressed));
-        itemHome->setAnchorPoint(ccp(0, 1.0f));
         itemHome->setTag(kTagSettingGoHome);
-        itemHome->setPositionX(220);
-        itemHome->setPositionY(designResolutionSize.height - 260);
+        itemHome->setPositionX(origin.x);
+        itemHome->setPositionY(origin.y - itemHome->getContentSize().height * 4.5f);
         menu->addChild(itemHome);
         
         // Menu

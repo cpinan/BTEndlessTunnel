@@ -30,7 +30,19 @@
 
 #include "NativeUtils.h"
 
-#define SP_FLOOR "floor_X.png"
+#define SP_PISTA "pista.png"
+#define SP_CIELO "cielo.png"
+#define SP_NUBE "nube.png"
+#define SP_BG_BACK "bg_back.png"
+#define SP_BG_MID "bg_mid.png" // MID ERROR
+#define SP_BG_FRONT "bg_front.png" // FRONT ERROR
+
+#define DT_SPEED_PISTA 1.0f
+#define DT_SPEED_OBSTACULOS (DT_SPEED_PISTA * 1.0f)
+#define DT_SPEED_NUBE (DT_SPEED_PISTA * 0.2f)
+#define DT_SPEED_BG_BACK (DT_SPEED_PISTA * 0.5f)
+#define DT_SPEED_BG_MID (DT_SPEED_PISTA * 1.0f)
+#define DT_SPEED_BG_FRONT (DT_SPEED_PISTA * 1.3f)
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -52,6 +64,7 @@ using namespace std;
  9 = x2 Obstaculo Doble en Aire
 */
 
+
 int easyMap[] = {
     0,0,1,1,0,0,1,1,0,0,1,1,2,0,1,0,1,0,1,
     2,3,3,2,3,3,2,3,2,0,0,1,0,0,0,1,0,1,0,
@@ -60,6 +73,11 @@ int easyMap[] = {
     1,1,9,1,0,1,2,9,1,2,9,0,1,2,1,0,2,1,2,
     0,0,1,0,0,1,1,0,1,1,0,0,1,4,5,0,1,3,8
 };
+
+/*
+int easyMap[] = {
+    0,1,0,1,0,1,0,1,0,1,0,1,0,1,2,3,2,3,2,3,2,3,2,3
+};*/
 
 int normalMap[] = {
     3,2,1,1,0,0,1,0,1,0,1,0,1,2,3,2,2,3,3,
@@ -121,8 +139,10 @@ GameLayer::~GameLayer()
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_PLAY_AGAIN);
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_GO_HOME);
 
-    CC_SAFE_RELEASE(_parallaxBackground);
-    CC_SAFE_RELEASE(_parallaxRoof);
+    CC_SAFE_RELEASE(_parallaxBGBack);
+    CC_SAFE_RELEASE(_parallaxBGMid);
+    CC_SAFE_RELEASE(_parallaxBGFront);
+    
     CC_SAFE_RELEASE(_parallaxFloor);
     CC_SAFE_RELEASE(_arrayObstacles);
 }
@@ -132,55 +152,91 @@ GameLayer::~GameLayer()
 void GameLayer::_createMap()
 {
     int i = 0;
-    float x, y;
+    float x = 0, y = 0;
+    CCSprite* _tmpSprite;
     
-    // Parallax Background
-    _parallaxBackground = CCArray::createWithCapacity(MAX_PARALLAX);
-    _parallaxBackground->retain();
-    CCSprite* bgParallax = CCSprite::create("bg_parallax.png");
-    x = 0;
-    y = designResolutionSize.height - bgParallax->getContentSize().height;
-    for(i = 0; i < MAX_PARALLAX; i++)
+    // Creamos el cielo
+    for(i = 0; i < 2; i++)
     {
-        bgParallax = CCSprite::create("bg_parallax.png");
-        bgParallax->setAnchorPoint(ccp(0, 0));
-        bgParallax->setPosition(ccp(x, y));
-        _parallaxBackground->addObject(bgParallax);
-        addChild(bgParallax, -100);
-        x += bgParallax->getContentSize().width;
+        _tmpSprite = CCSprite::create(SP_CIELO);
+        _tmpSprite->setAnchorPoint(CCPointZero);
+        _tmpSprite->setPosition(ccp(x, WIN_SIZE.height - _tmpSprite->getContentSize().height));
+        addChild(_tmpSprite, kDeepSky);
+        x += _tmpSprite->getContentSize().width;
     }
     
-    // Parallax Roof
-    _parallaxRoof = CCArray::createWithCapacity(MAX_PARALLAX);
-    _parallaxRoof->retain();
-    CCSprite* spRoof = CCSprite::create("bg_techo_parallax.png");
+    // Creamos la nube    
+    _spCloud = CCSprite::create(SP_NUBE);
+    _spCloud->setPosition(ccp(WIN_SIZE.width + _spCloud->getContentSize().width * 0.7f, WIN_SIZE.height - _spCloud->getContentSize().height * 2.3f));
+    addChild(_spCloud, kDeepCloud);
+    
+    // Creamos el BG que esta mas atras
     x = 0;
-    y = designResolutionSize.height - spRoof->getContentSize().height;
+    _parallaxBGBack = CCArray::createWithCapacity(MAX_PARALLAX);
+    _parallaxBGBack->retain();
     for(i = 0; i < MAX_PARALLAX; i++)
     {
-        spRoof = CCSprite::create("bg_techo_parallax.png");
-        spRoof->setAnchorPoint(ccp(0, 0));
-        spRoof->setPosition(ccp(x, y));
-        _parallaxRoof->addObject(spRoof);
-        addChild(spRoof, -90);
-        x += spRoof->getContentSize().width;
+        _tmpSprite = CCSprite::create(SP_BG_BACK);
+        _tmpSprite->setAnchorPoint(CCPointZero);
+        _tmpSprite->setPosition(ccp(x, WIN_SIZE.height - _tmpSprite->getContentSize().height * 0.9f));
+        addChild(_tmpSprite, kDeepBGBack);
+        _parallaxBGBack->addObject(_tmpSprite);
+        x += _tmpSprite->getContentSize().width;
     }
     
-    // Parallax Floor
+    // Creamos el BG que esta al medio
+    x = 0;
+    _parallaxBGMid = CCArray::createWithCapacity(MAX_PARALLAX);
+    _parallaxBGMid->retain();
+    for(i = 0; i < MAX_PARALLAX; i++)
+    {
+        _tmpSprite = CCSprite::create(SP_BG_MID);
+        _tmpSprite->setAnchorPoint(CCPointZero);
+        _tmpSprite->setPosition(ccp(x, WIN_SIZE.height - _tmpSprite->getContentSize().height * 0.9f));
+        addChild(_tmpSprite, kDeepBGMid);
+        _parallaxBGMid->addObject(_tmpSprite);
+        x += _tmpSprite->getContentSize().width;
+    }
+    
+    // Creamos el BG que esta al frente
+    x = 0;
+    _parallaxBGFront = CCArray::createWithCapacity(MAX_PARALLAX);
+    _parallaxBGFront->retain();
+    for(i = 0; i < MAX_PARALLAX; i++)
+    {
+        _tmpSprite = CCSprite::create(SP_BG_FRONT);
+        _tmpSprite->setAnchorPoint(CCPointZero);
+        _tmpSprite->setPosition(ccp(x, WIN_SIZE.height - _tmpSprite->getContentSize().height * 0.9f));
+        addChild(_tmpSprite, kDeepBGFront);
+        _parallaxBGFront->addObject(_tmpSprite);
+        x += _tmpSprite->getContentSize().width;
+    }
+    
+    // Creamos el parallax para la pista
     _parallaxFloor = CCArray::createWithCapacity(MAX_PARALLAX);
     _parallaxFloor->retain();
-    CCSprite* spFloor = CCSprite::create(SP_FLOOR);
+    
+    // Pista
+    CCSprite* spFloor = CCSprite::create(SP_PISTA);
+    _playerStartY = spFloor->getContentSize().height * 0.5f;
+    _wallHeight = spFloor->getContentSize().height * 0.25f;
+    
     x = 0;
     y = 0;
     for(i = 0; i < MAX_PARALLAX; i++)
     {
-        spFloor = CCSprite::create(SP_FLOOR);
+        spFloor = CCSprite::create(SP_PISTA);
         spFloor->setAnchorPoint(ccp(0, 0));
         spFloor->setPosition(ccp(x, y));
         _parallaxFloor->addObject(spFloor);
-        addChild(spFloor, -80);
+        addChild(spFloor, kDeepTracks);
         x += spFloor->getContentSize().width;
     }
+    
+    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.5f;
+    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.3f;
+    OBSTACLE_DOBLE_AIR_Y = _playerStartY + _wallHeight * 1.6f;
+    
 }
 
 void GameLayer::configureGame(GameLevel gameLevel)
@@ -202,7 +258,6 @@ void GameLayer::configureGame(GameLevel gameLevel)
     menu->addChild(_menuPause);
     addChild(menu, kDeepPauseLayer);
     
-    // setAccelerometerEnabled(true);
     setTouchEnabled(true);
     
      _worldSpeed = START_WORLD_SPEED;
@@ -266,7 +321,8 @@ void GameLayer::_initLayers()
 void GameLayer::_createPlayer()
 {
     _player = new VehicleFrog();
-    _player->setPositionY(100);
+    _player->setLimits(_playerStartY, _wallHeight);
+    _player->setPositionY(_playerStartY + _wallHeight * 0.25f);
     _player->setPositionX(-_player->getContentSize().width * 2.5f);
     _player->autorelease();
     addChild(_player);
@@ -276,14 +332,13 @@ void GameLayer::_initElements()
 {
     
     int i = 0;
-    float x, y;
+    float x;
         
     // Obstacles
     _arrayObstacles = CCArray::create();
     _arrayObstacles->retain();
     
     x = START_X_OBSTACLES;
-    y = 145;
     
     for(i = 0; i < MAX_OBSTACLES; i++)
     {
@@ -308,25 +363,25 @@ void GameLayer::_createObstacle(float x)
     if(type == 0)
     {
         obstacle = new ObstacleSimple();
-        y = 115;
-        z = 100;
+        y = OBSTACLE_SIMPLE_BOT_Y;
+        z = OBSTACLE_SIMPLE_BOT_Y;
     }
     else if(type == 1)
     {
         obstacle = new ObstacleSimple();
-        y = 145;
-        z = 145;
+        y = OBSTACLE_SIMPLE_TOP_Y;
+        z = OBSTACLE_SIMPLE_TOP_Y;
     }
     else if(type == 2)
     {
         obstacle = new ObstacleDoble();
-        y = 115;
-        z = designResolutionSize.height * 0.5f;
+        y = OBSTACLE_SIMPLE_BOT_Y;
+        z = WIN_SIZE.height * 0.5f;
     }
     else if(type == 3)
     {
         obstacle = new ObstacleDobleAir();
-        y = AIR_AND_TOP_Y;
+        y = OBSTACLE_DOBLE_AIR_Y;
     }
     else
     {
@@ -338,7 +393,7 @@ void GameLayer::_createObstacle(float x)
         obstacle->setPosition(ccp(x, y));
         obstacle->autorelease();
         _arrayObstacles->addObject(obstacle);
-        addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
+        addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
     }
 
     _itemMap++;
@@ -355,8 +410,8 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     if(type == 4)
     {
         // Crear 2 obstaculos simples abajo
-        y = 115;
-        z = 100;
+        y = OBSTACLE_SIMPLE_BOT_Y;
+        z = OBSTACLE_SIMPLE_BOT_Y;
         
         for(i = 0; i < 2; i++)
         {
@@ -372,7 +427,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->setPosition(ccp(x, y));
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
-            addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
+            addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
             x += _minDistanceObstaclesX * 0.5f;
         }
         
@@ -380,8 +435,8 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     else if(type == 5)
     {
         // Crear 2 obstaculos simples arriba
-        y = 145;
-        z = 145;
+        y = OBSTACLE_SIMPLE_TOP_Y;
+        z = OBSTACLE_SIMPLE_TOP_Y;
         
         for(i = 0; i < 2; i++)
         {
@@ -398,7 +453,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->setPosition(ccp(x, y));
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
-            addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
+            addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
             x += _minDistanceObstaclesX * 0.5f;
         }
         
@@ -406,8 +461,8 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     else if(type == 6)
     {
         // Crear 3 obstaculos dobles en tierra
-        y = 115;
-        z = designResolutionSize.height * 0.5f;
+        y = OBSTACLE_SIMPLE_BOT_Y;
+        z = WIN_SIZE.height * 0.5f;
         
         for(i = 0; i < 3; i++)
         {
@@ -424,7 +479,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->setPosition(ccp(x, y));
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
-            addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
+            addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
             x += _minDistanceObstaclesX * 0.3f;
         }
         
@@ -432,7 +487,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     else if(type == 7)
     {
         // Crear 3 obstaculos dobles en el aire
-        y = AIR_AND_TOP_Y;
+        y = OBSTACLE_DOBLE_AIR_Y;
         
         for(i = 0; i < 3; i++)
         {
@@ -449,15 +504,15 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->setPosition(ccp(x, y));
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
-            addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
+            addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
             x += _minDistanceObstaclesX * 0.3f;
         }
     }
     else if(type == 8)
     {
         // Crear 2 obstaculos dobles en tierra
-        y = 115;
-        z = designResolutionSize.height * 0.5f;
+        y = OBSTACLE_SIMPLE_BOT_Y;
+        z = WIN_SIZE.height * 0.5f;
         
         for(i = 0; i < 2; i++)
         {
@@ -474,7 +529,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->setPosition(ccp(x, y));
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
-            addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
+            addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
             x += _minDistanceObstaclesX * 0.3f;
         }
         
@@ -482,7 +537,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     else if(type == 9)
     {
         // Crear 2 obstaculos dobles en el aire
-        y = AIR_AND_TOP_Y;
+        y = OBSTACLE_DOBLE_AIR_Y;
         
         for(i = 0; i < 2; i++)
         {
@@ -499,7 +554,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->setPosition(ccp(x, y));
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
-            addChild(obstacle, designResolutionSize.height - z + obstacle->getContentSize().height * 0.5f);
+            addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
             x += _minDistanceObstaclesX * 0.3f;
         }
     }
@@ -638,16 +693,26 @@ void GameLayer::_gameLogic(float dt)
     _score += dt;
     _lblScore->setString(CCString::createWithFormat("%d", (int) (_score * kScoreFactor))->getCString());
     
+    int z = (WIN_SIZE.height - (_player->getPlayerY() + _player->getContentSize().height * 0.5f)) + kDeepGameElements;
     
+    /*
     this->reorderChild(_player, designResolutionSize.height - (_player->getPlayerY() - _player->getContentSize().height * 0.5f));
+    */
+    
+    this->reorderChild(_player, z);
     
     CCObject* object;
     CCSprite* sprite;
     BaseObstacle* obstacle;
     float spriteWidth;
     
-    // Bucle for _parallaxBackground
-    CCARRAY_FOREACH(_parallaxBackground, object)
+    // Move cloud
+    if(_spCloud->getPositionX() <= -_spCloud->getContentSize().width * 0.5f)
+        _spCloud->setPositionX(WIN_SIZE.width + _spCloud->getContentSize().width * 0.7f);
+    _spCloud->setPositionX(_spCloud->getPositionX() - _worldSpeed * dt * DT_SPEED_NUBE);
+    
+    // Bucle for _parallaxBGBack
+    CCARRAY_FOREACH(_parallaxBGBack, object)
     {
         sprite = (CCSprite*) object;
         spriteWidth = sprite->getContentSize().width;
@@ -655,14 +720,27 @@ void GameLayer::_gameLogic(float dt)
         if(sprite->getPositionX() <= -spriteWidth)
         {
             float diff = spriteWidth + sprite->getPositionX();
-            sprite->setPositionX((_parallaxBackground->count() - 1) * spriteWidth + diff);
+            sprite->setPositionX((_parallaxBGBack->count() - 1) * spriteWidth + diff);
         }
-        sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt);
+        sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt * DT_SPEED_BG_BACK);
+    }
+
+    // Bucle for _parallaxBGMid
+    CCARRAY_FOREACH(_parallaxBGMid, object)
+    {
+        sprite = (CCSprite*) object;
+        spriteWidth = sprite->getContentSize().width;
         
+        if(sprite->getPositionX() <= -spriteWidth)
+        {
+            float diff = spriteWidth + sprite->getPositionX();
+            sprite->setPositionX((_parallaxBGMid->count() - 1) * spriteWidth + diff);
+        }
+        sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt * DT_SPEED_BG_MID);
     }
     
-    // Bucle for _parallaxRoof
-    CCARRAY_FOREACH(_parallaxRoof, object)
+    // Bucle for _parallaxBGFront
+    CCARRAY_FOREACH(_parallaxBGFront, object)
     {
         sprite = (CCSprite*) object;
         spriteWidth = sprite->getContentSize().width;
@@ -670,10 +748,9 @@ void GameLayer::_gameLogic(float dt)
         if(sprite->getPositionX() <= -spriteWidth)
         {
             float diff = spriteWidth + sprite->getPositionX();
-            sprite->setPositionX((_parallaxRoof->count() - 1) * spriteWidth + diff);
+            sprite->setPositionX((_parallaxBGFront->count() - 1) * spriteWidth + diff);
         }
-        sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt);
-        
+        sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt * DT_SPEED_BG_FRONT);
     }
     
     // Bucle for _parallaxFloor
@@ -687,7 +764,7 @@ void GameLayer::_gameLogic(float dt)
             float diff = spriteWidth + sprite->getPositionX();
             sprite->setPositionX((_parallaxFloor->count() - 1) * spriteWidth + diff);
         }
-        sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt);
+        sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt * DT_SPEED_PISTA);
         
     }
     
@@ -723,7 +800,7 @@ void GameLayer::_gameLogic(float dt)
                     
                     // alertSprite->setOpacity(128);
                     
-                    addChild(alertSprite);
+                    addChild(alertSprite, kDeepScore);
                     
                     x -= obstacle->getDistanceObjects();
                     
@@ -732,16 +809,15 @@ void GameLayer::_gameLogic(float dt)
 
         }
         
-        // obstacle->setPositionX(positionX - _worldSpeed * dt);
-        obstacle->doUpdate(positionX, _worldSpeed * dt);
+        obstacle->doUpdate(positionX, _worldSpeed * dt * DT_SPEED_OBSTACULOS);
         
         if(obstacle->collision(*_player))
         {
             _player->dead();
-            this->reorderChild(_player, 9999);
+            this->reorderChild(_player, kDeepGameFinish);
             _gameOver = true;
             _gameState = kGameFinish;
-            break;
+            break;            
         }
         else
         {
@@ -753,7 +829,7 @@ void GameLayer::_gameLogic(float dt)
                     _obstaclesJumped++;
                 }
                 _obstaclesAvoided++;
-                SimpleAudioEngine::sharedEngine()->playEffect("swoosh.mp3");
+                SimpleAudioEngine::sharedEngine()->playEffect(SFX_SWOOSH);
             }
             
             if(obstacle->getPositionX() < -obstacle->getContentSize().width * 0.5f)
@@ -765,7 +841,6 @@ void GameLayer::_gameLogic(float dt)
     }
     
     // Remove and Add objects
-    
     CCARRAY_FOREACH(_removeObstacles, object)
     {
         BaseObstacle* lastObstacle = (BaseObstacle*) _arrayObstacles->lastObject();
@@ -953,8 +1028,58 @@ void GameLayer::draw()
 {
     CCLayer::draw();
     
-    if(DRAW_COLLISIONS)
+    if(DRAW_COLLISIONS && _gameState == kGameReady)
     {
+        
+        
+        CCObject* object;
+        
+        CCARRAY_FOREACH(_arrayObstacles, object)
+        {
+            BaseObstacle* obstacle = (BaseObstacle*) object;
+            if(obstacle != NULL)
+            {
+                int i;
+                CCRect area;
+                float left, top, right, bottom;
+                
+                std::vector<CCRect> areas = obstacle->getVCollision();
+                
+                if(areas.size() > 0)
+                {
+                    for(i = 0; i < areas.size(); i++)
+                    {
+                        area = obstacle->currentCollisionArea(areas[i]);
+                        
+                        left = area.getMinX();
+                        top = area.getMinY();
+                        right = area.getMaxX();
+                        bottom = area.getMaxY();
+                        
+                        CCPoint origin = ccp(left, top);
+                        CCPoint destination = ccp(right, bottom);
+                        ccDrawSolidRect(origin, destination, ccc4f(0.0f, 1.0f, 0.0f, 0.5f));
+                        
+                        
+                    }
+                }
+            }
+        }
+        
+        if(_player == NULL)
+            return;
+        
+        // Verde
+        CCPoint originGreenPlayer = ccp(_player->getGroundCollision().getMinX(), _player->getGroundCollision().getMinY());
+        CCPoint destionationGreenPlayer = ccp(_player->getGroundCollision().getMaxX(), _player->getGroundCollision().getMaxY());
+        ccDrawSolidRect(originGreenPlayer, destionationGreenPlayer, ccc4f(0.0f, 1.0f, 0.0f, 0.5f));
+        
+        // Rojo
+        CCPoint originRedPlayer = ccp(_player->getAirCollision().getMinX(), _player->getAirCollision().getMinY());
+        CCPoint destionationRedPlayer = ccp(_player->getAirCollision().getMaxX(), _player->getAirCollision().getMaxY());
+        ccDrawSolidRect(originRedPlayer, destionationRedPlayer, ccc4f(1.0f, 0.0f, 0.0f, 0.5f));
+        
+        
     }
     
 }

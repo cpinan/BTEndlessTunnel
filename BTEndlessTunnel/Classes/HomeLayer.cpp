@@ -9,6 +9,7 @@
 #include "HomeLayer.h"
 #include "SettingsLayer.h"
 #include "NativeUtils.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 
@@ -16,41 +17,43 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
 {
     disable = false;
     
+    CCPoint origin = ccp(WIN_SIZE.width * 0.5f, WIN_SIZE.height * 0.5f);
+    
     // Easy Mode
     CCMenuItemImage* menuItemEasy = CCMenuItemImage::create("btn_easy.png", "btn_easy.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemEasy->setTag(kTagEasyMode);
     menuItemEasy->setAnchorPoint(ccp(0, 0));
-    menuItemEasy->setPosition(ccp(90, 190));
+    menuItemEasy->setPosition(ccp(origin.x - menuItemEasy->getContentSize().width, origin.y + menuItemEasy->getContentSize().height));
     
     // Normal Mode
     CCMenuItemImage* menuItemNormal = CCMenuItemImage::create("btn_normal.png", "btn_normal.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemNormal->setTag(kTagNormalMode);
     menuItemNormal->setAnchorPoint(ccp(0, 0));
-    menuItemNormal->setPosition(ccp(menuItemEasy->getPositionX(), 120));
+    menuItemNormal->setPosition(ccp(menuItemEasy->getPositionX(), menuItemEasy->getPositionY() - menuItemEasy->getContentSize().height * 1.5f));
     
     // Hard Mode
     CCMenuItemImage* menuItemHard = CCMenuItemImage::create("btn_hard.png", "btn_hard.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemHard->setTag(kTagHardMode);
     menuItemHard->setAnchorPoint(ccp(0, 0));
-    menuItemHard->setPosition(ccp(menuItemEasy->getPositionX(), 50));
+    menuItemHard->setPosition(ccp(menuItemNormal->getPositionX(), menuItemNormal->getPositionY() - menuItemEasy->getContentSize().height * 1.5f));
     
     // Leaderboards
     CCMenuItemImage* menuItemLeaderboard = CCMenuItemImage::create("leaderboard.png", "leaderboard.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemLeaderboard->setTag(kTagLeaderboard);
     menuItemLeaderboard->setAnchorPoint(ccp(0, 0));
-    menuItemLeaderboard->setPosition(ccp(350, 165));
+    menuItemLeaderboard->setPosition(ccp(origin.x + menuItemEasy->getContentSize().width, menuItemEasy->getPositionY()));
     
     // Achievements
     CCMenuItemImage* menuItemAchievements = CCMenuItemImage::create("achievements.png", "achievements.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemAchievements->setTag(kTagAchievements);
     menuItemAchievements->setAnchorPoint(ccp(0, 0));
-    menuItemAchievements->setPosition(ccp(menuItemLeaderboard->getPositionX(), 85));
+    menuItemAchievements->setPosition(ccp(menuItemLeaderboard->getPositionX(), menuItemLeaderboard->getPositionY() - menuItemLeaderboard->getContentSize().height * 1.5f));
     
     // Settings
     CCMenuItemImage* menuItemSettings = CCMenuItemImage::create("settings.png", "settings.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemSettings->setTag(kTagSettings);
     menuItemSettings->setAnchorPoint(ccp(0, 0));
-    menuItemSettings->setPosition(ccp(menuItemLeaderboard->getPositionX(), 5));
+    menuItemSettings->setPosition(ccp(menuItemLeaderboard->getPositionX(), menuItemAchievements->getPositionY() - menuItemLeaderboard->getContentSize().height * 1.5f));
 
     // Menu
     CCMenu* menu = CCMenu::create();
@@ -99,7 +102,7 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
             break;
             
         case kTagSettings:
-            CCDirector::sharedDirector()->pushScene(CCTransitionMoveInT::create(0.5f, SettingsLayer::scene()));
+            CCDirector::sharedDirector()->pushScene(SettingsLayer::scene());
             break;
             
         case kTagLeaderboard:
@@ -120,7 +123,7 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
         disable = true;
         
         CCSequence* sequence = CCSequence::create(
-                                CCMoveBy::create(0.5f, ccp(0, -designResolutionSize.height)),
+                                CCMoveBy::create(0.5f, ccp(0, -WIN_SIZE.height)),
                                 CCCallFuncN::create(this, callfuncN_selector(HomeLayer::_finishHideLayer))                                               ,
                                                   NULL
                                                   );
