@@ -150,6 +150,12 @@ void NativeUtils::initAd()
 
 void NativeUtils::showAd()
 {
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	JniHelpers::jniCommonVoidCall(
+                                  "showAd",
+                                  CLASS_NAME);
+#endif
+    
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     PlayGameSingleton::sharedInstance().showAd();
 #endif
@@ -157,6 +163,12 @@ void NativeUtils::showAd()
 
 void NativeUtils::hideAd()
 {
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	JniHelpers::jniCommonVoidCall(
+                                  "hideAd",
+                                  CLASS_NAME);
+#endif
+    
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     PlayGameSingleton::sharedInstance().hideAd();
 #endif

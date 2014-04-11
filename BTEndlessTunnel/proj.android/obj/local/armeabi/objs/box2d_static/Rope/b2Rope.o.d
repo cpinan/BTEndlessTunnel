@@ -1,0 +1,29 @@
+obj/local/armeabi/objs/box2d_static/Rope/b2Rope.o: \
+ /Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/Rope/b2Rope.cpp \
+ /Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/../Box2D/Rope/b2Rope.h \
+ /Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/../Box2D/Common/b2Math.h \
+ /Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/../Box2D/Common/b2Settings.h \
+ /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/cassert \
+ /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/cmath \
+ /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/cfloat \
+ /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/cstddef \
+ /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/limits \
+ /Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/../Box2D/Common/b2Draw.h
+
+/Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/../Box2D/Rope/b2Rope.h:
+
+/Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/../Box2D/Common/b2Math.h:
+
+/Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/../Box2D/Common/b2Settings.h:
+
+/Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/cassert:
+
+/Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/cmath:
+
+/Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/cfloat:
+
+/Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/cstddef:
+
+/Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/limits:
+
+/Users/mac/Documents/cocos2d-x-2.1.5/external/Box2D/../Box2D/Common/b2Draw.h:
