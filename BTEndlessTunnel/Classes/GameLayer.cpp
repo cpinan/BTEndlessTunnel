@@ -249,7 +249,7 @@ void GameLayer::configureGame(GameLevel gameLevel)
     _menuPause = CCMenuItemImage::create("pause.png", "pause.png", this, menu_selector(GameLayer::pauseGame));
     _menuPause->setVisible(false);
     _menuPause->setAnchorPoint(ccp(0, 0));
-    _menuPause->setPositionX(40);
+    _menuPause->setPositionX(_menuPause->getContentSize().width * 1.25f);
     _menuPause->setPositionY(_lblScore->getPositionY());
     
     CCMenu* menu = CCMenu::create();
@@ -297,21 +297,23 @@ void GameLayer::configureGame(GameLevel gameLevel)
 void GameLayer::_initLayers()
 {
     
+    CCPoint origin = ccp(WIN_SIZE.width * 0.5, WIN_SIZE.height * 0.5f);
+    
     _lblScore = CCLabelTTF::create("0", "Arial", 20.0f, CCSizeMake(190, 24), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
-    _lblScore->setPosition(ccp(230, designResolutionSize.height - 60));
+    _lblScore->setPosition(ccp(WIN_SIZE.width * 0.75f, origin.y + WIN_SIZE.height * 0.25f));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();
     _pauseLayer->setVisible(false);
-    _pauseLayer->setPosition(ccp(0, -designResolutionSize.height));
+    _pauseLayer->setPosition(ccp(0, -WIN_SIZE.height));
     _pauseLayer->setPositionY(0);
     _pauseLayer->autorelease();
     addChild(_pauseLayer, kDeepPauseLayer);
     
     _popUpLoseLayer = new PopUpLoseLayer();
-    _popUpLoseLayer->setPosition(ccp(0, -designResolutionSize.height));
+    _popUpLoseLayer->setPosition(ccp(0, -WIN_SIZE.height));
     // _popUpLoseLayer->setPositionY(0);
     _popUpLoseLayer->autorelease();
     addChild(_popUpLoseLayer, kDeepPopUpLoseLayer);
@@ -777,12 +779,12 @@ void GameLayer::_gameLogic(float dt)
         float positionX = obstacle->getPositionX();
         
         // Show object
-        if(obstacle->getNumObjects() > 0 && !obstacle->getIsObjectAlerted() && positionX - obstacle->getContentSize().width < designResolutionSize.width * 1.3f)
+        if(obstacle->getNumObjects() > 0 && !obstacle->getIsObjectAlerted() && positionX - obstacle->getContentSize().width < WIN_SIZE.width * 1.3f)
         {
             obstacle->setIsObjectAlerted(true);
             
             int i = 0;
-            float x = designResolutionSize.width - obstacle->getContentSize().width * 1.5f;
+            float x = WIN_SIZE.width - obstacle->getContentSize().width * 1.5f;
             float blinkTime = 0.3f * (START_WORLD_SPEED / _worldSpeed);
             
             if(blinkTime > 0)
@@ -924,7 +926,7 @@ void GameLayer::update(float dt)
             _hudLayer->setVisible(false);
             _menuPause->setVisible(false);
             _popUpLoseLayer->updateScore(_gameLevel, _score * kScoreFactor);
-            _popUpLoseLayer->runAction(CCMoveBy::create(0.25f, ccp(0, designResolutionSize.height)));
+            _popUpLoseLayer->runAction(CCMoveBy::create(0.25f, ccp(0, WIN_SIZE.height)));
             NativeUtils::showAd();
             unscheduleUpdate();
         }
