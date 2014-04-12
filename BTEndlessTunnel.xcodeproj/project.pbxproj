@@ -10,7 +10,7 @@
 		041CE78518F50003006D05D9 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 041CE73618F50003006D05D9 /* libGoogleAdMobAds.a */; };
 		041CE78618F50003006D05D9 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 041CE73718F50003006D05D9 /* README.txt */; };
 		046DE98018E91A3000F7989F /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 046DE97F18E91A3000F7989F /* audio */; };
-		0746856618F84991005BA7EA /* 1280x800 in Resources */ = {isa = PBXBuildFile; fileRef = 0746856318F84991005BA7EA /* 1280x800 */; };
+		04BD50BB18F9D20000802E01 /* GooglePlayGames.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BD50BA18F9D20000802E01 /* GooglePlayGames.framework */; };
 		0746856718F84991005BA7EA /* 960x640 in Resources */ = {isa = PBXBuildFile; fileRef = 0746856418F84991005BA7EA /* 960x640 */; };
 		0746856818F84991005BA7EA /* 1024x768 in Resources */ = {isa = PBXBuildFile; fileRef = 0746856518F84991005BA7EA /* 1024x768 */; };
 		077CBB5D18F84EB5005FD669 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 077CBB5718F84EB5005FD669 /* Default-568h@2x.png */; };
@@ -294,7 +294,6 @@
 		07CBA61318DCAFC0004E8B35 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 07CBA61218DCAFC0004E8B35 /* cpVect.c */; };
 		07CBA61B18DCAFC0004E8B35 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CBA61A18DCAFC0004E8B35 /* libwebsockets.a */; };
 		07CBA62118DCAFC0004E8B35 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07CBA62018DCAFC0004E8B35 /* AppDelegate.cpp */; };
-		07CBA63018DCB033004E8B35 /* 480x320 in Resources */ = {isa = PBXBuildFile; fileRef = 07CBA62F18DCB033004E8B35 /* 480x320 */; };
 		07CD154A18E4D61400589C27 /* BaseObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07CD154818E4D61400589C27 /* BaseObstacle.cpp */; };
 		07CD154D18E4D62500589C27 /* ObstacleSimple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07CD154B18E4D62500589C27 /* ObstacleSimple.cpp */; };
 		07CD155018E4D63500589C27 /* ObstacleDoble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07CD154E18E4D63500589C27 /* ObstacleDoble.cpp */; };
@@ -304,7 +303,6 @@
 		07E877FF18F46556002E38F1 /* GooglePlayGames.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 07E877FD18F46556002E38F1 /* GooglePlayGames.bundle */; };
 		07E8780018F46556002E38F1 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 07E877FE18F46556002E38F1 /* GooglePlus.bundle */; };
 		07E8780418F46566002E38F1 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E8780118F46565002E38F1 /* GoogleOpenSource.framework */; };
-		07E8780518F46566002E38F1 /* GooglePlayGames.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E8780218F46566002E38F1 /* GooglePlayGames.framework */; };
 		07E8780618F46566002E38F1 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E8780318F46566002E38F1 /* GooglePlus.framework */; };
 		07E8780718F4657A002E38F1 /* GooglePlayGames.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E877FD18F46556002E38F1 /* GooglePlayGames.bundle */; };
 		07E8780818F4657A002E38F1 /* GooglePlus.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E877FE18F46556002E38F1 /* GooglePlus.bundle */; };
@@ -350,7 +348,7 @@
 		041CE73618F50003006D05D9 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		041CE73718F50003006D05D9 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		046DE97F18E91A3000F7989F /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = audio; path = Resources/audio; sourceTree = "<group>"; };
-		0746856318F84991005BA7EA /* 1280x800 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = 1280x800; path = Resources/1280x800; sourceTree = "<group>"; };
+		04BD50BA18F9D20000802E01 /* GooglePlayGames.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlayGames.framework; path = ios/GooglePlayGames.framework; sourceTree = "<group>"; };
 		0746856418F84991005BA7EA /* 960x640 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = 960x640; path = Resources/960x640; sourceTree = "<group>"; };
 		0746856518F84991005BA7EA /* 1024x768 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = 1024x768; path = Resources/1024x768; sourceTree = "<group>"; };
 		077CBB5718F84EB5005FD669 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -956,7 +954,6 @@
 		07CBA61D18DCAFC0004E8B35 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		07CBA61F18DCAFC0004E8B35 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		07CBA62018DCAFC0004E8B35 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		07CBA62F18DCB033004E8B35 /* 480x320 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = 480x320; path = Resources/480x320; sourceTree = "<group>"; };
 		07CBA63118DCB042004E8B35 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Classes/Constants.h; sourceTree = "<group>"; };
 		07CBA63318DCB099004E8B35 /* AppMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = Classes/AppMacros.h; sourceTree = "<group>"; };
 		07CD154818E4D61400589C27 /* BaseObstacle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseObstacle.cpp; path = Classes/BaseObstacle.cpp; sourceTree = "<group>"; };
@@ -974,7 +971,6 @@
 		07E877FD18F46556002E38F1 /* GooglePlayGames.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlayGames.bundle; path = ios/GooglePlayGames.bundle; sourceTree = "<group>"; };
 		07E877FE18F46556002E38F1 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = ios/GooglePlus.bundle; sourceTree = "<group>"; };
 		07E8780118F46565002E38F1 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = ios/GoogleOpenSource.framework; sourceTree = "<group>"; };
-		07E8780218F46566002E38F1 /* GooglePlayGames.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlayGames.framework; path = ios/GooglePlayGames.framework; sourceTree = "<group>"; };
 		07E8780318F46566002E38F1 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = ios/GooglePlus.framework; sourceTree = "<group>"; };
 		07E8780918F465A5002E38F1 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		07E8780B18F465AB002E38F1 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -1030,6 +1026,7 @@
 				07E8792518F49D4E002E38F1 /* MessageUI.framework in Frameworks */,
 				07E8792318F49D48002E38F1 /* CoreTelephony.framework in Frameworks */,
 				07CBA28C18DCAFB9004E8B35 /* CoreGraphics.framework in Frameworks */,
+				04BD50BB18F9D20000802E01 /* GooglePlayGames.framework in Frameworks */,
 				07CBA28618DCAFB9004E8B35 /* AVFoundation.framework in Frameworks */,
 				07CBA28418DCAFB9004E8B35 /* AudioToolbox.framework in Frameworks */,
 				07E8792118F49D2C002E38F1 /* AdSupport.framework in Frameworks */,
@@ -1051,7 +1048,6 @@
 				07CBA3F518DCAFBC004E8B35 /* libwebp.a in Frameworks */,
 				07CBA28818DCAFB9004E8B35 /* UIKit.framework in Frameworks */,
 				07CBA3F318DCAFBC004E8B35 /* libcurl.a in Frameworks */,
-				07E8780518F46566002E38F1 /* GooglePlayGames.framework in Frameworks */,
 				07E8780618F46566002E38F1 /* GooglePlus.framework in Frameworks */,
 				07CBA28018DCAFB8004E8B35 /* OpenGLES.framework in Frameworks */,
 				07CBA28A18DCAFB9004E8B35 /* Foundation.framework in Frameworks */,
@@ -1159,11 +1155,9 @@
 		07CBA28E18DCAFB9004E8B35 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0746856318F84991005BA7EA /* 1280x800 */,
 				0746856418F84991005BA7EA /* 960x640 */,
 				0746856518F84991005BA7EA /* 1024x768 */,
 				046DE97F18E91A3000F7989F /* audio */,
-				07CBA62F18DCB033004E8B35 /* 480x320 */,
 				07CBA29318DCAFB9004E8B35 /* Default.png */,
 				077CBB5718F84EB5005FD669 /* Default-568h@2x.png */,
 				077CBB5818F84EB5005FD669 /* Default-Landscape.png */,
@@ -1186,6 +1180,7 @@
 		07CBA2A618DCAFB9004E8B35 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				04BD50BA18F9D20000802E01 /* GooglePlayGames.framework */,
 				041CE6A118F50003006D05D9 /* GoogleAdMobSDK */,
 				07E8781D18F46656002E38F1 /* PlayGameSingleton.h */,
 				07E8781E18F46656002E38F1 /* PlayGameSingleton.mm */,
@@ -1196,7 +1191,6 @@
 				07E8782318F46656002E38F1 /* ViewSingleLeaderboard.h */,
 				07E8782418F46656002E38F1 /* ViewSingleLeaderboard.mm */,
 				07E8780118F46565002E38F1 /* GoogleOpenSource.framework */,
-				07E8780218F46566002E38F1 /* GooglePlayGames.framework */,
 				07E8780318F46566002E38F1 /* GooglePlus.framework */,
 				07E877FD18F46556002E38F1 /* GooglePlayGames.bundle */,
 				07E877FE18F46556002E38F1 /* GooglePlus.bundle */,
@@ -2451,7 +2445,7 @@
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					07CBA27918DCAFB8004E8B35 = {
-						DevelopmentTeam = 7843ENR3D7;
+						DevelopmentTeam = 78S83S4VV9;
 					};
 				};
 			};
@@ -2481,14 +2475,12 @@
 				07CBA2A018DCAFB9004E8B35 /* Icon.png in Resources */,
 				07CBA34318DCAFBA004E8B35 /* ChangeLog in Resources */,
 				07CBA29C18DCAFB9004E8B35 /* Icon-Small.png in Resources */,
-				0746856618F84991005BA7EA /* 1280x800 in Resources */,
 				041CE78618F50003006D05D9 /* README.txt in Resources */,
 				07CBA29818DCAFB9004E8B35 /* Icon-72.png in Resources */,
 				07CBA29A18DCAFB9004E8B35 /* Icon-Small-50.png in Resources */,
 				077CBB6118F84EB5005FD669 /* Default-Portrait@2x.png in Resources */,
 				0746856718F84991005BA7EA /* 960x640 in Resources */,
 				07CBA2A418DCAFB9004E8B35 /* iTunesArtwork in Resources */,
-				07CBA63018DCB033004E8B35 /* 480x320 in Resources */,
 				07CBA29E18DCAFB9004E8B35 /* Icon-Small@2x.png in Resources */,
 				07CBA29418DCAFB9004E8B35 /* Default.png in Resources */,
 				077CBB5D18F84EB5005FD669 /* Default-568h@2x.png in Resources */,
