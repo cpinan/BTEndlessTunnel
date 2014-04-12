@@ -47,6 +47,20 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     vector<string> searchPaths;
     
+    float ratio = frameSize.width / frameSize.height;
+    if(ratio <= 1.5)
+    {
+        // iPhone and iPads
+    }
+    else if(ratio <= 1.7)
+    {
+        // Intermediate devices
+    }else
+    {
+        // iPhone5 and others
+    }
+    
+    
     /*
     if(frameSize.height > smallResource.size.height)
     {
