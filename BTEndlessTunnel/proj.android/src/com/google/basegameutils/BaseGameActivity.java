@@ -61,7 +61,7 @@ public abstract class BaseGameActivity extends Cocos2dxActivity implements
 	protected int mRequestedClients = CLIENT_GAMES;
 
 	private final static String TAG = "BaseGameActivity";
-	protected boolean mDebugLog = true;
+	protected boolean mDebugLog = false;
 
 	/** Constructs a BaseGameActivity with default client (GamesClient). */
 	protected BaseGameActivity() {
