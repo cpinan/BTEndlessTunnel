@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import com.carlospinan.turborace.R;
 import com.google.android.gms.ads.AdRequest;
@@ -25,7 +25,7 @@ import com.google.basegameutils.BaseGameActivity;
 public class UtilActivity extends BaseGameActivity {
 
 	private AdView adView = null;
-	private LinearLayout adViewLayout = null;
+	private FrameLayout adViewLayout = null;
 	public static final String TAG = "UtilActivity";
 
 	/**
@@ -51,9 +51,9 @@ public class UtilActivity extends BaseGameActivity {
 
 	private void _initAdMob() {
 
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT);
+		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+				FrameLayout.LayoutParams.MATCH_PARENT,
+				FrameLayout.LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
 
 		// Create an ad.
@@ -65,7 +65,7 @@ public class UtilActivity extends BaseGameActivity {
 		// Add the AdView to the view hierarchy. The view will have no size
 		// until the ad is loaded.
 
-		adViewLayout = new LinearLayout(this);
+		adViewLayout = new FrameLayout(this);
 		adViewLayout.setLayoutParams(params);
 		adViewLayout.addView(adView);
 
