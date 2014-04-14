@@ -9,7 +9,7 @@
 #ifndef GooglePlayGameServices_PlayGameConstants_h
 #define GooglePlayGameServices_PlayGameConstants_h
 
-#define CLIENT_ID "893066960841.apps.googleusercontent.com"
+#define CLIENT_ID "893066960841-cgr2uksjuhjsihksn7khog52275o97qd.apps.googleusercontent.com"
 #define GPGApplicationID "893066960841"
 
 #define ACH_FIRST_TIME_PLAYING_THE_GAME "CgkIyb_B9_4ZEAIQFA"
@@ -24,7 +24,7 @@
 #define ACH_GET_10000_OR_MORE_IN_EASY_MODE "CgkIyb_B9_4ZEAIQDQ"
 #define ACH_GET_8000_OR_MORE_IN_NORMAL_MODE "CgkIyb_B9_4ZEAIQDg"
 #define ACH_GET_5000_OR_MORE_IN_HARD_MODE "CgkIyb_B9_4ZEAIQDw"
-#define ACH_AVERAGE_5000_OR_MORE_IN_50_GAMES_OR_MORE "CgkIyb_B9_4ZEAIQEA"
+#define ACH_AVERAGE_1000_OR_MORE_IN_50_GAMES_OR_MORE "CgkIyb_B9_4ZEAIQEA"
 #define ACH_GET_TOTAL_SCORE_100000_OR_MORE "CgkIyb_B9_4ZEAIQEQ"
 #define ACH_PLAY_IN_ACCELEROMETER_MODE "CgkIyb_B9_4ZEAIQEg"
 #define ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000 "CgkIyb_B9_4ZEAIQEw"

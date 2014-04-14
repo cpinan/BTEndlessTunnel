@@ -116,10 +116,10 @@ void PopUpLoseLayer::updateScore(int level, float score)
     
     long totalScore = (long) LocalStorageManager::getTotalScore();
     
-    if(!LocalStorageManager::isAchievementUnlocked(ACH_AVERAGE_5000_OR_MORE_IN_50_GAMES_OR_MORE) &&  LocalStorageManager::getTotalGamesPlayed() >= 50 && LocalStorageManager::getAverageScore() >= 5000)
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_AVERAGE_1000_OR_MORE_IN_50_GAMES_OR_MORE) &&  LocalStorageManager::getTotalGamesPlayed() >= 50 && LocalStorageManager::getAverageScore() >= 1000)
     {
-        Utils::unlockAchievement(ACH_AVERAGE_5000_OR_MORE_IN_50_GAMES_OR_MORE);
-        LocalStorageManager::unlockAchievement(ACH_AVERAGE_5000_OR_MORE_IN_50_GAMES_OR_MORE);
+        Utils::unlockAchievement(ACH_AVERAGE_1000_OR_MORE_IN_50_GAMES_OR_MORE);
+        LocalStorageManager::unlockAchievement(ACH_AVERAGE_1000_OR_MORE_IN_50_GAMES_OR_MORE);
     }
     
     if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_TOTAL_SCORE_100000_OR_MORE) && totalScore >= 100000)
