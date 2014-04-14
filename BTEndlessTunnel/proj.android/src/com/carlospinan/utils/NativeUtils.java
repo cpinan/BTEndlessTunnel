@@ -1,7 +1,7 @@
 package com.carlospinan.utils;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 
 import com.carlospinan.turborace.R;
 import com.google.android.gms.games.Games;
@@ -52,11 +52,13 @@ public class NativeUtils {
 	 * @param message
 	 */
 	public static void displayAlert(final String message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setMessage(message);
-		builder.setNeutralButton(
-				context.getResources().getString(android.R.string.ok), null);
-		builder.create().show();
+		Log.d(UtilActivity.TAG, message);
+		/*
+		 * AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		 * builder.setMessage(message); builder.setNeutralButton(
+		 * context.getResources().getString(android.R.string.ok), null);
+		 * builder.create().show();
+		 */
 	}
 
 	/*
@@ -188,6 +190,7 @@ public class NativeUtils {
 							.getAchievementsIntent(app.getCustomApiClient()),
 							REQUEST_ACHIEVEMENTS);
 				else {
+					gameServicesSignIn();
 					String message = context.getResources().getString(
 							R.string.fail_show_achievements);
 					displayAlert(message);
@@ -213,6 +216,7 @@ public class NativeUtils {
 									.getCustomApiClient()),
 							REQUEST_LEADERBOARDS);
 				else {
+					gameServicesSignIn();
 					String message = context.getResources().getString(
 							R.string.fail_show_leaderboards);
 					displayAlert(message);
@@ -237,6 +241,7 @@ public class NativeUtils {
 									app.getCustomApiClient(), leaderboardID),
 							REQUEST_LEADERBOARD);
 				else {
+					gameServicesSignIn();
 					String message = context.getResources().getString(
 							R.string.fail_show_leaderboard);
 					message = message.replace("{leaderboardID}", leaderboardID);

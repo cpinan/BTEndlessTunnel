@@ -12,7 +12,7 @@
 #include "cocos2d.h"
 
 #define SP_SHADOW "shadow.png"
-#define SHOW_FPS true
+#define SHOW_FPS false
 #define WIN_SIZE CCDirector::sharedDirector()->getWinSize()
 
 // Definición de ID's para Local Storage
@@ -43,7 +43,7 @@
 
 #define START_X_OBSTACLES WIN_SIZE.width * 1.9f
 #define START_WORLD_SPEED WIN_SIZE.width * 0.5f
-#define MIN_DISTANCE_OBSTACLES WIN_SIZE.width / 2.4f
+#define MIN_DISTANCE_OBSTACLES WIN_SIZE.width / 1.8f
 
 #define DRAW_COLLISIONS false
 

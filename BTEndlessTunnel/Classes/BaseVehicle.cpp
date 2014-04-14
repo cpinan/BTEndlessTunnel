@@ -25,7 +25,7 @@ BaseVehicle::BaseVehicle(std::string filename)
         jumpAnimation = NULL;
         idleAnimation = NULL;
         deadTexture = NULL;
-        speed = 12.0f;
+        speed = 11.0f;
         state = kStateIdle;
         
         playerY = getPositionY() - getContentSize().height * 0.5f;
@@ -141,12 +141,13 @@ CCRect BaseVehicle::getGroundCollision()
 
 CCRect BaseVehicle::getAirCollision()
 {
-    float x = boundingBox().getMaxX() - getContentSize().width * 0.2f;
+    float x = boundingBox().getMaxX() - getContentSize().width * 0.65f;
     float y = boundingBox().getMinY() + getContentSize().height * 0.15f;
-    float size = getContentSize().width * 0.2f;
+    float w = getContentSize().width * 0.5f;
+    float h = getContentSize().width * 0.2f;
     
     CCRect rect;
-    rect.setRect(x, y, size, size);
+    rect.setRect(x, y, w, h);
     
     return rect;
 }

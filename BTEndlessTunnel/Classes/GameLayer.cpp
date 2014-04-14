@@ -235,7 +235,7 @@ void GameLayer::_createMap()
     }
     
     OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.85f;
-    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.55f;
+    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.5f;
     OBSTACLE_DOBLE_AIR_Y = _playerStartY + _wallHeight * 1.9f;
     
 }
@@ -250,8 +250,8 @@ void GameLayer::configureGame(GameLevel gameLevel)
     _menuPause = CCMenuItemImage::create("pause.png", "pause.png", this, menu_selector(GameLayer::pauseGame));
     _menuPause->setVisible(false);
     _menuPause->setAnchorPoint(ccp(0, 0));
-    _menuPause->setPositionX(_menuPause->getContentSize().width * 1.1f);
-    _menuPause->setPositionY(_lblScore->getPositionY());
+    _menuPause->setPositionX(_menuPause->getContentSize().width * 0.7f);
+    _menuPause->setPositionY(_lblScore->getPositionY() - _menuPause->getContentSize().height * 0.15f);
     
     CCMenu* menu = CCMenu::create();
     menu->setAnchorPoint(ccp(0, 0));
@@ -271,13 +271,13 @@ void GameLayer::configureGame(GameLevel gameLevel)
     else if(_gameLevel == kGameLevelNormal)
     {
         _minDistanceObstaclesX *= 0.9f;
-        _worldSpeed *= 1.3f;
+        _worldSpeed *= 1.6f;
         _vectorMap.insert(_vectorMap.begin(), normalMap, normalMap + sizeof(normalMap) / sizeof(int));
     }
     else if(_gameLevel == kGameLevelHard)
     {
-        _minDistanceObstaclesX *= 0.8f;
-        _worldSpeed *= 1.8f;
+        _minDistanceObstaclesX *= 0.7f;
+        _worldSpeed *= 2.2f;
         _vectorMap.insert(_vectorMap.begin(), hardMap, hardMap + sizeof(hardMap) / sizeof(int));
     }
     

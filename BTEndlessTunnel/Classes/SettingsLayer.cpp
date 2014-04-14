@@ -40,14 +40,14 @@ SettingsLayer::SettingsLayer()
         // Joypad Mode
         CCMenuItemImage* itemJoypad = CCMenuItemImage::create("joypad_mode.png", "joypad_mode.png", this, menu_selector(SettingsLayer::_onOptionPressed));
         itemJoypad->setTag(kTagSettingJoypadMode);
-        itemJoypad->setPositionX(origin.x - itemJoypad->getContentSize().width * 0.5f);
+        itemJoypad->setPositionX(origin.x - itemJoypad->getContentSize().width * 0.75f);
         itemJoypad->setPositionY(origin.y + itemJoypad->getContentSize().height * 0.1f);
         menu->addChild(itemJoypad);
         
         // Accel Mode
         CCMenuItemImage* itemAccel = CCMenuItemImage::create("accel_mode.png", "accel_mode.png", this, menu_selector(SettingsLayer::_onOptionPressed));
         itemAccel->setTag(kTagSettingAccelMode);
-        itemAccel->setPositionX(origin.x + itemAccel->getContentSize().width * 0.5f);
+        itemAccel->setPositionX(origin.x + itemAccel->getContentSize().width * 0.4f);
         itemAccel->setPositionY(itemJoypad->getPositionY());
         menu->addChild(itemAccel);
         
@@ -55,7 +55,7 @@ SettingsLayer::SettingsLayer()
         CCMenuItemImage* itemHome = CCMenuItemImage::create("home.png", "home.png", this, menu_selector(SettingsLayer::_onOptionPressed));
         itemHome->setTag(kTagSettingGoHome);
         itemHome->setPositionX(origin.x);
-        itemHome->setPositionY(origin.y - itemHome->getContentSize().height * 4.5f);
+        itemHome->setPositionY(origin.y - itemHome->getContentSize().height * 3.5f);
         menu->addChild(itemHome);
         
         // Menu
