@@ -64,7 +64,6 @@ using namespace std;
  9 = x2 Obstaculo Doble en Aire
 */
 
-
 int easyMap[] = {
     0,0,1,1,0,0,1,1,0,0,1,1,2,0,1,0,1,0,1,
     2,3,3,2,3,3,2,3,2,0,0,1,0,0,0,1,0,1,0,
@@ -73,11 +72,6 @@ int easyMap[] = {
     1,1,9,1,0,1,2,9,1,2,9,0,1,2,1,0,2,1,2,
     0,0,1,0,0,1,1,0,1,1,0,0,1,4,5,0,1,3,8
 };
-
-/*
-int easyMap[] = {
-    0,1,0,1,0,1,0,1,0,1,0,1,0,1,2,3,2,3,2,3,2,3,2,3
-};*/
 
 int normalMap[] = {
     3,2,1,1,0,0,1,0,1,0,1,0,1,2,3,2,2,3,3,
@@ -167,7 +161,7 @@ void GameLayer::_createMap()
     _parallaxFloor->retain();
 
     CCSprite* spFloor = CCSprite::create(SP_PISTA);
-    _playerStartY = spFloor->getContentSize().height * 0.5f + yPos;
+    _playerStartY = spFloor->getContentSize().height * 0.55f + yPos;
     _wallHeight = spFloor->getContentSize().height * 0.25f;
     
     // Creamos el cielo
@@ -207,7 +201,7 @@ void GameLayer::_createMap()
     {
         _tmpSprite = CCSprite::create(SP_BG_MID);
         _tmpSprite->setAnchorPoint(CCPointZero);
-        _tmpSprite->setPosition(ccp(x, _playerStartY + _wallHeight * 1.2f));
+        _tmpSprite->setPosition(ccp(x, _playerStartY + _wallHeight * 1.0f));
         addChild(_tmpSprite, kDeepBGMid);
         _parallaxBGMid->addObject(_tmpSprite);
         x += _tmpSprite->getContentSize().width;
@@ -221,7 +215,7 @@ void GameLayer::_createMap()
     {
         _tmpSprite = CCSprite::create(SP_BG_FRONT);
         _tmpSprite->setAnchorPoint(CCPointZero);
-        _tmpSprite->setPosition(ccp(x, _playerStartY + _wallHeight * 1.2f));
+        _tmpSprite->setPosition(ccp(x, _playerStartY + _wallHeight * 1.0f));
         addChild(_tmpSprite, kDeepBGFront);
         _parallaxBGFront->addObject(_tmpSprite);
         x += _tmpSprite->getContentSize().width;
@@ -240,9 +234,9 @@ void GameLayer::_createMap()
         x += spFloor->getContentSize().width;
     }
     
-    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.5f;
-    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.3f;
-    OBSTACLE_DOBLE_AIR_Y = _playerStartY + _wallHeight * 1.6f;
+    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.85f;
+    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.55f;
+    OBSTACLE_DOBLE_AIR_Y = _playerStartY + _wallHeight * 1.9f;
     
 }
 
@@ -256,7 +250,7 @@ void GameLayer::configureGame(GameLevel gameLevel)
     _menuPause = CCMenuItemImage::create("pause.png", "pause.png", this, menu_selector(GameLayer::pauseGame));
     _menuPause->setVisible(false);
     _menuPause->setAnchorPoint(ccp(0, 0));
-    _menuPause->setPositionX(_menuPause->getContentSize().width * 1.25f);
+    _menuPause->setPositionX(_menuPause->getContentSize().width * 1.1f);
     _menuPause->setPositionY(_lblScore->getPositionY());
     
     CCMenu* menu = CCMenu::create();
@@ -307,10 +301,10 @@ void GameLayer::_initLayers()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCSize size = CCDirector::sharedDirector()->getVisibleSize();
     
-    _lblScore = CCLabelTTF::create("0", "Arial", 20.0f, CCSizeMake(190, 24), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
+    _lblScore = CCLabelTTF::create("0", "Arial", 40.0f, CCSizeMake(380, 50), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
-    _lblScore->setPosition(ccp(origin.x + size.width * 0.75f, origin.y + size.height * 0.9f));
+    _lblScore->setPosition(ccp(origin.x + size.width * 0.5f, origin.y + size.height * 0.85f));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();
@@ -331,8 +325,8 @@ void GameLayer::_initLayers()
 void GameLayer::_createPlayer()
 {
     _player = new VehicleFrog();
-    _player->setLimits(_playerStartY, _wallHeight);
-    _player->setPositionY(_playerStartY + _wallHeight * 0.25f);
+    _player->setLimits(_playerStartY - _wallHeight * 0.1f, _wallHeight * 0.9f);
+    _player->setPositionY(_playerStartY + _wallHeight * 0.5f);
     _player->setPositionX(-_player->getContentSize().width * 2.5f);
     _player->autorelease();
     addChild(_player);
@@ -703,11 +697,7 @@ void GameLayer::_gameLogic(float dt)
     _score += dt;
     _lblScore->setString(CCString::createWithFormat("%d", (int) (_score * kScoreFactor))->getCString());
     
-    int z = (WIN_SIZE.height - (_player->getPlayerY() + _player->getContentSize().height * 0.5f)) + kDeepGameElements;
-    
-    /*
-    this->reorderChild(_player, designResolutionSize.height - (_player->getPlayerY() - _player->getContentSize().height * 0.5f));
-    */
+    int z = (WIN_SIZE.height - (_player->getPlayerY() + _player->getContentSize().height * 0.75f)) + kDeepGameElements;
     
     this->reorderChild(_player, z);
     
@@ -827,7 +817,7 @@ void GameLayer::_gameLogic(float dt)
             this->reorderChild(_player, kDeepGameFinish);
             _gameOver = true;
             _gameState = kGameFinish;
-            break;            
+            break;
         }
         else
         {
@@ -979,7 +969,8 @@ void GameLayer::_checkAchievements()
         }
         
     }
-    else if(_gameLevel == kGameLevelHard && _obstaclesAvoided >= 100)
+    
+    if(_gameLevel == kGameLevelHard && _obstaclesAvoided >= 100)
     {
         
         if(!LocalStorageManager::isAchievementUnlocked(ACH_AVOID_100_OBSTACLES_IN_HARD_MODE))
@@ -1073,6 +1064,21 @@ void GameLayer::draw()
                         
                     }
                 }
+                
+                if(obstacle->getObstacType() == kSimpleObstacle)
+                {
+                    area = obstacle->boundingBox();
+                    top = area.getMinY() + obstacle->getContentSize().height * 0.0f;
+                    bottom = top + obstacle->getContentSize().height * 0.37f;
+                    left = area.getMinX();
+                    right = area.getMaxX();
+                    
+                    CCPoint origin = ccp(left, top);
+                    CCPoint destination = ccp(right, bottom);
+                    ccDrawSolidRect(origin, destination, ccc4f(0.0f, 0.0f, 1.0f, 0.5f));
+                    
+                }
+                
             }
         }
         

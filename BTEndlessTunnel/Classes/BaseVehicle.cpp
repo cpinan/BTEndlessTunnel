@@ -25,12 +25,12 @@ BaseVehicle::BaseVehicle(std::string filename)
         jumpAnimation = NULL;
         idleAnimation = NULL;
         deadTexture = NULL;
-        speed = 6.0f;
+        speed = 12.0f;
         state = kStateIdle;
         
         playerY = getPositionY() - getContentSize().height * 0.5f;
         
-        _jumpByAction = CCJumpBy::create(MAX_PLAYER_JUMP / 100.0f, ccp(0, 0), MAX_PLAYER_JUMP, 1);
+        _jumpByAction = CCJumpBy::create(0.6f, ccp(0, 0), MAX_PLAYER_JUMP, 1);
         _jumpByAction->setTag(kActionJumpTag);
         _jumpByAction->retain();
         
@@ -49,16 +49,17 @@ BaseVehicle::~BaseVehicle()
 
 void BaseVehicle::doJump()
 {
-    float y = getPositionY() - getPlayerY() - getContentSize().height * 0.5f;
-    if(y == 0 && state != kStateJump && getActionByTag(kActionJumpTag) == NULL)
+    int y = getPositionY() - getPlayerY() - getContentSize().height * 0.5f;
+    // CCLog("Try jump: %d in state %d", y, state);
+    if(y <= 1 && state != kStateJump/* && getActionByTag(kActionJumpTag) == NULL*/)
     {
+        state = kStateJump;
         if(jumpAnimation != NULL && idleAnimation != NULL)
         {
             stopAction(idleAnimation);
             runAction(jumpAnimation);
         }
         runAction(_jumpByAction);
-        state = kStateJump;
         SimpleAudioEngine::sharedEngine()->playEffect(SFX_JUMP);
     }
 }
@@ -71,7 +72,7 @@ void BaseVehicle::dead()
         setTexture(deadTexture);
         SimpleAudioEngine::sharedEngine()->playEffect(SFX_SMASH);
         
-        float x = getPositionX() + designResolutionSize.width * 1.5f;
+        float x = getPositionX() + WIN_SIZE.width * 1.5f;
         
         runAction(CCMoveTo::create(1.5f, ccp(x, getPositionY())));
     }

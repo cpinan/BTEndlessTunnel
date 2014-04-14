@@ -11,7 +11,7 @@
 
 #include "cocos2d.h"
 
-#define MAX_PLAYER_JUMP 60.0f
+#define MAX_PLAYER_JUMP 140.0f
 
 enum
 {
@@ -22,11 +22,11 @@ enum
 
 enum ActorStates
 {
-    kStateNothing,
-    kStateIdle,
-    kStateJump,
-    kStateRun,
-    kStateBack
+    kStateNothing = 0,
+    kStateIdle = 1,
+    kStateJump = 2,
+    kStateRun = 3,
+    kStateBack = 4
 };
 
 class BaseVehicle : public cocos2d::CCSprite

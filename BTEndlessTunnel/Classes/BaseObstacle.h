@@ -15,7 +15,8 @@
 enum ObstacleType
 {
     kNormalObstacle = 0,
-    kJumpObstacle = 1
+    kJumpObstacle = 1,
+    kSimpleObstacle = 2
 };
 
 class BaseObstacle : public cocos2d::CCSprite

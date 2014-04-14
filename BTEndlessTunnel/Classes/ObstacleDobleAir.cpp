@@ -41,7 +41,7 @@ ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("wall_03.png")
     vCollision.push_back(collideArea);
     
     _spShadow = CCSprite::create(SP_SHADOW);
-    _spShadow->setPosition(ccp(25, -10));
+    _spShadow->setPosition(ccp(_spShadow->getContentSize().width * 0.8f, -_spShadow->getContentSize().height * 1.25f));
     _spShadow->setOpacity(128);
     addChild(_spShadow, -1);
     
@@ -55,7 +55,7 @@ bool ObstacleDobleAir::collision(BaseVehicle &vehicle)
         return false;
     
     float y = vehicle.getPositionY() - vehicle.getPlayerY() - vehicle.getContentSize().height * 0.5f;
-    if(y < MAX_PLAYER_JUMP * 0.35f)
+    if(y < MAX_PLAYER_JUMP * 0.45f)
         return false;
     
     CCRect rectAir = vehicle.getAirCollision();

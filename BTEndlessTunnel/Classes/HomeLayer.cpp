@@ -43,19 +43,19 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     CCMenuItemImage* menuItemLeaderboard = CCMenuItemImage::create("leaderboard.png", "leaderboard.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemLeaderboard->setTag(kTagLeaderboard);
     menuItemLeaderboard->setAnchorPoint(ccp(0, 0));
-    menuItemLeaderboard->setPosition(ccp(origin.x + menuItemEasy->getContentSize().width, menuItemEasy->getPositionY()));
+    menuItemLeaderboard->setPosition(ccp(origin.x + menuItemEasy->getContentSize().width * 0.5f, menuItemEasy->getPositionY()));
     
     // Achievements
     CCMenuItemImage* menuItemAchievements = CCMenuItemImage::create("achievements.png", "achievements.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemAchievements->setTag(kTagAchievements);
     menuItemAchievements->setAnchorPoint(ccp(0, 0));
-    menuItemAchievements->setPosition(ccp(menuItemLeaderboard->getPositionX(), menuItemLeaderboard->getPositionY() - menuItemLeaderboard->getContentSize().height * 1.5f));
+    menuItemAchievements->setPosition(ccp(menuItemLeaderboard->getPositionX(), menuItemLeaderboard->getPositionY() - menuItemLeaderboard->getContentSize().height * 1.3f));
     
     // Settings
     CCMenuItemImage* menuItemSettings = CCMenuItemImage::create("settings.png", "settings.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemSettings->setTag(kTagSettings);
     menuItemSettings->setAnchorPoint(ccp(0, 0));
-    menuItemSettings->setPosition(ccp(menuItemLeaderboard->getPositionX(), menuItemAchievements->getPositionY() - menuItemLeaderboard->getContentSize().height * 1.5f));
+    menuItemSettings->setPosition(ccp(menuItemLeaderboard->getPositionX(), menuItemAchievements->getPositionY() - menuItemLeaderboard->getContentSize().height * 1.3f));
 
     // Menu
     CCMenu* menu = CCMenu::create();
