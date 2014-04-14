@@ -1,6 +1,6 @@
 obj/local/armeabi/objs/game_shared/__/__/Classes/HudLayer.o: \
  jni/../../Classes/HudLayer.cpp jni/../../Classes/HudLayer.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h \
+ jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/include/cocos2d.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/include/ccConfig.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/platform/CCPlatformConfig.h \
@@ -204,16 +204,13 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/HudLayer.o: \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/data_support/uthash.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponent.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButtonSkinnedBase.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/BaseVehicle.h jni/../../Classes/AppMacros.h
 
 jni/../../Classes/HudLayer.h:
 
-jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h:
+jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h:
 
 /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/include/cocos2d.h:
 
@@ -620,12 +617,6 @@ jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h:
 /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponent.h:
 
 /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h:
-
-jni/../../Classes/SneakyInputCocos2dx/SneakyButtonSkinnedBase.h:
-
-jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h:
-
-jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h:
 
 jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h:
 

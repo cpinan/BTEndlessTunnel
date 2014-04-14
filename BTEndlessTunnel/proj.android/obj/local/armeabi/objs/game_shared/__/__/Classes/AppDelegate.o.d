@@ -209,14 +209,12 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/AppDelegate.o: \
  jni/../../Classes/AppMacros.h jni/../../Classes/Constants.h \
  jni/../../Classes/HomeScene.h jni/../../Classes/GameLayer.h \
  jni/../../Classes/BaseVehicle.h jni/../../Classes/HudLayer.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButtonSkinnedBase.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/PauseLayer.h jni/../../Classes/PopUpLoseLayer.h \
- jni/../../Classes/BaseObstacle.h jni/../../Classes/HomeLayer.h
+ jni/../../Classes/BaseObstacle.h jni/../../Classes/HomeLayer.h \
+ jni/../../Classes/HelloWorldScene.h
 
 jni/../../Classes/AppDelegate.h:
 
@@ -644,12 +642,6 @@ jni/../../Classes/BaseVehicle.h:
 
 jni/../../Classes/HudLayer.h:
 
-jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h:
-
-jni/../../Classes/SneakyInputCocos2dx/SneakyButtonSkinnedBase.h:
-
-jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h:
-
 jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h:
 
 jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h:
@@ -663,3 +655,5 @@ jni/../../Classes/PopUpLoseLayer.h:
 jni/../../Classes/BaseObstacle.h:
 
 jni/../../Classes/HomeLayer.h:
+
+jni/../../Classes/HelloWorldScene.h:

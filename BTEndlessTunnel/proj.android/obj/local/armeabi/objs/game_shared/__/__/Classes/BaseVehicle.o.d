@@ -205,7 +205,7 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/BaseVehicle.o: \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h \
- jni/../../Classes/AppMacros.h
+ jni/../../Classes/AppMacros.h jni/../../Classes/Constants.h
 
 jni/../../Classes/BaseVehicle.h:
 
@@ -620,3 +620,5 @@ jni/../../Classes/BaseVehicle.h:
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h:
 
 jni/../../Classes/AppMacros.h:
+
+jni/../../Classes/Constants.h:

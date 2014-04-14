@@ -3,7 +3,7 @@ package com.carlospinan.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 
-import com.carlospinan.tunnelrace.R;
+import com.carlospinan.turborace.R;
 import com.google.android.gms.games.Games;
 
 /**

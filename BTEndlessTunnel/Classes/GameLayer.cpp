@@ -103,6 +103,8 @@ vector<int> _vectorMap;
 
 GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel) : _hudLayer(hudLayer), _gameMode(gameMode)
 {
+    srand(time(0));
+    _player = NULL;
     _obstaclesJumped = 0;
     _obstaclesAvoided = 0;
     _isJoypad = true;
@@ -151,9 +153,22 @@ GameLayer::~GameLayer()
 
 void GameLayer::_createMap()
 {
+    CCPoint visibleOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    
     int i = 0;
-    float x = 0, y = 0;
+    float x = 0;
+    float yPos = visibleOrigin.y * 0.5f;
     CCSprite* _tmpSprite;
+    
+    
+    // Creamos el parallax para la pista
+    _parallaxFloor = CCArray::createWithCapacity(MAX_PARALLAX);
+    _parallaxFloor->retain();
+
+    CCSprite* spFloor = CCSprite::create(SP_PISTA);
+    _playerStartY = spFloor->getContentSize().height * 0.5f + yPos;
+    _wallHeight = spFloor->getContentSize().height * 0.25f;
     
     // Creamos el cielo
     for(i = 0; i < 2; i++)
@@ -167,7 +182,7 @@ void GameLayer::_createMap()
     
     // Creamos la nube    
     _spCloud = CCSprite::create(SP_NUBE);
-    _spCloud->setPosition(ccp(WIN_SIZE.width + _spCloud->getContentSize().width * 0.7f, WIN_SIZE.height - _spCloud->getContentSize().height * 2.3f));
+    _spCloud->setPosition(ccp(WIN_SIZE.width + _spCloud->getContentSize().width * 0.7f, visibleSize.height - _spCloud->getContentSize().height * 2.3f + visibleOrigin.y));
     addChild(_spCloud, kDeepCloud);
     
     // Creamos el BG que esta mas atras
@@ -192,7 +207,7 @@ void GameLayer::_createMap()
     {
         _tmpSprite = CCSprite::create(SP_BG_MID);
         _tmpSprite->setAnchorPoint(CCPointZero);
-        _tmpSprite->setPosition(ccp(x, WIN_SIZE.height - _tmpSprite->getContentSize().height * 0.9f));
+        _tmpSprite->setPosition(ccp(x, _playerStartY + _wallHeight * 1.2f));
         addChild(_tmpSprite, kDeepBGMid);
         _parallaxBGMid->addObject(_tmpSprite);
         x += _tmpSprite->getContentSize().width;
@@ -206,28 +221,20 @@ void GameLayer::_createMap()
     {
         _tmpSprite = CCSprite::create(SP_BG_FRONT);
         _tmpSprite->setAnchorPoint(CCPointZero);
-        _tmpSprite->setPosition(ccp(x, WIN_SIZE.height - _tmpSprite->getContentSize().height * 0.9f));
+        _tmpSprite->setPosition(ccp(x, _playerStartY + _wallHeight * 1.2f));
         addChild(_tmpSprite, kDeepBGFront);
         _parallaxBGFront->addObject(_tmpSprite);
         x += _tmpSprite->getContentSize().width;
     }
     
-    // Creamos el parallax para la pista
-    _parallaxFloor = CCArray::createWithCapacity(MAX_PARALLAX);
-    _parallaxFloor->retain();
-    
     // Pista
-    CCSprite* spFloor = CCSprite::create(SP_PISTA);
-    _playerStartY = spFloor->getContentSize().height * 0.5f;
-    _wallHeight = spFloor->getContentSize().height * 0.25f;
-    
     x = 0;
-    y = 0;
+    
     for(i = 0; i < MAX_PARALLAX; i++)
     {
         spFloor = CCSprite::create(SP_PISTA);
         spFloor->setAnchorPoint(ccp(0, 0));
-        spFloor->setPosition(ccp(x, y));
+        spFloor->setPosition(ccp(x, yPos));
         _parallaxFloor->addObject(spFloor);
         addChild(spFloor, kDeepTracks);
         x += spFloor->getContentSize().width;
@@ -297,12 +304,13 @@ void GameLayer::configureGame(GameLevel gameLevel)
 void GameLayer::_initLayers()
 {
     
-    CCPoint origin = ccp(WIN_SIZE.width * 0.5, WIN_SIZE.height * 0.5f);
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    CCSize size = CCDirector::sharedDirector()->getVisibleSize();
     
     _lblScore = CCLabelTTF::create("0", "Arial", 20.0f, CCSizeMake(190, 24), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
-    _lblScore->setPosition(ccp(WIN_SIZE.width * 0.75f, origin.y + WIN_SIZE.height * 0.25f));
+    _lblScore->setPosition(ccp(origin.x + size.width * 0.75f, origin.y + size.height * 0.9f));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();

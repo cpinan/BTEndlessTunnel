@@ -29,7 +29,9 @@ SettingsLayer::SettingsLayer()
     if(initWithColor(ccc4(255, 255, 255, 255)))
     {
         
-        CCPoint origin = ccp(WIN_SIZE.width * 0.5f, WIN_SIZE.height * 0.5f);
+        CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+        CCPoint visibleOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
+        CCPoint origin = ccp(visibleOrigin.x + visibleSize.width * 0.5f, visibleOrigin.y + visibleSize.height* 0.5f);
         
         CCMenu* menu = CCMenu::create();
         menu->setPosition(CCPointZero);

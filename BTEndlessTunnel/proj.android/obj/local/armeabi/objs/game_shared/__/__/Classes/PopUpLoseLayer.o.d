@@ -206,9 +206,6 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/PopUpLoseLayer.o: \
  jni/../../Classes/Constants.h jni/../../Classes/HomeScene.h \
  jni/../../Classes/GameLayer.h jni/../../Classes/BaseVehicle.h \
  jni/../../Classes/AppMacros.h jni/../../Classes/HudLayer.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButtonSkinnedBase.h \
- jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
@@ -636,12 +633,6 @@ jni/../../Classes/BaseVehicle.h:
 jni/../../Classes/AppMacros.h:
 
 jni/../../Classes/HudLayer.h:
-
-jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h:
-
-jni/../../Classes/SneakyInputCocos2dx/SneakyButtonSkinnedBase.h:
-
-jni/../../Classes/SneakyInputCocos2dx/SneakyButton.h:
 
 jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h:
 

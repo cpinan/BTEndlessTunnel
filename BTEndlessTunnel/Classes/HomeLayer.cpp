@@ -17,7 +17,9 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
 {
     disable = false;
     
-    CCPoint origin = ccp(WIN_SIZE.width * 0.5f, WIN_SIZE.height * 0.5f);
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint visibleOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
+    CCPoint origin = ccp(visibleOrigin.x + visibleSize.width * 0.5f, visibleOrigin.y + visibleSize.height* 0.5f);
     
     // Easy Mode
     CCMenuItemImage* menuItemEasy = CCMenuItemImage::create("btn_easy.png", "btn_easy.png", this, menu_selector(HomeLayer::_onOptionPressed));

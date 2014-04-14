@@ -203,7 +203,8 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/SettingsLayer.o: \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/data_support/uthash.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponent.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h \
- jni/../../Classes/AppMacros.h jni/../../Classes/LocalStorageManager.h
+ jni/../../Classes/AppMacros.h jni/../../Classes/LocalStorageManager.h \
+ jni/../../Classes/Constants.h
 
 jni/../../Classes/SettingsLayer.h:
 
@@ -616,3 +617,5 @@ jni/../../Classes/SettingsLayer.h:
 jni/../../Classes/AppMacros.h:
 
 jni/../../Classes/LocalStorageManager.h:
+
+jni/../../Classes/Constants.h:
