@@ -83,9 +83,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_JUMP);
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_SWOOSH);
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_SMASH);
+    SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_BUTTON);
+    
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(BG_MUSIC_01);
+    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(BG_MUSIC_02);
+    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(BG_MUSIC_03);
     
     SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(BG_MUSIC_VOLUME);
+    SimpleAudioEngine::sharedEngine()->setEffectsVolume(1.0f);
     
 
     // turn on display FPS

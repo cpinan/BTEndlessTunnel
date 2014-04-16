@@ -9,6 +9,12 @@
 #ifndef __BTEndlessTunnel__GameLayer__
 #define __BTEndlessTunnel__GameLayer__
 
+struct MusicPlaying
+{
+    const char* bg_music;
+    const char* description;
+};
+
 enum GameMode
 {
     kGameModeHome = 0,
@@ -104,6 +110,10 @@ private:
     void _resumeAllActions();
     
     void _checkAchievements();
+    
+    void _showAudioPlaying();
+    
+    void _selectRandomMusic();
     
     
 private:

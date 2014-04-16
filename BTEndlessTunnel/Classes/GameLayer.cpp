@@ -70,7 +70,8 @@ int easyMap[] = {
     1,0,0,0,1,1,1,0,1,1,3,2,3,3,3,2,3,1,8,
     9,0,1,0,1,2,0,0,1,1,2,0,1,2,0,0,8,0,0,
     1,1,9,1,0,1,2,9,1,2,9,0,1,2,1,0,2,1,2,
-    0,0,1,0,0,1,1,0,1,1,0,0,1,4,5,0,1,3,8
+    0,0,1,0,0,1,1,0,1,1,0,0,1,4,5,0,1,3,8,
+    0,0,1,1,0,1,1,0,1,0,1,0,1,0,1,0,1,3,2
 };
 
 int normalMap[] = {
@@ -79,7 +80,8 @@ int normalMap[] = {
     3,2,0,1,0,8,9,2,0,1,4,5,4,5,8,0,1,0,2,
     3,3,2,2,3,8,0,1,0,1,4,5,4,5,2,4,5,3,2,
     0,1,1,0,0,1,1,0,0,1,2,3,2,2,3,3,8,9,6,
-    3,7,0,0,1,1,4,5,5,4,2,3,2,1,0,1,0,1,0
+    3,7,0,0,1,1,4,5,5,4,2,3,2,1,0,1,0,1,0,
+    3,2,3,2,3,3,8,3,8,3,2,9,2,0,2,1,2,0,2
 };
 
 int hardMap[] = {
@@ -88,16 +90,22 @@ int hardMap[] = {
     8,3,6,3,8,3,2,3,8,9,6,7,0,2,1,2,0,3,9,
     6,9,6,9,8,9,3,8,9,2,9,9,2,9,9,2,4,5,8,
     9,3,8,9,8,3,3,4,5,4,5,0,1,0,1,2,3,3,8,
-    6,9,6,9,6,0,1,6,9,3,6,0,9,8,9,6,8,0,9
+    6,9,6,9,6,0,1,6,9,3,6,0,9,8,9,6,8,0,9,
+    6,7,6,7,6,3,3,6,3,8,9,8,9,8,2,8,0,8,1
 };
 
 vector<int> _vectorMap;
+vector<MusicPlaying> _vectorMusics;
+MusicPlaying _music;
 
 // End Level definition
 
 GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel) : _hudLayer(hudLayer), _gameMode(gameMode)
 {
     srand(time(0));
+    
+    _selectRandomMusic();
+    
     _player = NULL;
     _obstaclesJumped = 0;
     _obstaclesAvoided = 0;
@@ -123,6 +131,54 @@ void GameLayer::onEnterTransitionDidFinish()
         configureGame(_gameLevel);
         runGame();
     }
+}
+
+void GameLayer::_selectRandomMusic()
+{
+    MusicPlaying mp;
+    
+    mp.bg_music = BG_MUSIC_01;
+    mp.description = "BT Turbo Tunnel";
+    _vectorMusics.push_back(mp);
+    
+    mp.bg_music = BG_MUSIC_02;
+    mp.description = "Music by Diego Rodriguez";
+    _vectorMusics.push_back(mp);
+    
+    mp.bg_music = BG_MUSIC_03;
+    mp.description = "Turtle Blues - PlayOnLoop.com";
+    _vectorMusics.push_back(mp);
+    
+    random_shuffle(_vectorMusics.begin(), _vectorMusics.end());
+    _music = _vectorMusics[0];
+    
+}
+
+void GameLayer::_showAudioPlaying()
+{
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+    CCLabelTTF* lblMusic = CCLabelTTF::create(CCString::createWithFormat("Playing %s", _music.description)->getCString(), "Arial", 35.0f, CCSizeMake(winSize.width * 0.85f, winSize.height * 0.15f), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
+    
+    lblMusic->setPositionX(origin.x + visibleSize.width * 0.55f);
+    lblMusic->setPositionY(origin.y - visibleSize.height * 0.25f);
+    
+    CCMoveTo* ac1 = CCMoveTo::create(1.0f, ccp(lblMusic->getPositionX(), origin.y + visibleSize.height * 0.05f));
+    
+    CCDelayTime* ac2 = CCDelayTime::create(2.1f);
+    
+    CCFadeOut* ac3 = CCFadeOut::create(0.9f);
+    
+    CCCallFuncN* ac4 = CCCallFuncN::create(this, callfuncN_selector(GameLayer::_removeNode));
+    
+    addChild(lblMusic, kDeepGameFinish);
+    
+    lblMusic->runAction(CCSequence::create(ac1, ac2, ac3, ac4, NULL));
+    
+    SimpleAudioEngine::sharedEngine()->playBackgroundMusic(_music.bg_music, true);
+    
 }
 
 GameLayer::~GameLayer()
@@ -613,7 +669,7 @@ void GameLayer::runGame()
     }
     
     unscheduleUpdate();
-    SimpleAudioEngine::sharedEngine()->playBackgroundMusic(BG_MUSIC_01, true);
+    _showAudioPlaying();
     scheduleUpdate();
 }
 
@@ -914,6 +970,9 @@ void GameLayer::update(float dt)
     {
         if(_player->numberOfRunningActions() == 0)
         {
+            
+            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            
             _checkAchievements();
             _obstaclesAvoided = 0;
             

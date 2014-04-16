@@ -10,8 +10,11 @@
 #include "SettingsLayer.h"
 #include "NativeUtils.h"
 #include "Constants.h"
+#include "SimpleAudioEngine.h"
+
 
 using namespace cocos2d;
+using namespace CocosDenshion;
 
 HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
 {
@@ -83,6 +86,8 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
 {
     if(disable)
         return;
+    
+    SimpleAudioEngine::sharedEngine()->playEffect(SFX_BUTTON);
     
     CCMenuItem* item = (CCMenuItem*) pSender;
     bool runGame = false;

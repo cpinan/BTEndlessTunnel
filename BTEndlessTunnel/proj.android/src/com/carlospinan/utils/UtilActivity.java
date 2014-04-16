@@ -1,7 +1,10 @@
 package com.carlospinan.utils;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -51,10 +54,18 @@ public class UtilActivity extends BaseGameActivity {
 
 	private void _initAdMob() {
 
+		// setContentView(R.layout.admob);
+
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+
+		LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflate.inflate(R.layout.admob, null);
+		addContentView(view, params);
+
+		adViewLayout = (FrameLayout) view.findViewById(R.id.admob);
 
 		// Create an ad.
 		adView = new AdView(this);
@@ -64,9 +75,6 @@ public class UtilActivity extends BaseGameActivity {
 
 		// Add the AdView to the view hierarchy. The view will have no size
 		// until the ad is loaded.
-
-		adViewLayout = new FrameLayout(this);
-		adViewLayout.setLayoutParams(params);
 		adViewLayout.addView(adView);
 
 		if (ConfigUtils.AD_MOB_DEBUG) {
@@ -80,8 +88,9 @@ public class UtilActivity extends BaseGameActivity {
 			// Start loading the ad in the background.
 			adView.loadAd(adRequest);
 		}
-
-		this.addContentView(adViewLayout, params);
+		adViewLayout.setBackgroundColor(Color.BLACK);
+		adViewLayout.setBackgroundColor(0);
+		showAd();
 	}
 
 	@Override
