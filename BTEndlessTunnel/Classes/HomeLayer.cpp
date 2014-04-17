@@ -11,7 +11,7 @@
 #include "NativeUtils.h"
 #include "Constants.h"
 #include "SimpleAudioEngine.h"
-
+#include "PlayGameConstants.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -19,7 +19,7 @@ using namespace CocosDenshion;
 HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
 {
     disable = false;
-    
+        
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint visibleOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCPoint origin = ccp(visibleOrigin.x + visibleSize.width * 0.5f, visibleOrigin.y + visibleSize.height* 0.5f);

@@ -121,3 +121,14 @@ float LocalStorageManager::getScoreInLevel(int level)
     CCString* key = CCString::createWithFormat(USER_SCORE_IN_LEVEL, level);
     return defaults()->getFloatForKey(key->getCString(), 0);
 }
+
+void LocalStorageManager::updateObstaclesJumped(int num)
+{
+    defaults()->setIntegerForKey(USER_OBSTACLES_JUMPED, num);
+    defaults()->flush();
+}
+
+int LocalStorageManager::getObstaclesJumped()
+{
+    return defaults()->getIntegerForKey(USER_OBSTACLES_JUMPED, 0);
+}

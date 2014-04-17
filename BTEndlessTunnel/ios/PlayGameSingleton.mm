@@ -7,14 +7,8 @@
 //
 
 #import "PlayGameSingleton.h"
-#import <GooglePlayGames/GooglePlayGames.h>
-#import <GooglePlus/GooglePlus.h>
-
-#include "ViewSingleLeaderboard.h"
-#include "ViewLeaderboardPicker.h"
-#include "ViewAchievements.h"
 #include "AdMobBannerView.h"
-//#include "IADViewController.h"
+#import "GCHelper.h"
 
 #import <UIKit/UIKit.h>
 
@@ -23,11 +17,7 @@
 using namespace cocos2d;
 
 #pragma mark - Declare Views
-ViewSingleLeaderboard* viewSingleLeaderboard = 0;
-ViewLeaderboardPicker* viewLeaderboardPicker = 0;
-ViewAchievements* viewAchiemevents = 0;
 AdMobBannerView* adMobBannerView = 0;
-//IADViewController* iadView = 0;
 
 #pragma mark - Destructor and Constructor
 PlayGameSingleton::~PlayGameSingleton()
@@ -53,32 +43,17 @@ void PlayGameSingleton::showSingleLeaderboard(const char* leaderBoardID)
     if(!isSignedIn())
         authenticate();
     
-    if(!viewSingleLeaderboard)
-        viewSingleLeaderboard = [[ViewSingleLeaderboard alloc] init];
-    
-    
     UIWindow *window =  [[UIApplication sharedApplication] keyWindow];
     
     if(!rootController)
         rootController = window.rootViewController;
     
-    [window addSubview:viewSingleLeaderboard.view];
-    
-    [viewSingleLeaderboard showLeaderboard:[NSString stringWithUTF8String:leaderBoardID]];
-    
+    NSString* name = [NSString stringWithUTF8String:leaderBoardID];
+    [[GCHelper sharedInstance] showLeaderboard:name];
 }
 
 void PlayGameSingleton::finishSingleLeaderboard()
 {
-    UIWindow *window =  [[UIApplication sharedApplication] keyWindow];
-    if (!rootController)
-        rootController = window.rootViewController;
-    
-    [viewSingleLeaderboard.view removeFromSuperview];
-    [viewSingleLeaderboard release];
-    viewSingleLeaderboard = 0;
-    
-    [window setRootViewController:(UIViewController *)rootController];
 }
 
 #pragma mark - Leaderboards Picker
@@ -91,30 +66,11 @@ void PlayGameSingleton::showLeaderboards()
         return;
     }
     
-    if(!viewLeaderboardPicker)
-        viewLeaderboardPicker = [[ViewLeaderboardPicker alloc] init];
-    
-    
-    UIWindow *window =  [[UIApplication sharedApplication] keyWindow];
-    
-    if(!rootController)
-        rootController = window.rootViewController;
-    
-    [window addSubview:viewLeaderboardPicker.view];
-    [viewLeaderboardPicker showLeaderboards];
+    [[GCHelper sharedInstance] showLeaderboard:nil];
 }
 
 void PlayGameSingleton::finishLeaderboards()
 {
-    UIWindow *window =  [[UIApplication sharedApplication] keyWindow];
-    
-    if(!rootController)
-        rootController = window.rootViewController;
-    
-    [viewLeaderboardPicker.view removeFromSuperview];
-    [viewLeaderboardPicker release];
-    viewLeaderboardPicker = 0;
-    [window setRootViewController:(UIViewController *)rootController];
 }
 
 #pragma mark - Submit score
@@ -123,25 +79,9 @@ void PlayGameSingleton::submitScore(long score, const char *leaderBoardID)
     
     if(!isSignedIn())
         return;
-    
-    GPGScore* myScore = [[GPGScore alloc] initWithLeaderboardId:[NSString stringWithUTF8String:leaderBoardID]];
-    myScore.value = score;
-    
-    [myScore submitScoreWithCompletionHandler:^(GPGScoreReport *report, NSError *error) {
-        if(error)
-        {
-            // Handle the error
-        }
-        else
-        {
-            // Analyze the report, if you'd like
-            if(![report isHighScoreForLocalPlayerAllTime])
-            {
-                NSLog(@"%lld is a good score, but it's not enough to beat your all-time score of %@!",
-                      report.reportedScoreValue, report.highScoreForLocalPlayerAllTime.formattedScore);
-            }
-        }
-    }];
+
+    NSString* name = [NSString stringWithUTF8String:leaderBoardID];
+    [[GCHelper sharedInstance] submitScore: score forCategory:name];
     
     CCLog("Score submitted: %lu", score);
 
@@ -157,135 +97,71 @@ void PlayGameSingleton::showAchievements()
         return;
     }
     
-    if(!viewAchiemevents)
-        viewAchiemevents = [[ViewAchievements alloc] init];
-    
-    
-    UIWindow *window =  [[UIApplication sharedApplication] keyWindow];
-    
-    if(!rootController)
-        rootController = window.rootViewController;
-    
-    // [((UIViewController *) rootController).view addSubview: viewAchiemevents.view];
-    [window addSubview:viewAchiemevents.view];
-    
-    [viewAchiemevents showAchievements];
+    [[GCHelper sharedInstance] showAchievements];
 }
 
 void PlayGameSingleton::finishAchievements()
 {
-    UIWindow *window =  [[UIApplication sharedApplication] keyWindow];
-    
-    if(!rootController)
-        rootController = window.rootViewController;
-    
-    [viewAchiemevents.view removeFromSuperview];
-    [viewAchiemevents release];
-    viewAchiemevents = 0;
-    
-    [window setRootViewController:(UIViewController *)rootController];
 }
 
 #pragma mark - Manage achievements
 void PlayGameSingleton::revealAchievement(const char *achievementID)
 {
-    
     if(!isSignedIn())
         return;
-    
-    GPGAchievement* revealMe = [GPGAchievement achievementWithId:[NSString stringWithUTF8String:achievementID]];
-    
-    [revealMe revealAchievementWithCompletionHandler:^(GPGAchievementState state, NSError *error) {
-        if(error)
-        {
-            // Handle the error
-        }
-        else
-        {
-            // Achievement revealed!
-        }
-    }];
 }
 
 void PlayGameSingleton::unlockAchievement(const char *achievementID)
 {
-    
     if(!isSignedIn())
         return;
     
-    // [GPGManager sharedInstance].achievementUnlockedToastPlacement = kGPGToastPlacementTop;
-    // Specify our offset to be 20 points
-    // [GPGManager sharedInstance].achievementUnlockedOffset = 20;
+    if(strlen(achievementID) == 0)
+        return;
     
-    GPGAchievement* unlockMe = [GPGAchievement achievementWithId:[NSString stringWithUTF8String:achievementID]];
-    // unlockMe.showsCompletionNotification = NO;
+    NSString* name = [NSString stringWithUTF8String:achievementID];
+    [[GCHelper sharedInstance] reportAchievementIdentifier:name percentComplete:100];
     
-    [unlockMe unlockAchievementWithCompletionHandler:^(BOOL newlyUnlocked, NSError *error) {
-        if(error)
-        {
-            // Handle the error
-            CCLog("Achievement Error");
-        }
-        else if (!newlyUnlocked)
-        {
-            // Achievement was already unlocked
-            CCLog("Achievement Already Unlocked");
-        }
-        else
-        {
-            // Achievement unlocked!
-            CCLog("Achievement Unlocked");
-        }
-        CCLog("Achievement %s", achievementID);
-    }];
+}
+
+void PlayGameSingleton::incrementPercentageAchievement(float percentage, const char *achievementID)
+{
+    if(!isSignedIn())
+        return;
+    
+    if(strlen(achievementID) == 0)
+        return;
+    
+    NSString* name = [NSString stringWithUTF8String:achievementID];
+    [[GCHelper sharedInstance] reportAchievementIdentifier:name percentComplete:percentage];
 }
 
 void PlayGameSingleton::incrementAchievement(int numSteps, const char *achievementID)
 {
-    
     if(!isSignedIn())
         return;
-    
-    GPGAchievement* incrementMe = [GPGAchievement achievementWithId:[NSString stringWithUTF8String:achievementID]];
-    
-    [incrementMe incrementAchievementNumSteps:numSteps completionHandler:^(BOOL newlyUnlocked, int currentSteps, NSError *error) {
-        if(error)
-        {
-            // Handle the error
-        }
-        else if (newlyUnlocked)
-        {
-            // Incremental achievement unlocked
-        }
-        else
-        {
-            // User has completed the steps total: currentSteps
-        }
-    }];
 }
 
 #pragma mark - Login configuration
 void PlayGameSingleton::trySilentAuthentication()
 {
-    [[GPPSignIn sharedInstance] trySilentAuthentication];
 }
 
 void PlayGameSingleton::authenticate()
 {
-    [[GPPSignIn sharedInstance] authenticate];
+    [[GCHelper sharedInstance] authenticateLocalUser];
 }
 
 bool PlayGameSingleton::isSignedIn()
 {
-    bool signedIn = [GPGManager sharedInstance].isSignedIn;
-    return signedIn;
+    return true;
 }
 
 void PlayGameSingleton::signOut()
 {
     if(isSignedIn())
     {
-        [[GPGManager sharedInstance] signOut];
+
     }
 }
 

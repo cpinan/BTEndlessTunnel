@@ -6,12 +6,9 @@
 //  Copyright __MyCompanyName__ 2014. All rights reserved.
 //
 
-#import <GooglePlus/GooglePlus.h>
-#import <GooglePlayGames/GooglePlayGames.h>
-
 @class RootViewController;
 
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate, GPPSignInDelegate> {
+@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate> {
     UIWindow *window;
     RootViewController    *viewController;
 }

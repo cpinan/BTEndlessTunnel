@@ -15,7 +15,7 @@
 #import "PlayGameSingleton.h"
 
 #import "RootViewController.h"
-#import <GoogleOpenSource/GoogleOpenSource.h>
+#import "GCHelper.h"
 
 @implementation AppController
 
@@ -50,18 +50,7 @@ static AppDelegate s_sharedApplication;
     
     //
     
-    GPPSignIn* signIn = [GPPSignIn sharedInstance];
-    signIn.clientID = [NSString stringWithUTF8String:CLIENT_ID];
-    signIn.scopes = [NSArray arrayWithObjects:
-                     @"https://www.googleapis.com/auth/games",
-                     @"https://www.googleapis.com/auth/appstate",
-                     nil];
-    signIn.language = [[NSLocale preferredLanguages] objectAtIndex:0];
-    signIn.delegate = self;
-    signIn.shouldFetchGoogleUserID = YES;
-    
-    [GPGManager sharedInstance].achievementUnlockedToastPlacement = kGPGToastPlacementTop;
-    
+    [[GCHelper sharedInstance] authenticateLocalUser];
     PlayGameSingleton::sharedInstance().trySilentAuthentication();
 
     // Add the view controller's view to the window and display.
@@ -99,23 +88,6 @@ static AppDelegate s_sharedApplication;
     PlayGameSingleton::sharedInstance().initAd();
     
     cocos2d::CCApplication::sharedApplication()->run();
-    
-    
-    /*
-    if(!PlayGameSingleton::sharedInstance().isSignedIn())
-    {
-        UIAlertView *alert = [[UIAlertView alloc] init];
-        
-        [alert setTitle:@"Confirm"];
-        [alert setMessage:@"Do you want sign in on Google Play Games?"];
-        [alert setDelegate:self];
-        [alert addButtonWithTitle:@"Yes"];
-        [alert addButtonWithTitle:@"No"];
-        [alert show];
-        [alert release];
-        
-    }
-    */
     
     return YES;
 }
@@ -172,52 +144,6 @@ static AppDelegate s_sharedApplication;
 
 - (void)dealloc {
     [super dealloc];
-}
-
-#pragma mark - Google Play Game Services
-
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
-}
-
-- (void)finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error
-{
-    NSLog(@"Finished with auth.");
-    //if (error == nil && auth) {
-    //NSLog(@"Success signing in to Google! Auth object is %@", auth);
-    
-    if (error.code == 0 && auth) {
-        NSLog(@"Success signing in to Google! Auth object is %@", auth);
-        
-        // Tell your GPGManager that you're ready to go.
-        [self startGoogleGamesSignIn];
-        
-    } else {
-        NSLog(@"Failed to log into Google\n\tError=%@\n\tAuthObj=%@",error,auth);
-    }
-}
-
--(void)startGoogleGamesSignIn
-{
-    // The GPPSignIn object has an auth token now. Pass it to the GPGManager.
-    [[GPGManager sharedInstance] signIn:[GPPSignIn sharedInstance]
-                     reauthorizeHandler:^(BOOL requiresKeychainWipe, NSError *error) {
-                         // If you hit this, auth has failed and you need to authenticate.
-                         // Most likely you can refresh behind the scenes
-                         if (requiresKeychainWipe) {
-                             [[GPPSignIn sharedInstance] signOut];
-                         }
-                         [[GPPSignIn sharedInstance] authenticate];
-                     }];
-}
-
-- (void)playServicesAuthenticate
-{
-    NSLog(@"playServicesAuthenticate");
-    PlayGameSingleton::sharedInstance().authenticate();
 }
 
 @end

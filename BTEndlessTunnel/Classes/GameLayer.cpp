@@ -1048,7 +1048,7 @@ void GameLayer::_checkAchievements()
         LocalStorageManager::unlockAchievement(ACH_MORE_THAN_3000);
     }
     
-    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_10000_OR_MORE_IN_EASY_MODE) && _gameLevel == kGameLevelEasy && longScore >= 500)
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_10000_OR_MORE_IN_EASY_MODE) && _gameLevel == kGameLevelEasy && longScore >= 10000)
     {
         Utils::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
         LocalStorageManager::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
@@ -1074,8 +1074,33 @@ void GameLayer::_checkAchievements()
     
     if(_obstaclesJumped > 0)
     {
-        Utils::incrementAchievement(ACH_JUMP_50_OBSTACLES, _obstaclesJumped);
-        Utils::incrementAchievement(ACH_JUMP_1000_OBSTACLES, _obstaclesJumped);
+        
+        int totalObstaclesJumped = LocalStorageManager::getObstaclesJumped() + _obstaclesJumped;
+        
+        // Jump 50 Obstacles
+        if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        {
+            if(totalObstaclesJumped >= 50)
+                Utils::unlockAchievement(ACH_JUMP_50_OBSTACLES);
+        }
+        else
+        {
+            Utils::incrementAchievement(ACH_JUMP_50_OBSTACLES, _obstaclesJumped);
+        }
+        
+        // Jump 1000 Obstacles
+        if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        {
+            if(totalObstaclesJumped >= 1000)
+                Utils::unlockAchievement(ACH_JUMP_1000_OBSTACLES);
+        }
+        else
+        {
+            Utils::incrementAchievement(ACH_JUMP_1000_OBSTACLES, _obstaclesJumped);
+        }
+        
+        LocalStorageManager::updateObstaclesJumped(totalObstaclesJumped);
+        
     }
     
     _obstaclesJumped = 0;

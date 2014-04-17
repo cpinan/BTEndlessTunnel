@@ -51,6 +51,7 @@ public:
     void revealAchievement(const char* achievementID);
     void unlockAchievement(const char* achievementID);
     void incrementAchievement(int numSteps, const char* achievementID);
+    void incrementPercentageAchievement(float percentage, const char* achievementID);
     
     void authenticate();
     void signOut();

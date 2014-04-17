@@ -103,14 +103,46 @@ void PopUpLoseLayer::updateScore(int level, float score)
     _score = longScore;
     // Check Achievements
     
-    if(LocalStorageManager::getTotalGamesPlayed() < 10)
-        Utils::incrementAchievement(ACH_PLAY_10_TIMES, 1);
+    int totalGamesPlayed = LocalStorageManager::getTotalGamesPlayed();
     
-    if(LocalStorageManager::getTotalGamesPlayed() < 100)
-        Utils::incrementAchievement(ACH_PLAY_100_TIMES, 1);
+    // 10 Games played
+    if(totalGamesPlayed <= 10)
+    {
+        if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        {
+            Utils::incrementPercentageAchievement(ACH_PLAY_10_TIMES, 100.0f / (10.0f / totalGamesPlayed));
+        }
+        else
+        {
+            Utils::incrementAchievement(ACH_PLAY_10_TIMES, 1);
+        }
+    }
     
-    if(LocalStorageManager::getTotalGamesPlayed() < 1000)
-        Utils::incrementAchievement(ACH_PLAY_1000_TIMES, 1);
+    // 100 Games played
+    if(LocalStorageManager::getTotalGamesPlayed() <= 100)
+    {
+        if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        {
+            Utils::incrementPercentageAchievement(ACH_PLAY_100_TIMES, 100.0f / (100.0f / totalGamesPlayed));
+        }
+        else
+        {
+            Utils::incrementAchievement(ACH_PLAY_100_TIMES, 1);
+        }
+    }
+    
+    // 1000 Games `layed
+    if(LocalStorageManager::getTotalGamesPlayed() <= 1000)
+    {
+        if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        {
+            Utils::incrementPercentageAchievement(ACH_PLAY_1000_TIMES, 100.0f / (1000.0f / totalGamesPlayed));
+        }
+        else
+        {
+            Utils::incrementAchievement(ACH_PLAY_1000_TIMES, 1);
+        }
+    }
     
     LocalStorageManager::setScore(score);
     

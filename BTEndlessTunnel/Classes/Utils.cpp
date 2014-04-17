@@ -22,6 +22,11 @@ void Utils::incrementAchievement(const char *achievementID, int numSteps)
     NativeUtils::incrementAchievement(achievementID, numSteps);
 }
 
+void Utils::incrementPercentageAchievement(const char *achievementID, float percentage)
+{
+    NativeUtils::incrementPercentageAchievement(achievementID, percentage);
+}
+
 void Utils::submitScore(const char* leaderboardID, float score)
 {
     NativeUtils::submitScore(leaderboardID, (long) score);

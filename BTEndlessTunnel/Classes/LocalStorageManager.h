@@ -48,6 +48,9 @@ public:
     static bool isAchievementUnlocked(const char* achievementID);
     static void unlockAchievement(const char* achievementID);
     
+    static void updateObstaclesJumped(int num);
+    static int getObstaclesJumped();
+    
 };
 
 #endif /* defined(__BTEndlessTunnel__LocalStorageManager__) */

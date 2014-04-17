@@ -99,6 +99,13 @@ void NativeUtils::incrementAchievement(const char* achievementID, int numSteps)
 #endif
 }
 
+void NativeUtils::incrementPercentageAchievement(const char *achievementID, float percentage)
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    PlayGameSingleton::sharedInstance().incrementPercentageAchievement(percentage, achievementID);
+#endif
+}
+
 #pragma mark - Show achievements, leaderboards and single leaderboard.
 void NativeUtils::showAchievements()
 {
