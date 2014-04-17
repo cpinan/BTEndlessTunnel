@@ -15,8 +15,6 @@
 #include "HomeScene.h"
 #include "GameLayer.h"
 
-#include "HelloWorldScene.h"
-
 #include <vector>
 #include <string>
 
@@ -47,17 +45,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     vector<string> searchPaths;
     
-    float ratio = frameSize.width / frameSize.height;
-    if(ratio <= 1.5)
+    if(frameSize.width < designResolutionSize.width)
     {
-        // iPhone and iPads
-    }
-    else if(ratio <= 1.7)
-    {
-        // Intermediate devices
-    }else
-    {
-        // iPhone5 and others
+        
     }
     
     
@@ -101,7 +91,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
     CCScene *pScene = HomeScene::scene(kGameModeHome);
-    // CCScene *pScene = HelloWorld::scene();
     // run
     pDirector->runWithScene(pScene);
 

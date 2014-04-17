@@ -55,6 +55,6 @@
 #define MY_BANNER_UNIT_ID "ca-app-pub-3855348217239115/3776780188"
 
 // Music and Sound
-#define BG_MUSIC_VOLUME 0.4f
+#define BG_MUSIC_VOLUME 0.2f
 
 #endif
