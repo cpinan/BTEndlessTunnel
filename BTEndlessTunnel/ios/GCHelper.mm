@@ -7,6 +7,7 @@
 //
 
 #import "GCHelper.h"
+#import "Globals.h"
 
 @implementation GCHelper
 
@@ -53,9 +54,11 @@ static GCHelper *sharedHelper = nil;
     
     if ([GKLocalPlayer localPlayer].isAuthenticated && !userAuthenticated) {
         //NSLog(@"Authentication changed: player authenticated.");
+        user_data_id = [[GKLocalPlayer localPlayer].playerID UTF8String];
         userAuthenticated = TRUE;
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {
        // NSLog(@"Authentication changed: player not authenticated");
+        user_data_id = "";
         userAuthenticated = FALSE;
     }
     
@@ -77,6 +80,8 @@ static GCHelper *sharedHelper = nil;
         
         localPlayer.authenticateHandler = ^(UIViewController *viewController,NSError *error) {
             if (localPlayer.authenticated) {
+                //localPlayer.playerID
+                user_data_id = [localPlayer.playerID UTF8String];
                // NSLog(@"Already authenticated");
                 // [self authenticatedPlayer: localPlayer];
                 //already authenticated

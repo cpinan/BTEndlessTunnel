@@ -28,30 +28,9 @@
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-    {
-        // Yes, do something
-        /*
-         [NSThread detachNewThreadSelector:@selector(playServicesAuthenticate) toTarget:self withObject:nil];
-        */
-        PlayGameSingleton::sharedInstance().authenticate();
-    }
-    else if (buttonIndex == 1)
-    {
-        // No
-    }
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     // Override point for customization after application launch.
-    
-    //
-    
-    [[GCHelper sharedInstance] authenticateLocalUser];
-    PlayGameSingleton::sharedInstance().trySilentAuthentication();
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
@@ -86,7 +65,6 @@ static AppDelegate s_sharedApplication;
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
 
     PlayGameSingleton::sharedInstance().initAd();
-    
     cocos2d::CCApplication::sharedApplication()->run();
     
     return YES;

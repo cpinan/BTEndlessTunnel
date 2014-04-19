@@ -8,6 +8,7 @@
 
 #include "LocalStorageManager.h"
 #include "Constants.h"
+#include "Globals.h"
 
 using namespace cocos2d;
 
@@ -45,29 +46,29 @@ void LocalStorageManager::setPlayer(StorageValues value)
 
 float LocalStorageManager::getMaxScore()
 {
-    return defaults()->getFloatForKey(USER_MAX_SCORE, 0);
+    return defaults()->getFloatForKey(CCString::createWithFormat("%s%s", USER_MAX_SCORE, user_data_id.c_str())->getCString(), 0);
 }
 
 void LocalStorageManager::setMaxScore(float score)
 {
-    defaults()->setFloatForKey(USER_MAX_SCORE, score);
+    defaults()->setFloatForKey(CCString::createWithFormat("%s%s", USER_MAX_SCORE, user_data_id.c_str())->getCString(), score);
     defaults()->flush();
 }
 
 void LocalStorageManager::incrementTotalGamesPlayed()
 {
-    defaults()->setIntegerForKey(USER_TOTAL_GAMES_PLAYED, getTotalGamesPlayed() + 1);
+    defaults()->setIntegerForKey(CCString::createWithFormat("%s%s", USER_TOTAL_GAMES_PLAYED, user_data_id.c_str())->getCString(), getTotalGamesPlayed() + 1);
     defaults()->flush();
 }
 
 int LocalStorageManager::getTotalGamesPlayed()
 {
-    return defaults()->getIntegerForKey(USER_TOTAL_GAMES_PLAYED, 0);
+    return defaults()->getIntegerForKey(CCString::createWithFormat("%s%s", USER_TOTAL_GAMES_PLAYED, user_data_id.c_str())->getCString(), 0);
 }
 
 void LocalStorageManager::setTotalScore(float score)
 {
-    defaults()->setFloatForKey(USER_TOTAL_SCORE, getTotalScore() + score);
+    defaults()->setFloatForKey(CCString::createWithFormat("%s%s", USER_TOTAL_SCORE, user_data_id.c_str())->getCString(), getTotalScore() + score);
     defaults()->flush();
     
     incrementTotalGamesPlayed();    
@@ -75,7 +76,7 @@ void LocalStorageManager::setTotalScore(float score)
 
 float LocalStorageManager::getTotalScore()
 {
-    return defaults()->getFloatForKey(USER_TOTAL_SCORE, 0);
+    return defaults()->getFloatForKey(CCString::createWithFormat("%s%s", USER_TOTAL_SCORE, user_data_id.c_str())->getCString(), 0);
 }
 
 float LocalStorageManager::getAverageScore()
@@ -100,35 +101,35 @@ void LocalStorageManager::setScore(float score)
 
 bool LocalStorageManager::isAchievementUnlocked(const char *achievementID)
 {
-    return defaults()->getBoolForKey(achievementID, false);
+    return defaults()->getBoolForKey(CCString::createWithFormat("%s%s", achievementID, user_data_id.c_str())->getCString(), false);
 }
 
 void LocalStorageManager::unlockAchievement(const char *achievementID)
 {
-    defaults()->setBoolForKey(achievementID, true);
+    defaults()->setBoolForKey(CCString::createWithFormat("%s%s", achievementID, user_data_id.c_str())->getCString(), true);
     defaults()->flush();
 }
 
 void LocalStorageManager::setScoreInLevel(float score, int level)
 {
-    CCString* key = CCString::createWithFormat(USER_SCORE_IN_LEVEL, level);
+    CCString* key = CCString::createWithFormat(CCString::createWithFormat("%s%s", USER_SCORE_IN_LEVEL, user_data_id.c_str())->getCString(), level);
     defaults()->setFloatForKey(key->getCString(), score);
     defaults()->flush();
 }
 
 float LocalStorageManager::getScoreInLevel(int level)
 {
-    CCString* key = CCString::createWithFormat(USER_SCORE_IN_LEVEL, level);
+    CCString* key = CCString::createWithFormat(CCString::createWithFormat("%s%s", USER_SCORE_IN_LEVEL, user_data_id.c_str())->getCString(), level);
     return defaults()->getFloatForKey(key->getCString(), 0);
 }
 
 void LocalStorageManager::updateObstaclesJumped(int num)
 {
-    defaults()->setIntegerForKey(USER_OBSTACLES_JUMPED, num);
+    defaults()->setIntegerForKey(CCString::createWithFormat("%s%s", USER_OBSTACLES_JUMPED, user_data_id.c_str())->getCString(), num);
     defaults()->flush();
 }
 
 int LocalStorageManager::getObstaclesJumped()
 {
-    return defaults()->getIntegerForKey(USER_OBSTACLES_JUMPED, 0);
+    return defaults()->getIntegerForKey(CCString::createWithFormat("%s%s", USER_OBSTACLES_JUMPED, user_data_id.c_str())->getCString(), 0);
 }

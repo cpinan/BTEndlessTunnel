@@ -91,7 +91,7 @@ int hardMap[] = {
     6,9,6,9,8,9,3,8,9,2,9,9,2,9,9,2,4,5,8,
     9,3,8,9,8,3,3,4,5,4,5,0,1,0,1,2,3,3,8,
     6,9,6,9,6,0,1,6,9,3,6,0,9,8,9,6,8,0,9,
-    6,7,6,7,6,3,3,6,3,8,9,8,9,8,2,8,0,8,1
+    6,7,6,7,6,3,3,6,3,8,9,8,9,8,1,8,0,8,1
 };
 
 vector<int> _vectorMap;
@@ -138,7 +138,7 @@ void GameLayer::_selectRandomMusic()
     MusicPlaying mp;
     
     mp.bg_music = BG_MUSIC_01;
-    mp.description = "BT Turbo Tunnel";
+    mp.description = "BT Turbo Tunnel - VGMusic.com";
     _vectorMusics.push_back(mp);
     
     mp.bg_music = BG_MUSIC_02;
@@ -1054,13 +1054,15 @@ void GameLayer::_checkAchievements()
         LocalStorageManager::unlockAchievement(ACH_GET_10000_OR_MORE_IN_EASY_MODE);
         
     }
-    else if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE) && _gameLevel == kGameLevelNormal && longScore >= 8000)
+
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE) && _gameLevel == kGameLevelNormal && longScore >= 8000)
     {
         Utils::unlockAchievement(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE);
         LocalStorageManager::unlockAchievement(ACH_GET_8000_OR_MORE_IN_NORMAL_MODE);
         
     }
-    else if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_5000_OR_MORE_IN_HARD_MODE) && _gameLevel == kGameLevelHard && longScore >= 5000)
+
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_5000_OR_MORE_IN_HARD_MODE) && _gameLevel == kGameLevelHard && longScore >= 5000)
     {
         Utils::unlockAchievement(ACH_GET_5000_OR_MORE_IN_HARD_MODE);
         LocalStorageManager::unlockAchievement(ACH_GET_5000_OR_MORE_IN_HARD_MODE);
@@ -1070,6 +1072,24 @@ void GameLayer::_checkAchievements()
     {
         Utils::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000);
         LocalStorageManager::unlockAchievement(ACH_PLAY_IN_ACCELEROMETER_MODE_AND_GET_MORE_THAN_3000);
+    }
+    
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_30K_IN_EASY_MODE) && _gameLevel == kGameLevelEasy && longScore >= 30000)
+    {
+        Utils::unlockAchievement(ACH_GET_30K_IN_EASY_MODE);
+        LocalStorageManager::unlockAchievement(ACH_GET_30K_IN_EASY_MODE);
+    }
+    
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_15K_IN_NORMAL_MODE) && _gameLevel == kGameLevelNormal && longScore >= 15000)
+    {
+        Utils::unlockAchievement(ACH_GET_15K_IN_NORMAL_MODE);
+        LocalStorageManager::unlockAchievement(ACH_GET_15K_IN_NORMAL_MODE);
+    }
+    
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_10K_IN_HARD_MODE) && _gameLevel == kGameLevelEasy && longScore >= 10000)
+    {
+        Utils::unlockAchievement(ACH_GET_10K_IN_HARD_MODE);
+        LocalStorageManager::unlockAchievement(ACH_GET_10K_IN_HARD_MODE);
     }
     
     if(_obstaclesJumped > 0)

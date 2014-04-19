@@ -8,6 +8,7 @@
 
 #import "PlayGameSingleton.h"
 #include "AdMobBannerView.h"
+#include "Globals.h"
 #import "GCHelper.h"
 
 #import <UIKit/UIKit.h>
@@ -154,7 +155,8 @@ void PlayGameSingleton::authenticate()
 
 bool PlayGameSingleton::isSignedIn()
 {
-    return true;
+    CCLOG("user_data_id: %s", user_data_id.c_str());
+    return user_data_id != "";
 }
 
 void PlayGameSingleton::signOut()
