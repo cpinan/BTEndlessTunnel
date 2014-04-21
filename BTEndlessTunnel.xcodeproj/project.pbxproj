@@ -9,12 +9,11 @@
 /* Begin PBXBuildFile section */
 		041CE78518F50003006D05D9 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 041CE73618F50003006D05D9 /* libGoogleAdMobAds.a */; };
 		041CE78618F50003006D05D9 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 041CE73718F50003006D05D9 /* README.txt */; };
-		041DE38418FF751900301586 /* 512x384 in Resources */ = {isa = PBXBuildFile; fileRef = 041DE38118FF751900301586 /* 512x384 */; };
-		041DE38518FF751900301586 /* 1024x768 in Resources */ = {isa = PBXBuildFile; fileRef = 041DE38218FF751900301586 /* 1024x768 */; };
 		041DE38618FF751900301586 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 041DE38318FF751900301586 /* audio */; };
 		0444D42C1902C4C2001E04D7 /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0444D42A1902C4C2001E04D7 /* Globals.cpp */; };
 		04E5C29618FF879B000C47FF /* GCHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E5C29518FF879B000C47FF /* GCHelper.mm */; };
 		04E5C29818FF883C000C47FF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E5C29718FF883C000C47FF /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		070A18B01905A8E00094F95A /* 1024x768 in Resources */ = {isa = PBXBuildFile; fileRef = 070A18AF1905A8E00094F95A /* 1024x768 */; };
 		077CBB5D18F84EB5005FD669 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 077CBB5718F84EB5005FD669 /* Default-568h@2x.png */; };
 		077CBB5E18F84EB5005FD669 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 077CBB5818F84EB5005FD669 /* Default-Landscape.png */; };
 		077CBB5F18F84EB5005FD669 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 077CBB5918F84EB5005FD669 /* Default-Landscape@2x.png */; };
@@ -340,14 +339,13 @@
 		041CE73518F50003006D05D9 /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
 		041CE73618F50003006D05D9 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		041CE73718F50003006D05D9 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		041DE38118FF751900301586 /* 512x384 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 512x384; sourceTree = "<group>"; };
-		041DE38218FF751900301586 /* 1024x768 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 1024x768; sourceTree = "<group>"; };
 		041DE38318FF751900301586 /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = audio; sourceTree = "<group>"; };
 		0444D42A1902C4C2001E04D7 /* Globals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Globals.cpp; path = Classes/Globals.cpp; sourceTree = "<group>"; };
 		0444D42B1902C4C2001E04D7 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Globals.h; path = Classes/Globals.h; sourceTree = "<group>"; };
 		04E5C29418FF879B000C47FF /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCHelper.h; path = ios/GCHelper.h; sourceTree = "<group>"; };
 		04E5C29518FF879B000C47FF /* GCHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GCHelper.mm; path = ios/GCHelper.mm; sourceTree = "<group>"; };
 		04E5C29718FF883C000C47FF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		070A18AF1905A8E00094F95A /* 1024x768 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 1024x768; sourceTree = "<group>"; };
 		077CBB5718F84EB5005FD669 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		077CBB5818F84EB5005FD669 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Resources/Default-Landscape.png"; sourceTree = "<group>"; };
 		077CBB5918F84EB5005FD669 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Resources/Default-Landscape@2x.png"; sourceTree = "<group>"; };
@@ -1063,8 +1061,7 @@
 		041DE32318FF750300301586 /* CommonResources */ = {
 			isa = PBXGroup;
 			children = (
-				041DE38118FF751900301586 /* 512x384 */,
-				041DE38218FF751900301586 /* 1024x768 */,
+				070A18AF1905A8E00094F95A /* 1024x768 */,
 				041DE38318FF751900301586 /* audio */,
 			);
 			path = CommonResources;
@@ -2438,7 +2435,7 @@
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					07CBA27918DCAFB8004E8B35 = {
-						DevelopmentTeam = 78S83S4VV9;
+						DevelopmentTeam = 7843ENR3D7;
 					};
 				};
 			};
@@ -2466,14 +2463,13 @@
 			files = (
 				077CBB6218F84EB5005FD669 /* Default@2x.png in Resources */,
 				07CBA2A018DCAFB9004E8B35 /* Icon.png in Resources */,
-				041DE38418FF751900301586 /* 512x384 in Resources */,
 				07CBA34318DCAFBA004E8B35 /* ChangeLog in Resources */,
 				07CBA29C18DCAFB9004E8B35 /* Icon-Small.png in Resources */,
 				041CE78618F50003006D05D9 /* README.txt in Resources */,
 				07CBA29818DCAFB9004E8B35 /* Icon-72.png in Resources */,
 				07CBA29A18DCAFB9004E8B35 /* Icon-Small-50.png in Resources */,
-				041DE38518FF751900301586 /* 1024x768 in Resources */,
 				077CBB6118F84EB5005FD669 /* Default-Portrait@2x.png in Resources */,
+				070A18B01905A8E00094F95A /* 1024x768 in Resources */,
 				07CBA2A418DCAFB9004E8B35 /* iTunesArtwork in Resources */,
 				041DE38618FF751900301586 /* audio in Resources */,
 				07CBA29E18DCAFB9004E8B35 /* Icon-Small@2x.png in Resources */,
