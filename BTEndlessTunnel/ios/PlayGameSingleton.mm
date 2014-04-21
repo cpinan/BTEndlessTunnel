@@ -15,7 +15,7 @@
 
 #include "cocos2d.h"
 
-#define APP_ID 552035781 //id from iTunesConnect
+#define APP_ID 864587748 //id from iTunesConnect
 
 using namespace cocos2d;
 
