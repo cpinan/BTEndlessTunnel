@@ -10,27 +10,23 @@
 
 using namespace cocos2d;
 
-VehicleFrog::VehicleFrog() : BaseVehicle("bibho_0001@X.png")
+VehicleFrog::VehicleFrog() : BaseVehicle("bicho_0001.png")
 {
     defaultTexture = getTexture();
-    deadTexture = CCSprite::create("moto_over.png")->getTexture();
+    deadTexture = CCSprite::create("bicho_0004.png")->getTexture();
     
     CCAnimation* _jumpAnimation = CCAnimation::create();
-    
-    _jumpAnimation->addSpriteFrameWithFileName("moto_jump1.png");
-    _jumpAnimation->addSpriteFrameWithFileName("moto_jump2.png");
-    _jumpAnimation->addSpriteFrameWithFileName("moto_jump3.png");
-    
+    _jumpAnimation->addSpriteFrameWithFileName("bicho_0003.png");
     _jumpAnimation->setRestoreOriginalFrame(false);
-    _jumpAnimation->setDelayPerUnit(1.0f / 16.0f);
+    _jumpAnimation->setDelayPerUnit(1.0f / 10.0f);
     
     jumpAnimation = CCAnimate::create(_jumpAnimation);
     jumpAnimation->retain();
     
     CCAnimation* _idleAnimation = CCAnimation::create();
     
-    _idleAnimation->addSpriteFrameWithFileName("bibho_0001@X.png");
-    _idleAnimation->addSpriteFrameWithFileName("bibho_0002@X.png");
+    _idleAnimation->addSpriteFrameWithFileName("bicho_0001.png");
+    _idleAnimation->addSpriteFrameWithFileName("bicho_0002.png");
     
     _idleAnimation->setRestoreOriginalFrame(false);
     _idleAnimation->setDelayPerUnit(1.0f / 12.0f);

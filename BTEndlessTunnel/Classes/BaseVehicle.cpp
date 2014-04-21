@@ -72,10 +72,23 @@ void BaseVehicle::dead()
         setTexture(deadTexture);
         SimpleAudioEngine::sharedEngine()->playEffect(SFX_SMASH);
         
-        float x = getPositionX() + WIN_SIZE.width * 1.5f;
-        
-        runAction(CCMoveTo::create(1.5f, ccp(x, getPositionY())));
+        //float x = getPositionX() + WIN_SIZE.width * 1.5f;
+        //runAction(CCMoveTo::create(1.5f, ccp(x, getPositionY())));
+        runAction(CCBlink::create(1.0f, 5));
+        if(state == kStateJump)
+        {
+            float time = 0.5f;
+            float times = 20;
+            float y = _spShadow->getPositionY() + getPositionY();
+            runAction(CCMoveTo::create(0.5f, ccp(getPositionX() + getContentSize().width * 0.25f, y)));
+            schedule(schedule_selector(BaseVehicle::_updateEnd), time / times, times, 0);
+        }
     }
+}
+
+void BaseVehicle::_updateEnd()
+{
+    _updateShadow();
 }
 
 void BaseVehicle::doMove(CCPoint velocity)

@@ -54,6 +54,7 @@ public:
     
 private:
     void _updateShadow();
+    void _updateEnd();
     
 private:
     cocos2d::CCJumpBy* _jumpByAction;

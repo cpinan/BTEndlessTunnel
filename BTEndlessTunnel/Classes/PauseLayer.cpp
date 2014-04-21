@@ -29,13 +29,13 @@ PauseLayer::PauseLayer()
     CCPoint o = ccp(w * 0.5f, h * 0.5f);
     
     // Pause Text
-    CCLabelTTF* lblPause = CCLabelTTF::create("PAUSE", FONT_GAME, 16.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* lblPause = CCLabelTTF::create("PAUSE", FONT_GAME, 25.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     lblPause->setPosition(ccp(o.x, o.y + h * 0.25f));
     lblPause->setColor(ccc3(0, 0, 0));
     bg->addChild(lblPause);
     
     // Jump image
-    CCSprite* spJump = CCSprite::create("moto_jump3.png");
+    CCSprite* spJump = CCSprite::create("bicho_0003.png");
     spJump->setPosition(o);
     bg->addChild(spJump);
     

@@ -35,7 +35,7 @@
 #define SP_NUBE "nube.png"
 #define SP_BG_BACK "bg_back.png"
 #define SP_BG_MID "bg_mid.png" // MID ERROR
-#define SP_BG_FRONT "bg_front.png" // FRONT ERROR
+#define SP_BG_FRONT "humo.png" // FRONT ERROR
 
 #define DT_SPEED_PISTA 1.0f
 #define DT_SPEED_OBSTACULOS (DT_SPEED_PISTA * 1.0f)
@@ -303,11 +303,14 @@ void GameLayer::configureGame(GameLevel gameLevel)
     
     _accelVelocity = CCPointZero;
     
+    CCPoint visOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
+    CCSize visSize = CCDirector::sharedDirector()->getVisibleSize();
+    
     _menuPause = CCMenuItemImage::create("pause.png", "pause.png", this, menu_selector(GameLayer::pauseGame));
     _menuPause->setVisible(false);
     _menuPause->setAnchorPoint(ccp(0, 0));
-    _menuPause->setPositionX(_menuPause->getContentSize().width * 0.7f);
-    _menuPause->setPositionY(_lblScore->getPositionY() - _menuPause->getContentSize().height * 0.15f);
+    _menuPause->setPositionX(visOrigin.x + _menuPause->getContentSize().width * 0.9f);
+    _menuPause->setPositionY(visOrigin.y + visSize.height - _menuPause->getContentSize().width * 1.9f);
     
     CCMenu* menu = CCMenu::create();
     menu->setAnchorPoint(ccp(0, 0));
@@ -360,7 +363,7 @@ void GameLayer::_initLayers()
     _lblScore = CCLabelTTF::create("0", FONT_GAME, 40.0f, CCSizeMake(380, 50), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
-    _lblScore->setPosition(ccp(origin.x + size.width * 0.5f, origin.y + size.height * 0.85f));
+    _lblScore->setPosition(ccp(origin.x + size.width * 0.56f, origin.y + size.height * 0.85f));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();
