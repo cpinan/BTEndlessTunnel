@@ -1,6 +1,10 @@
 package com.carlospinan.utils;
 
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import com.carlospinan.turborace.R;
@@ -321,6 +325,32 @@ public class NativeUtils {
 			@Override
 			public void run() {
 				app.hideAd();
+			}
+		});
+	}
+
+	public static void rateApp() {
+		app.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				Uri uri = Uri.parse("market://details?id="
+						+ context.getPackageName());
+				Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+				try {
+					context.startActivity(goToMarket);
+				} catch (ActivityNotFoundException e) {
+
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							context);
+					builder.setMessage("Couldn't launch the PlayStore");
+					builder.setNeutralButton(
+							context.getResources().getString(
+									android.R.string.ok), null);
+					builder.create().show();
+
+				}
+
 			}
 		});
 	}

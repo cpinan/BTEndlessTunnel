@@ -29,7 +29,7 @@ PauseLayer::PauseLayer()
     CCPoint o = ccp(w * 0.5f, h * 0.5f);
     
     // Pause Text
-    CCLabelTTF* lblPause = CCLabelTTF::create("PAUSE", "Arial", 16.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* lblPause = CCLabelTTF::create("PAUSE", FONT_GAME, 16.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     lblPause->setPosition(ccp(o.x, o.y + h * 0.25f));
     lblPause->setColor(ccc3(0, 0, 0));
     bg->addChild(lblPause);

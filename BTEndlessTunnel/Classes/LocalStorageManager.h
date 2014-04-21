@@ -51,6 +51,9 @@ public:
     static void updateObstaclesJumped(int num);
     static int getObstaclesJumped();
     
+    static void setMute(bool state);
+    static bool isMute();
+    
 };
 
 #endif /* defined(__BTEndlessTunnel__LocalStorageManager__) */

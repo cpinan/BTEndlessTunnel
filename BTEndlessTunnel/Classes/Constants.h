@@ -11,6 +11,8 @@
 
 #include "cocos2d.h"
 
+#define FONT_GAME "Marker Felt"
+
 #define SP_SHADOW "shadow.png"
 #define SHOW_FPS false
 #define WIN_SIZE CCDirector::sharedDirector()->getWinSize()
@@ -25,6 +27,7 @@
 #define USER_TOTAL_SCORE "KEY_TOTAL_SCORE"
 #define USER_SCORE_IN_LEVEL "KEY_SCORE_LEVEL_%d"
 #define USER_OBSTACLES_JUMPED "KEY_OBSTACLES_JUMPED"
+#define USER_MANAGE_MUSIC "KEY_MUSIC"
 
 // Notifications
 #define NOTIFICATION_PAUSE_GAME "NOT_PAUSE_GAME"

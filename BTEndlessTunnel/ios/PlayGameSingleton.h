@@ -62,6 +62,8 @@ public:
     void showAd();
     void hideAd();
     
+    void rateApp();
+    
 private:
     void* rootController;
 };

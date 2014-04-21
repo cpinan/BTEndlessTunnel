@@ -133,3 +133,14 @@ int LocalStorageManager::getObstaclesJumped()
 {
     return defaults()->getIntegerForKey(CCString::createWithFormat("%s%s", USER_OBSTACLES_JUMPED, user_data_id.c_str())->getCString(), 0);
 }
+
+void LocalStorageManager::setMute(bool state)
+{
+    defaults()->setBoolForKey(USER_MANAGE_MUSIC, state);
+    defaults()->flush();
+}
+
+bool LocalStorageManager::isMute()
+{
+    return defaults()->getBoolForKey(USER_MANAGE_MUSIC, false);
+}

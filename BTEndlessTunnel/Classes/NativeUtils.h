@@ -48,6 +48,8 @@ public:
     static void initAd();
     static void showAd();
     static void hideAd();
+    
+    static void rateApp();
 	
 	/*
 	* Ouya connection

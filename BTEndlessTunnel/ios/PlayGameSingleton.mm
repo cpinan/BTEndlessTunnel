@@ -15,6 +15,8 @@
 
 #include "cocos2d.h"
 
+#define APP_ID 552035781 //id from iTunesConnect
+
 using namespace cocos2d;
 
 #pragma mark - Declare Views
@@ -63,6 +65,7 @@ void PlayGameSingleton::showLeaderboards()
     
     if(!isSignedIn())
     {
+        CCMessageBox("Game Center", "Login");
         authenticate();
         return;
     }
@@ -94,6 +97,7 @@ void PlayGameSingleton::showAchievements()
     
     if(!isSignedIn())
     {
+        CCMessageBox("Game Center", "Login");
         authenticate();
         return;
     }
@@ -155,7 +159,7 @@ void PlayGameSingleton::authenticate()
 
 bool PlayGameSingleton::isSignedIn()
 {
-    CCLOG("user_data_id: %s", user_data_id.c_str());
+    // CCLOG("user_data_id: %s", user_data_id.c_str());
     return user_data_id != "";
 }
 
@@ -194,5 +198,13 @@ void PlayGameSingleton::hideAd()
     //[adMobBannerView.view removeFromSuperview];
     //[adMobBannerView release];
     //adMobBannerView = 0;
+}
+
+void PlayGameSingleton::rateApp()
+{
+    NSString *reviewURL = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%d", APP_ID];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+    
 }
 

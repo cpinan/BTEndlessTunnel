@@ -180,3 +180,15 @@ void NativeUtils::hideAd()
     PlayGameSingleton::sharedInstance().hideAd();
 #endif
 }
+
+void NativeUtils::rateApp()
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	JniHelpers::jniCommonVoidCall(
+                                  "rateApp",
+                                  CLASS_NAME);
+#endif
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    PlayGameSingleton::sharedInstance().rateApp();
+#endif
+}

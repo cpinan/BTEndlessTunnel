@@ -24,7 +24,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"View Did Load AdMobBanner");
     // Do any additional setup after loading the view.
     
     bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];

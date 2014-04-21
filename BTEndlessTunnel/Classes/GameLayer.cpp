@@ -160,7 +160,7 @@ void GameLayer::_showAudioPlaying()
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     
-    CCLabelTTF* lblMusic = CCLabelTTF::create(CCString::createWithFormat("Playing %s", _music.description)->getCString(), "Arial", 35.0f, CCSizeMake(winSize.width * 0.85f, winSize.height * 0.15f), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
+    CCLabelTTF* lblMusic = CCLabelTTF::create(CCString::createWithFormat("Playing %s", _music.description)->getCString(), FONT_GAME, 35.0f, CCSizeMake(winSize.width * 0.85f, winSize.height * 0.15f), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     
     lblMusic->setPositionX(origin.x + visibleSize.width * 0.55f);
     lblMusic->setPositionY(origin.y - visibleSize.height * 0.25f);
@@ -357,7 +357,7 @@ void GameLayer::_initLayers()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCSize size = CCDirector::sharedDirector()->getVisibleSize();
     
-    _lblScore = CCLabelTTF::create("0", "Arial", 40.0f, CCSizeMake(380, 50), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
+    _lblScore = CCLabelTTF::create("0", FONT_GAME, 40.0f, CCSizeMake(380, 50), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
     _lblScore->setPosition(ccp(origin.x + size.width * 0.5f, origin.y + size.height * 0.85f));
@@ -669,7 +669,12 @@ void GameLayer::runGame()
     }
     
     unscheduleUpdate();
-    _showAudioPlaying();
+
+    if(!LocalStorageManager::isMute())
+    {
+        _showAudioPlaying();
+    }
+    
     scheduleUpdate();
 }
 

@@ -12,6 +12,7 @@
 #include "Constants.h"
 #include "SimpleAudioEngine.h"
 #include "PlayGameConstants.h"
+#include "LocalStorageManager.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -59,7 +60,27 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuItemSettings->setTag(kTagSettings);
     menuItemSettings->setAnchorPoint(ccp(0, 0));
     menuItemSettings->setPosition(ccp(menuItemLeaderboard->getPositionX(), menuItemAchievements->getPositionY() - menuItemLeaderboard->getContentSize().height * 1.3f));
-
+    
+    // Rate App
+    CCLabelTTF* lblRateApp = CCLabelTTF::create("Rate this App!", FONT_GAME, 25.0f);
+    lblRateApp->setColor(ccWHITE);
+    
+    CCMenuItemLabel* menuRateApp = CCMenuItemLabel::create(lblRateApp, this, menu_selector(HomeLayer::_onOptionPressed));
+    menuRateApp->setTag(kTagRateApp);
+    menuRateApp->setPositionX(visibleOrigin.x + visibleSize.width - menuRateApp->getContentSize().width * 0.8f);
+    menuRateApp->setPositionY(visibleOrigin.y + menuRateApp->getContentSize().height * 1.7f);
+    
+    // Sound management
+    CCMenuItemImage* menuSoundOn = CCMenuItemImage::create("snd_on.png", "snd_on.png", NULL, NULL);
+    CCMenuItemImage* menuSoundOff = CCMenuItemImage::create("snd_off.png", "snd_off.png", NULL, NULL);
+    
+    CCMenuItemToggle* menuSound = CCMenuItemToggle::createWithTarget(this, menu_selector(HomeLayer::_manageMusic), menuSoundOn, menuSoundOff, NULL);
+    menuSound->setPositionX(visibleOrigin.x + menuSoundOn->getContentSize().width * 0.95f);
+    menuSound->setPositionY(visibleOrigin.y + menuSoundOn->getContentSize().height * 0.95f);
+    
+    if(LocalStorageManager::isMute())
+        menuSound->setSelectedIndex(1);
+    
     // Menu
     CCMenu* menu = CCMenu::create();
     menu->setAnchorPoint(ccp(0, 0));
@@ -70,11 +91,24 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menu->addChild(menuItemLeaderboard);
     menu->addChild(menuItemAchievements);
     menu->addChild(menuItemSettings);
+    menu->addChild(menuSound);
+    menu->addChild(menuRateApp);
     
     addChild(menu);
     
     NativeUtils::showAd();
     
+}
+
+void HomeLayer::_manageMusic(cocos2d::CCObject* pSender)
+{
+    if(disable)
+        return;
+    
+    SimpleAudioEngine::sharedEngine()->playEffect(SFX_BUTTON);
+        
+    bool state = LocalStorageManager::isMute();
+    LocalStorageManager::setMute(!state);
 }
 
 HomeLayer::~HomeLayer()
@@ -118,6 +152,10 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
             
         case kTagAchievements:
             NativeUtils::showAchievements();
+            break;
+            
+        case kTagRateApp:
+            NativeUtils::rateApp();
             break;
             
         default:

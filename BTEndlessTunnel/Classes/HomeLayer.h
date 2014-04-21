@@ -17,7 +17,7 @@ enum HomeButtons
     kTagEasyMode = 0,
     kTagNormalMode = 1,
     kTagHardMode = 2,
-    kTagCredits = 3,
+    kTagRateApp = 3,
     kTagLeaderboard = 4,
     kTagAchievements = 5,
     kTagSettings = 6
@@ -32,6 +32,7 @@ public:
 private:
     void _onOptionPressed(cocos2d::CCObject* pSender);
     void _finishHideLayer();
+    void _manageMusic(cocos2d::CCObject* pSender);
     
 private:
     bool disable;
