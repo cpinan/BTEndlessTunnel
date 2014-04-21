@@ -37,7 +37,7 @@ PopUpLoseLayer::PopUpLoseLayer()
     CCPoint o = ccp(w * 0.5f, h * 0.5f);
     
     // Head title
-    _lblHeadTitle = CCLabelTTF::create("Finish!", FONT_GAME, 16.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    _lblHeadTitle = CCLabelTTF::create("Finish!", FONT_GAME, 25.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     _lblHeadTitle->setPosition(ccp(o.x, o.y + h * 0.35f));
     _lblHeadTitle->setColor(ccc3(0, 0, 0));
     bg->addChild(_lblHeadTitle);
@@ -47,19 +47,19 @@ PopUpLoseLayer::PopUpLoseLayer()
     spBadge->setPosition(ccp(o.x - spBadge->getContentSize().width * 1.2f, o.y + h * 0.05f));
     bg->addChild(spBadge, 10);
     
-    _lblScore = CCLabelTTF::create("0", FONT_GAME, 16.0f, CCSizeMake(130, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+    _lblScore = CCLabelTTF::create("0", FONT_GAME, 30.0f, CCSizeMake(130, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
     _lblScore->setColor(ccc3(0, 0, 0));
     _lblScore->setAnchorPoint(ccp(0, 0));
     _lblScore->setPosition(ccp(o.x, o.y));
     bg->addChild(_lblScore);
     
-    _lblMaxScore = CCLabelTTF::create("Best: 0", FONT_GAME, 16.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+    _lblMaxScore = CCLabelTTF::create("Best: 0", FONT_GAME, 25.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
     _lblMaxScore->setColor(ccc3(0, 0, 0));
     _lblMaxScore->setAnchorPoint(ccp(0, 0));
     _lblMaxScore->setPosition(ccp(o.x - w * 0.3f, o.y + h * 0.2f));
     bg->addChild(_lblMaxScore);
     
-    _lblTotalScore = CCLabelTTF::create("Total Score: 0", FONT_GAME, 16.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+    _lblTotalScore = CCLabelTTF::create("Total Score: 0", FONT_GAME, 25.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
     _lblTotalScore->setColor(ccc3(0, 0, 0));
     _lblTotalScore->setAnchorPoint(ccp(0, 0));
     _lblTotalScore->setPosition(ccp(o.x - w * 0.3f, o.y - h * 0.15f));

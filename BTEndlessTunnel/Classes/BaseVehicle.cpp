@@ -74,13 +74,13 @@ void BaseVehicle::dead()
         
         //float x = getPositionX() + WIN_SIZE.width * 1.5f;
         //runAction(CCMoveTo::create(1.5f, ccp(x, getPositionY())));
-        runAction(CCBlink::create(1.0f, 5));
+        runAction(CCBlink::create(1.5f, 8));
         if(state == kStateJump)
         {
-            float time = 0.5f;
-            float times = 20;
+            float time = 1.0f;
+            float times = 30;
             float y = _spShadow->getPositionY() + getPositionY();
-            runAction(CCMoveTo::create(0.5f, ccp(getPositionX() + getContentSize().width * 0.25f, y)));
+            runAction(CCMoveTo::create(time, ccp(getPositionX() + getContentSize().width * 0.15f, y)));
             schedule(schedule_selector(BaseVehicle::_updateEnd), time / times, times, 0);
         }
     }

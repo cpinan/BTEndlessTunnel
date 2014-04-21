@@ -130,6 +130,7 @@ private:
     GameLevel _gameLevel;
     
     cocos2d::CCSprite* _spCloud;
+    cocos2d::CCArray* _parallaxSky;
     cocos2d::CCArray* _parallaxBGBack;
     cocos2d::CCArray* _parallaxBGMid;
     cocos2d::CCArray* _parallaxBGFront;
@@ -151,6 +152,9 @@ private:
     int _itemMap;
     int _obstaclesAvoided;
     int _obstaclesJumped;
+    
+    float _color;
+    int _colorSign;
     
     float _playerStartY;
     float _wallHeight;

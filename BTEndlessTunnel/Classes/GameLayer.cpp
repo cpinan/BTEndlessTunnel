@@ -43,6 +43,8 @@
 #define DT_SPEED_BG_BACK (DT_SPEED_PISTA * 0.5f)
 #define DT_SPEED_BG_MID (DT_SPEED_PISTA * 1.0f)
 #define DT_SPEED_BG_FRONT (DT_SPEED_PISTA * 1.3f)
+#define MIN_COLOR 100
+#define MAX_COLOR 255
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -103,6 +105,9 @@ MusicPlaying _music;
 GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel) : _hudLayer(hudLayer), _gameMode(gameMode)
 {
     srand(time(0));
+    
+    _color = 255;
+    _colorSign = -1;
     
     _selectRandomMusic();
     
@@ -191,6 +196,7 @@ GameLayer::~GameLayer()
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_PLAY_AGAIN);
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_GO_HOME);
 
+    CC_SAFE_RELEASE(_parallaxSky);
     CC_SAFE_RELEASE(_parallaxBGBack);
     CC_SAFE_RELEASE(_parallaxBGMid);
     CC_SAFE_RELEASE(_parallaxBGFront);
@@ -221,6 +227,9 @@ void GameLayer::_createMap()
     _wallHeight = spFloor->getContentSize().height * 0.25f;
     
     // Creamos el cielo
+    _parallaxSky = CCArray::createWithCapacity(2);
+    _parallaxSky->retain();
+    
     for(i = 0; i < 2; i++)
     {
         _tmpSprite = CCSprite::create(SP_CIELO);
@@ -228,6 +237,7 @@ void GameLayer::_createMap()
         _tmpSprite->setPosition(ccp(x, WIN_SIZE.height - _tmpSprite->getContentSize().height));
         addChild(_tmpSprite, kDeepSky);
         x += _tmpSprite->getContentSize().width;
+        _parallaxSky->addObject(_tmpSprite);
     }
     
     // Creamos la nube    
@@ -775,6 +785,12 @@ void GameLayer::_gameLogic(float dt)
         _spCloud->setPositionX(WIN_SIZE.width + _spCloud->getContentSize().width * 0.7f);
     _spCloud->setPositionX(_spCloud->getPositionX() - _worldSpeed * dt * DT_SPEED_NUBE);
     
+    ccColor3B color = ccc3((int)_color, (int)_color, (int)_color);
+    
+    ((CCSprite*) _parallaxSky->objectAtIndex(0))->setColor(color);
+    ((CCSprite*) _parallaxSky->objectAtIndex(1))->setColor(color);
+    _spCloud->setColor(color);
+    
     // Bucle for _parallaxBGBack
     CCARRAY_FOREACH(_parallaxBGBack, object)
     {
@@ -787,6 +803,7 @@ void GameLayer::_gameLogic(float dt)
             sprite->setPositionX((_parallaxBGBack->count() - 1) * spriteWidth + diff);
         }
         sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt * DT_SPEED_BG_BACK);
+        sprite->setColor(color);
     }
 
     // Bucle for _parallaxBGMid
@@ -801,6 +818,7 @@ void GameLayer::_gameLogic(float dt)
             sprite->setPositionX((_parallaxBGMid->count() - 1) * spriteWidth + diff);
         }
         sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt * DT_SPEED_BG_MID);
+        sprite->setColor(color);
     }
     
     // Bucle for _parallaxBGFront
@@ -815,7 +833,21 @@ void GameLayer::_gameLogic(float dt)
             sprite->setPositionX((_parallaxBGFront->count() - 1) * spriteWidth + diff);
         }
         sprite->setPositionX(sprite->getPositionX() - _worldSpeed * dt * DT_SPEED_BG_FRONT);
+        sprite->setColor(color);
     }
+    
+    _color += dt * _colorSign * 3;
+    
+    if(_color < MIN_COLOR && _colorSign == -1)
+        _colorSign = 1;
+    else if(_color > MAX_COLOR && _colorSign == 1)
+        _colorSign = -1;
+    
+    if(_color > MAX_COLOR)
+        _color = MAX_COLOR;
+    
+    if(_color < MIN_COLOR)
+        _color = MIN_COLOR;
     
     // Bucle for _parallaxFloor
     CCARRAY_FOREACH(_parallaxFloor, object)
@@ -875,7 +907,7 @@ void GameLayer::_gameLogic(float dt)
         
         obstacle->doUpdate(positionX, _worldSpeed * dt * DT_SPEED_OBSTACULOS);
         
-        if(obstacle->collision(*_player))
+        if(obstacle->getIsObjectAlerted() && !obstacle->getPassPlayerSFX() && obstacle->collision(*_player))
         {
             _player->dead();
             this->reorderChild(_player, kDeepGameFinish);
