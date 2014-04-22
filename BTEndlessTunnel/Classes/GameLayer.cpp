@@ -387,7 +387,7 @@ void GameLayer::_initLayers()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCSize size = CCDirector::sharedDirector()->getVisibleSize();
     
-    _lblScore = CCLabelTTF::create("0", FONT_GAME, 40.0f, CCSizeMake(380, 50), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
+    _lblScore = CCLabelTTF::create("0", FONT_GAME, SIZE_SCORE_GAME, CCSizeMake(380, 50), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
     _lblScore->setPosition(ccp(origin.x + size.width * 0.56f, origin.y + size.height * 0.85f));

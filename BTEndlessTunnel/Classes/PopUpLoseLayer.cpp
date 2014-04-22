@@ -44,7 +44,7 @@ PopUpLoseLayer::PopUpLoseLayer()
     spBadge->setPosition(ccp(o.x, o.y + spBadge->getContentSize().height * 0.5f));
     bg->addChild(spBadge, 10);
     
-    _lblScore = CCLabelTTF::create("", FONT_GAME, 28.0f, CCSizeMake(w * 0.5f, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+    _lblScore = CCLabelTTF::create("", FONT_GAME, SIZE_RATE_END, CCSizeMake(w * 0.5f, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
     _lblScore->setPosition(ccp(o.x + spBadge->getContentSize().width * 0.8f, o.y - spBadge->getContentSize().height * 0.1f));
     _lblScore->setColor(ccWHITE);
     _lblScore->setRotation(-3);

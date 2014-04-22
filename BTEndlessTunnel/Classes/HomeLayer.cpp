@@ -84,7 +84,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuItemSettings->setPosition(ccp(visibleSize.width - menuItemSettings->getContentSize().width * 0.8f, visibleOrigin.y + menuItemSettings->getContentSize().height * 0.7f));
     
     // Rate App
-    CCLabelTTF* lblRateApp = CCLabelTTF::create("Rate this App!", FONT_GAME, 35.0f);
+    CCLabelTTF* lblRateApp = CCLabelTTF::create("Rate this App!", FONT_GAME, SIZE_RATE_APP);
     lblRateApp->setColor(ccWHITE);
     
     menuRateApp = CCMenuItemLabel::create(lblRateApp, this, menu_selector(HomeLayer::_onOptionPressed));

@@ -13,6 +13,9 @@
 #include "PlayGameConstants.h"
 
 #define FONT_GAME !IOS() ? "Carton_Six.ttf" : "CartonSix"
+#define SIZE_SCORE_GAME 40.0f * CC_CONTENT_SCALE_FACTOR()
+#define SIZE_RATE_APP 35.0f * CC_CONTENT_SCALE_FACTOR()
+#define SIZE_RATE_END 28.0f * CC_CONTENT_SCALE_FACTOR()
 
 #define SP_SHADOW "shadow.png"
 #define SHOW_FPS false
