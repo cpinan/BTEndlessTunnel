@@ -33,7 +33,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     
     // Pantalla
     CCSprite* pantalla = CCSprite::create("pantalla_0001.png");
-    pantalla->setPositionY(visibleSize.height - pantalla->getContentSize().height * 0.5f);
+    pantalla->setPositionY(tablero->getPositionY() + tablero->getContentSize().height - pantalla->getContentSize().height * 0.5f);
     pantalla->setPositionX(visibleOrigin.x + pantalla->getContentSize().width * 0.5f);
     
     // Crear logo
