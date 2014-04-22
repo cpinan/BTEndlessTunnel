@@ -318,9 +318,8 @@ void GameLayer::configureGame(GameLevel gameLevel)
     
     _menuPause = CCMenuItemImage::create("pause.png", "pause.png", this, menu_selector(GameLayer::pauseGame));
     _menuPause->setVisible(false);
-    _menuPause->setAnchorPoint(ccp(0, 0));
     _menuPause->setPositionX(visOrigin.x + _menuPause->getContentSize().width * 0.9f);
-    _menuPause->setPositionY(visOrigin.y + visSize.height - _menuPause->getContentSize().width * 1.9f);
+    _menuPause->setPositionY(visOrigin.y + visSize.height - _menuPause->getContentSize().width * 0.6f);
     
     CCMenu* menu = CCMenu::create();
     menu->setAnchorPoint(ccp(0, 0));
