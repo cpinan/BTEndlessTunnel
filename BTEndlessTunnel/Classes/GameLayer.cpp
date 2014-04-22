@@ -661,13 +661,7 @@ void GameLayer::playGame()
 }
 
 void GameLayer::runGame()
-{
-    if(!LocalStorageManager::isAchievementUnlocked(ACH_FIRST_TIME_PLAYING_THE_GAME))
-    {
-        Utils::unlockAchievement(ACH_FIRST_TIME_PLAYING_THE_GAME);
-        LocalStorageManager::unlockAchievement(ACH_FIRST_TIME_PLAYING_THE_GAME);
-    }
-    
+{    
     _isJoypad = LocalStorageManager::isUsingJoypad();
     
     if(!_isJoypad)
