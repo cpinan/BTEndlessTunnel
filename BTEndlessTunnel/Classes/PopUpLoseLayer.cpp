@@ -43,8 +43,8 @@ PopUpLoseLayer::PopUpLoseLayer()
     bg->addChild(_lblHeadTitle);
     
     // Badge and record
-    CCSprite* spBadge = CCSprite::create("badge.png");
-    spBadge->setPosition(ccp(o.x - spBadge->getContentSize().width * 1.2f, o.y + h * 0.05f));
+    CCSprite* spBadge = CCSprite::create("bicho_0004.png");
+    spBadge->setPosition(ccp(o.x - spBadge->getContentSize().width * 0.9f, o.y + h * 0.05f));
     bg->addChild(spBadge, 10);
     
     _lblScore = CCLabelTTF::create("0", FONT_GAME, 30.0f, CCSizeMake(130, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
@@ -66,7 +66,7 @@ PopUpLoseLayer::PopUpLoseLayer()
     bg->addChild(_lblTotalScore);
     
     // Send score button
-    CCMenuItemImage* itemScore = CCMenuItemImage::create("play_game.png", "play_game.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+    CCMenuItemImage* itemScore = CCMenuItemImage::create("chart.png", "chart.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
     itemScore->setTag(kTagSendScore);
     itemScore->setAnchorPoint(ccp(0, 0));
     itemScore->setPosition(ccp(o.x - w * 0.35f, o.y - h * 0.35f));

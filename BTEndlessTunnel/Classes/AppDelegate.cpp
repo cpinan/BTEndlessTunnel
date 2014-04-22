@@ -74,6 +74,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_SWOOSH);
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_SMASH);
     SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_BUTTON);
+    SimpleAudioEngine::sharedEngine()->preloadEffect(SFX_LIGHTNING);
     
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(BG_MUSIC_01);
     SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(BG_MUSIC_02);

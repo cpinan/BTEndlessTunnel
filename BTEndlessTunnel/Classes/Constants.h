@@ -36,14 +36,15 @@
 #define NOTIFICATION_GO_HOME "NOT_GO_HOME"
 
 // Musics and SFX
-#define BG_MUSIC_01 "bg_music.mp3"
-#define BG_MUSIC_02 "bg_game_01.mp3"
+#define BG_MUSIC_01 "vg_bt_music.mp3"
+#define BG_MUSIC_02 "diego_music.mp3"
 #define BG_MUSIC_03 "POL-turtle-blues-short.mp3"
 
 #define SFX_JUMP "jump.mp3"
 #define SFX_SMASH "smash.mp3"
 #define SFX_SWOOSH "swoosh.mp3"
 #define SFX_BUTTON "button.mp3"
+#define SFX_LIGHTNING "lightning.mp3"
 
 // Game constants
 #define MAX_PARALLAX 5

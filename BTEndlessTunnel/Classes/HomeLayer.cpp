@@ -14,6 +14,8 @@
 #include "PlayGameConstants.h"
 #include "LocalStorageManager.h"
 
+#define HIDE_TIME 0.4f
+
 using namespace cocos2d;
 using namespace CocosDenshion;
 
@@ -25,68 +27,52 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     CCPoint visibleOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
     
     // Tablero Izq.
-    CCSprite* tablero = CCSprite::create("tablero_title.png");
+    tablero = CCSprite::create("tablero_title.png");
     tablero->setAnchorPoint(CCPointZero);
     tablero->setPositionX(visibleOrigin.x);
     tablero->setPositionY(visibleOrigin.y);
     addChild(tablero);
     
-    // Pantalla
-    CCSprite* pantalla = CCSprite::create("pantalla_0001.png");
-    pantalla->setPositionY(tablero->getPositionY() + tablero->getContentSize().height - pantalla->getContentSize().height * 0.5f);
-    pantalla->setPositionX(visibleOrigin.x + pantalla->getContentSize().width * 0.5f);
-    
     // Crear logo
-    CCSprite* logo = CCSprite::create("logo.png");
-    logo->setPositionX(visibleOrigin.x + visibleSize.width * 0.7f);
-    logo->setPositionY(visibleOrigin.y + visibleSize.height * 0.65f);
-    addChild(logo);
-    
-    
-    CCAnimation* animation = CCAnimation::create();
-    for(int i = 1; i <= 5; i++ )
-    {
-        CCString* str = CCString::createWithFormat("pantalla_000%d.png", i);
-        animation->addSpriteFrameWithFileName(str->getCString());
-    }
-    animation->setDelayPerUnit(1.0 / 12.0f);
-    animation->setRestoreOriginalFrame(false);
-    pantalla->runAction(CCRepeatForever::create(CCAnimate::create(animation)));
-    tablero->addChild(pantalla);
-    
+    logo = CCSprite::create("logo.png");
+    logo->setPositionX(-logo->getContentSize().width * 1.2f);
+    logo->setPositionY(visibleOrigin.y + visibleSize.height * 0.55f);
+    logo->runAction(CCMoveTo::create(0.7f, ccp(visibleOrigin.x + visibleSize.width * 0.65f, logo->getPositionY())));
+    addChild(logo , -1);
+
     // Easy Mode
-    CCMenuItemImage* menuItemEasy = CCMenuItemImage::create("easy.png", "easy.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemEasy = CCMenuItemImage::create("easy.png", "easy.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemEasy->setTag(kTagEasyMode);
     menuItemEasy->setAnchorPoint(ccp(0, 0));
-    menuItemEasy->setPosition(ccp(visibleOrigin.x + menuItemEasy->getContentSize().width * 0.1f, visibleOrigin.y + menuItemEasy->getContentSize().height * 3.2));
+    menuItemEasy->setPosition(ccp(visibleOrigin.x + menuItemEasy->getContentSize().width * 0.1f, visibleOrigin.y + menuItemEasy->getContentSize().height * 3.8));
     
     // Normal Mode
-    CCMenuItemImage* menuItemNormal = CCMenuItemImage::create("medium.png", "medium.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemNormal = CCMenuItemImage::create("medium.png", "medium.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemNormal->setTag(kTagNormalMode);
     menuItemNormal->setAnchorPoint(ccp(0, 0));
-    menuItemNormal->setPosition(ccp(menuItemEasy->getPositionX(), menuItemEasy->getPositionY() - menuItemEasy->getContentSize().height * 1.1f));
+    menuItemNormal->setPosition(ccp(menuItemEasy->getPositionX(), menuItemEasy->getPositionY() - menuItemEasy->getContentSize().height * 1.2f));
     
     // Hard Mode
-    CCMenuItemImage* menuItemHard = CCMenuItemImage::create("hard.png", "hard.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemHard = CCMenuItemImage::create("hard.png", "hard.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemHard->setTag(kTagHardMode);
     menuItemHard->setAnchorPoint(ccp(0, 0));
-    menuItemHard->setPosition(ccp(menuItemNormal->getPositionX(), menuItemNormal->getPositionY() - menuItemEasy->getContentSize().height * 1.1f));
+    menuItemHard->setPosition(ccp(menuItemNormal->getPositionX(), menuItemNormal->getPositionY() - menuItemEasy->getContentSize().height * 1.2f));
     
     
     // Achievements
-    CCMenuItemImage* menuItemAchievements = CCMenuItemImage::create("achievement.png", "achievement.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemAchievements = CCMenuItemImage::create("achievement.png", "achievement.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemAchievements->setTag(kTagAchievements);
-    menuItemAchievements->setPositionX(menuItemHard->getPositionX() + menuItemAchievements->getContentSize().width * 0.9f);
-    menuItemAchievements->setPositionY(menuItemHard->getPositionY() - menuItemAchievements->getContentSize().height * 0.65f);
+    menuItemAchievements->setPositionX(menuItemHard->getPositionX() + menuItemAchievements->getContentSize().width * 0.7f);
+    menuItemAchievements->setPositionY(menuItemHard->getPositionY() - menuItemAchievements->getContentSize().height * 0.95f);
     
     // Leaderboards
-    CCMenuItemImage* menuItemLeaderboard = CCMenuItemImage::create("chart.png", "chart.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemLeaderboard = CCMenuItemImage::create("chart.png", "chart.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemLeaderboard->setTag(kTagLeaderboard);
-    menuItemLeaderboard->setPositionX(menuItemAchievements->getPositionX() + menuItemAchievements->getContentSize().width * 1.1f);
+    menuItemLeaderboard->setPositionX(menuItemAchievements->getPositionX() + menuItemAchievements->getContentSize().width * 1.2f);
     menuItemLeaderboard->setPositionY(menuItemAchievements->getPositionY());
     
     // Settings
-    CCMenuItemImage* menuItemSettings = CCMenuItemImage::create("ajustes.png", "ajustes.png", this, menu_selector(HomeLayer::_onOptionPressed));
+    menuItemSettings = CCMenuItemImage::create("ajustes.png", "ajustes.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemSettings->setTag(kTagSettings);
     menuItemSettings->setPosition(ccp(visibleSize.width - menuItemSettings->getContentSize().width * 0.8f, visibleOrigin.y + menuItemSettings->getContentSize().height * 0.7f));
     
@@ -94,7 +80,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     CCLabelTTF* lblRateApp = CCLabelTTF::create("Rate this App!", FONT_GAME, 35.0f);
     lblRateApp->setColor(ccWHITE);
     
-    CCMenuItemLabel* menuRateApp = CCMenuItemLabel::create(lblRateApp, this, menu_selector(HomeLayer::_onOptionPressed));
+    menuRateApp = CCMenuItemLabel::create(lblRateApp, this, menu_selector(HomeLayer::_onOptionPressed));
     menuRateApp->setTag(kTagRateApp);
     menuRateApp->setPositionX(visibleOrigin.x + visibleSize.width * 0.7f);
     menuRateApp->setPositionY(visibleOrigin.y + menuRateApp->getContentSize().height * 1.6f);
@@ -103,7 +89,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     CCMenuItemImage* menuSoundOn = CCMenuItemImage::create("snd_on.png", "snd_on.png", NULL, NULL);
     CCMenuItemImage* menuSoundOff = CCMenuItemImage::create("snd_off.png", "snd_off.png", NULL, NULL);
     
-    CCMenuItemToggle* menuSound = CCMenuItemToggle::createWithTarget(this, menu_selector(HomeLayer::_manageMusic), menuSoundOn, menuSoundOff, NULL);
+    menuSound = CCMenuItemToggle::createWithTarget(this, menu_selector(HomeLayer::_manageMusic), menuSoundOn, menuSoundOff, NULL);
     menuSound->setPositionX(menuItemLeaderboard->getPositionX() + menuSoundOn->getContentSize().width * 1.8f);
     menuSound->setPositionY(menuItemLeaderboard->getPositionY());
     
@@ -194,16 +180,31 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
     {
         NativeUtils::hideAd();
         disable = true;
-        
-        CCSequence* sequence = CCSequence::create(
-                                CCMoveBy::create(0.5f, ccp(0, -WIN_SIZE.height)),
-                                CCCallFuncN::create(this, callfuncN_selector(HomeLayer::_finishHideLayer))                                               ,
-                                                  NULL
-                                                  );
-        this->runAction(CCFadeOut::create(0.45f));
-        this->runAction(sequence);
+        _hideToLeft();
+        _hideToRight();
+        scheduleOnce(schedule_selector(HomeLayer::_finishHideLayer), HIDE_TIME + 0.1f);
     }
     
+}
+
+void HomeLayer::_hideToLeft()
+{
+    CCMoveBy* move = CCMoveBy::create(HIDE_TIME, ccp(-WIN_SIZE.width * 0.8f, 0));
+    tablero->runAction((CCAction*) move->copy()->autorelease());
+    menuItemEasy->runAction((CCAction*) move->copy()->autorelease());
+    menuItemNormal->runAction((CCAction*) move->copy()->autorelease());
+    menuItemHard->runAction((CCAction*) move->copy()->autorelease());
+    menuItemAchievements->runAction((CCAction*) move->copy()->autorelease());
+    menuItemLeaderboard->runAction((CCAction*) move->copy()->autorelease());
+    menuSound->runAction((CCAction*) move->copy()->autorelease());
+}
+
+void HomeLayer::_hideToRight()
+{
+    CCMoveBy* move = CCMoveBy::create(HIDE_TIME, ccp(WIN_SIZE.width * 0.8f, 0));
+    menuItemSettings->runAction((CCAction*) move->copy()->autorelease());
+    menuRateApp->runAction((CCAction*) move->copy()->autorelease());
+    logo->runAction((CCAction*) move->copy()->autorelease());
 }
 
 void HomeLayer::_finishHideLayer()

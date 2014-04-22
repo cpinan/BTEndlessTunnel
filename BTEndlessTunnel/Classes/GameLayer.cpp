@@ -33,9 +33,9 @@
 #define SP_PISTA "pista.png"
 #define SP_CIELO "cielo.png"
 #define SP_NUBE "nube.png"
-#define SP_BG_BACK "bg_back.png"
-#define SP_BG_MID "bg_mid.png" // MID ERROR
-#define SP_BG_FRONT "humo.png" // FRONT ERROR
+#define SP_BG_BACK "background_2.png"
+#define SP_BG_MID "background_1.png"
+#define SP_BG_FRONT "humo.png"
 
 #define DT_SPEED_PISTA 1.0f
 #define DT_SPEED_OBSTACULOS (DT_SPEED_PISTA * 1.0f)
@@ -45,6 +45,7 @@
 #define DT_SPEED_BG_FRONT (DT_SPEED_PISTA * 1.3f)
 #define MIN_COLOR 100
 #define MAX_COLOR 255
+#define LIGHT_TIME 5.0f
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -108,6 +109,7 @@ GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel)
     
     _color = 255;
     _colorSign = -1;
+    _lightningTimer = 0;
     
     _selectRandomMusic();
     
@@ -253,7 +255,7 @@ void GameLayer::_createMap()
     {
         _tmpSprite = CCSprite::create(SP_BG_BACK);
         _tmpSprite->setAnchorPoint(CCPointZero);
-        _tmpSprite->setPosition(ccp(x, WIN_SIZE.height - _tmpSprite->getContentSize().height * 0.9f));
+        _tmpSprite->setPosition(ccp(x, _playerStartY + _wallHeight * 1.9f));
         addChild(_tmpSprite, kDeepBGBack);
         _parallaxBGBack->addObject(_tmpSprite);
         x += _tmpSprite->getContentSize().width;
@@ -953,7 +955,28 @@ void GameLayer::_gameLogic(float dt)
 
     }
     
+    _runLightning(dt);
 
+}
+
+void GameLayer::_runLightning(float dt)
+{
+    if(_color < MAX_COLOR - MIN_COLOR)
+    {
+        _lightningTimer += dt;
+        if(_lightningTimer > LIGHT_TIME)
+        {
+            
+            
+            
+            SimpleAudioEngine::sharedEngine()->playEffect(SFX_LIGHTNING);
+            _lightningTimer = 0;
+        }
+    }
+    else
+    {
+        _lightningTimer = 0;
+    }
 }
 
 void GameLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)

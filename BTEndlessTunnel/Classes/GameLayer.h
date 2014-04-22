@@ -115,6 +115,9 @@ private:
     
     void _selectRandomMusic();
     
+    void _runLightning(float dt);
+    float _lightningTimer;
+    
     
 private:
     BaseVehicle* _player;    
