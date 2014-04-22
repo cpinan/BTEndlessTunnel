@@ -44,7 +44,7 @@ PopUpLoseLayer::PopUpLoseLayer()
     
     // Badge and record
     CCSprite* spBadge = CCSprite::create("bicho_0004.png");
-    spBadge->setPosition(ccp(o.x - spBadge->getContentSize().width * 0.9f, o.y + h * 0.05f));
+    spBadge->setPosition(ccp(o.x - spBadge->getContentSize().width * 0.7f, o.y + h * 0.05f));
     bg->addChild(spBadge, 10);
     
     _lblScore = CCLabelTTF::create("0", FONT_GAME, 30.0f, CCSizeMake(130, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);

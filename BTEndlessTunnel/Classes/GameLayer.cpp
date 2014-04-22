@@ -955,7 +955,7 @@ void GameLayer::_gameLogic(float dt)
 
     }
     
-    _runLightning(dt);
+    // _runLightning(dt);
 
 }
 
