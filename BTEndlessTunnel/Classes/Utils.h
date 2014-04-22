@@ -18,6 +18,7 @@ public:
     static void incrementAchievement(const char* achievementID, int numSteps);
     static void incrementPercentageAchievement(const char* achievementID, float percentage);
     static void submitScore(const char* leaderboardID, float score);
+    static float randomBetween(float min, float max);
 };
 
 #endif /* defined(__BTEndlessTunnel__Utils__) */

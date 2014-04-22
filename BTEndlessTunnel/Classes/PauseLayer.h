@@ -18,7 +18,7 @@ enum PauseButtons
     kTagPausePlayAgain = 2
 };
 
-class PauseLayer : public cocos2d::CCLayer
+class PauseLayer : public cocos2d::CCLayerColor
 {
 public:
     PauseLayer();

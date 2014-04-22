@@ -18,7 +18,7 @@ enum PopUpLoseButtons
     kTagSendScore = 2
 };
 
-class PopUpLoseLayer : public cocos2d::CCLayer
+class PopUpLoseLayer : public cocos2d::CCLayerColor
 {
 public:
     PopUpLoseLayer();
@@ -30,10 +30,9 @@ private:
     
 private:
     long _score;
-    cocos2d::CCLabelTTF* _lblHeadTitle;
     cocos2d::CCLabelTTF* _lblScore;
     cocos2d::CCLabelTTF* _lblMaxScore;
-    cocos2d::CCLabelTTF* _lblTotalScore;
+    cocos2d::CCSprite* spBadge;
     bool disable;
 };
 

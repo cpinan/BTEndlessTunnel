@@ -10,8 +10,9 @@
 #define BTEndlessTunnel_Constants_h
 
 #include "cocos2d.h"
+#include "PlayGameConstants.h"
 
-#define FONT_GAME "Marker Felt"
+#define FONT_GAME !IOS() ? "Carton_Six.ttf" : "CartonSix"
 
 #define SP_SHADOW "shadow.png"
 #define SHOW_FPS false

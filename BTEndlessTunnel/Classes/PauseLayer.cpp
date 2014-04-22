@@ -15,12 +15,15 @@ using namespace cocos2d;
 
 PauseLayer::PauseLayer()
 {
+    
+    initWithColor(ccc4BFromccc4F(ccc4f(0, 0, 0, 128)));
+    
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint visibleOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCPoint origin = ccp(visibleOrigin.x + visibleSize.width * 0.5f, visibleOrigin.y + visibleSize.height* 0.5f);
     
     // BGWhite
-    CCSprite* bg = CCSprite::create("bg_white.png");
+    CCSprite* bg = CCSprite::create("pause_screen.png");
     bg->setPosition(origin);
     addChild(bg);
     
@@ -28,33 +31,29 @@ PauseLayer::PauseLayer()
     float h = bg->getContentSize().height;
     CCPoint o = ccp(w * 0.5f, h * 0.5f);
     
-    // Pause Text
-    CCLabelTTF* lblPause = CCLabelTTF::create("PAUSE", FONT_GAME, 25.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    lblPause->setPosition(ccp(o.x, o.y + h * 0.25f));
-    lblPause->setColor(ccc3(0, 0, 0));
-    bg->addChild(lblPause);
-    
-    // Jump image
-    CCSprite* spJump = CCSprite::create("bicho_0003.png");
-    spJump->setPosition(o);
-    bg->addChild(spJump);
-    
     // Buttons
     
-    // Send score button
-    CCMenuItemImage* itemResume = CCMenuItemImage::create("resume.png", "resume.png", this, menu_selector(PauseLayer::_onOptionPressed));
-    itemResume->setTag(kTagPauseResumeGame);
-    itemResume->setPosition(ccp(o.x - w * 0.25f, o.y - h * 0.25f));
-    
-    // Home button
-    CCMenuItemImage* itemHome = CCMenuItemImage::create("home.png", "home.png", this, menu_selector(PauseLayer::_onOptionPressed));
-    itemHome->setTag(kTagPauseGoHome);
-    itemHome->setPosition(ccp(itemResume->getPositionX() + itemResume->getContentSize().width * 1.5f, itemResume->getPositionY()));
     
     // Play again button
-    CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("play_again.png", "play_again.png", this, menu_selector(PauseLayer::_onOptionPressed));
+    CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay.png", "pause_replay.png", this, menu_selector(PauseLayer::_onOptionPressed));
     itemPlayAgain->setTag(kTagPausePlayAgain);
-    itemPlayAgain->setPosition(ccp(itemHome->getPositionX() + itemResume->getContentSize().width * 1.5f, itemResume->getPositionY()));
+    itemPlayAgain->setPositionX(o.x - itemPlayAgain->getContentSize().width);
+    itemPlayAgain->setPositionY(o.y - itemPlayAgain->getContentSize().height * 0.9f);
+    
+    CCMenuItemImage* itemResume = CCMenuItemImage::create("pause_play.png", "pause_play.png", this, menu_selector(PauseLayer::_onOptionPressed));
+    itemResume->setTag(kTagPauseResumeGame);
+    itemResume->setPositionX(itemPlayAgain->getPositionX() + itemResume->getContentSize().width * 1.1f);
+    itemResume->setPositionY(itemPlayAgain->getPositionY());
+    
+    // Home button
+    CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home.png", "pause_home.png", this, menu_selector(PauseLayer::_onOptionPressed));
+    itemHome->setTag(kTagPauseGoHome);
+    itemHome->setPositionX(itemResume->getPositionX() + itemResume->getContentSize().width * 1.1f);
+    itemHome->setPositionY(itemResume->getPositionY());
+    
+    itemPlayAgain->setPositionY(itemPlayAgain->getPositionY() - itemPlayAgain->getContentSize().height * 0.3f);
+    itemResume->setPositionY(itemResume->getPositionY() - itemResume->getContentSize().height * 0.15f);
+
     
     // Menu
     CCMenu* menu = CCMenu::create();

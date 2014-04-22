@@ -107,11 +107,14 @@ GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel)
 {
     srand(time(0));
     
+    _lightningAnimation = NULL;
+    
     _color = 255;
     _colorSign = -1;
     _lightningTimer = 0;
     
     _selectRandomMusic();
+    // _preloadLightning();
     
     _player = NULL;
     _obstaclesJumped = 0;
@@ -129,6 +132,18 @@ GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel)
     _createMap();
     _initLayers();
     _gameLevel = gameLevel;
+}
+
+void GameLayer::_preloadLightning()
+{
+    CCAnimation* animation = CCAnimation::create();
+    animation->setDelayPerUnit(1.0 / 12.0f);
+    animation->setRestoreOriginalFrame(false);
+    
+    animation->addSpriteFrameWithFileName("");
+    
+    _lightningAnimation = CCAnimate::create(animation);
+    _lightningAnimation->retain();
 }
 
 void GameLayer::onEnterTransitionDidFinish()
@@ -205,6 +220,7 @@ GameLayer::~GameLayer()
     
     CC_SAFE_RELEASE(_parallaxFloor);
     CC_SAFE_RELEASE(_arrayObstacles);
+    CC_SAFE_RELEASE(_lightningAnimation);
 }
 
 #pragma mark - Init layers, Create Players and Game Elements
@@ -904,6 +920,8 @@ void GameLayer::_gameLogic(float dt)
         
         if(obstacle->getIsObjectAlerted() && !obstacle->getPassPlayerSFX() && obstacle->collision(*_player))
         {
+            _lblScore->setVisible(false);
+            _menuPause->setVisible(false);
             _player->dead();
             this->reorderChild(_player, kDeepGameFinish);
             _gameOver = true;
@@ -960,7 +978,19 @@ void GameLayer::_runLightning(float dt)
         _lightningTimer += dt;
         if(_lightningTimer > LIGHT_TIME)
         {
+            CCSprite* lightning = CCSprite::create("");
             
+            CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+            CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+            
+            float x = Utils::randomBetween(lightning->getContentSize().width, origin.x + visibleSize.width - lightning->getContentSize().width);
+            
+            float y = origin.y + visibleSize.height - lightning->getContentSize().height * 0.5f;
+            
+            lightning->setPosition(ccp(x, y));
+            
+            lightning->runAction((CCAction*) _lightningAnimation->copy()->autorelease());
+            addChild(lightning, kDeepTracks - 50);
             
             
             SimpleAudioEngine::sharedEngine()->playEffect(SFX_LIGHTNING);
@@ -1035,7 +1065,6 @@ void GameLayer::update(float dt)
             setTouchEnabled(false);
             if(!_isJoypad)
                 setAccelerometerEnabled(false);
-            _lblScore->setVisible(false);
             _hudLayer->setVisible(false);
             _menuPause->setVisible(false);
             _popUpLoseLayer->updateScore(_gameLevel, _score * kScoreFactor);

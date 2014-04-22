@@ -31,3 +31,9 @@ void Utils::submitScore(const char* leaderboardID, float score)
 {
     NativeUtils::submitScore(leaderboardID, (long) score);
 }
+
+float Utils::randomBetween(float min, float max)
+{
+    float random = min + CCRANDOM_0_1() * (max - min + 1);
+    return random;
+}

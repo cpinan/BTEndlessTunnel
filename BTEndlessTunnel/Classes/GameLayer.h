@@ -116,6 +116,8 @@ private:
     void _selectRandomMusic();
     
     void _runLightning(float dt);
+    void _preloadLightning();
+    
     float _lightningTimer;
     
     
@@ -143,6 +145,7 @@ private:
     cocos2d::CCArray* _arrayObstacles;
     
     cocos2d::CCMenuItemImage* _menuPause;
+    cocos2d::CCAnimate* _lightningAnimation;
     
     bool _pause;
     bool _gameOver;

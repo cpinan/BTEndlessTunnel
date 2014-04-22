@@ -20,6 +20,9 @@ using namespace cocos2d;
 
 PopUpLoseLayer::PopUpLoseLayer()
 {
+    
+    initWithColor(ccc4BFromccc4F(ccc4f(0, 0, 0, 128)));
+    
     _score = 0;
     disable = false;
     
@@ -28,7 +31,7 @@ PopUpLoseLayer::PopUpLoseLayer()
     CCPoint origin = ccp(visibleOrigin.x + visibleSize.width * 0.5f, visibleOrigin.y + visibleSize.height* 0.5f);
     
     // BGWhite
-    CCSprite* bg = CCSprite::create("bg_white.png");
+    CCSprite* bg = CCSprite::create("gameover_screen.png");
     bg->setPosition(origin);
     addChild(bg);
     
@@ -36,52 +39,43 @@ PopUpLoseLayer::PopUpLoseLayer()
     float h = bg->getContentSize().height;
     CCPoint o = ccp(w * 0.5f, h * 0.5f);
     
-    // Head title
-    _lblHeadTitle = CCLabelTTF::create("Finish!", FONT_GAME, 25.0f, CCSizeMake(190, 20), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    _lblHeadTitle->setPosition(ccp(o.x, o.y + h * 0.35f));
-    _lblHeadTitle->setColor(ccc3(0, 0, 0));
-    bg->addChild(_lblHeadTitle);
-    
     // Badge and record
-    CCSprite* spBadge = CCSprite::create("bicho_0004.png");
-    spBadge->setPosition(ccp(o.x - spBadge->getContentSize().width * 0.7f, o.y + h * 0.05f));
+    spBadge = CCSprite::create("bicho_0004.png");
+    spBadge->setPosition(ccp(o.x, o.y + spBadge->getContentSize().height * 0.5f));
     bg->addChild(spBadge, 10);
     
-    _lblScore = CCLabelTTF::create("0", FONT_GAME, 30.0f, CCSizeMake(130, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
-    _lblScore->setColor(ccc3(0, 0, 0));
-    _lblScore->setAnchorPoint(ccp(0, 0));
-    _lblScore->setPosition(ccp(o.x, o.y));
+    _lblScore = CCLabelTTF::create("", FONT_GAME, 28.0f, CCSizeMake(w * 0.5f, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+    _lblScore->setPosition(ccp(o.x + spBadge->getContentSize().width * 0.8f, o.y - spBadge->getContentSize().height * 0.1f));
+    _lblScore->setColor(ccWHITE);
+    _lblScore->setRotation(-3);
     bg->addChild(_lblScore);
     
-    _lblMaxScore = CCLabelTTF::create("Best: 0", FONT_GAME, 25.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
-    _lblMaxScore->setColor(ccc3(0, 0, 0));
-    _lblMaxScore->setAnchorPoint(ccp(0, 0));
-    _lblMaxScore->setPosition(ccp(o.x - w * 0.3f, o.y + h * 0.2f));
+    _lblMaxScore = CCLabelTTF::create("", FONT_GAME, _lblScore->getFontSize(), CCSizeMake(w * 0.5f, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+    _lblMaxScore->setPosition(ccp(_lblScore->getPositionX(), _lblScore->getPositionY() - spBadge->getContentSize().height * 0.28f));
+    _lblMaxScore->setColor(ccWHITE);
+    _lblMaxScore->setRotation(_lblScore->getRotation());
     bg->addChild(_lblMaxScore);
     
-    _lblTotalScore = CCLabelTTF::create("Total Score: 0", FONT_GAME, 25.0f, CCSizeMake(200, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
-    _lblTotalScore->setColor(ccc3(0, 0, 0));
-    _lblTotalScore->setAnchorPoint(ccp(0, 0));
-    _lblTotalScore->setPosition(ccp(o.x - w * 0.3f, o.y - h * 0.15f));
-    bg->addChild(_lblTotalScore);
-    
     // Send score button
-    CCMenuItemImage* itemScore = CCMenuItemImage::create("chart.png", "chart.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+    CCMenuItemImage* itemScore = CCMenuItemImage::create("btn_chart_2.png", "btn_chart_2.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
     itemScore->setTag(kTagSendScore);
-    itemScore->setAnchorPoint(ccp(0, 0));
-    itemScore->setPosition(ccp(o.x - w * 0.35f, o.y - h * 0.35f));
+    itemScore->setPositionX(o.x - itemScore->getContentSize().width);
+    itemScore->setPositionY(o.y - itemScore->getContentSize().height * 1.5f);
     
     // Home button
-    CCMenuItemImage* itemHome = CCMenuItemImage::create("home.png", "home.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+    CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home.png", "pause_home.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
     itemHome->setTag(kTagGoHome);
-    itemHome->setAnchorPoint(ccp(0, 0));
-    itemHome->setPosition(ccp(itemScore->getPositionX() + itemScore->getContentSize().width * 1.6f, itemScore->getPositionY()));
+    itemHome->setPositionX(itemScore->getPositionX() + itemScore->getContentSize().width * 1.1f);
+    itemHome->setPositionY(itemScore->getPositionY());
     
     // Play again button
-    CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("play_again.png", "play_again.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+    CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay.png", "pause_replay.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
     itemPlayAgain->setTag(kTagPlayAgain);
-    itemPlayAgain->setAnchorPoint(ccp(0, 0));
-    itemPlayAgain->setPosition(ccp(itemHome->getPositionX() + itemScore->getContentSize().width * 1.6f, itemScore->getPositionY()));
+    itemPlayAgain->setPositionX(itemHome->getPositionX() + itemScore->getContentSize().width * 1.1f);
+    itemPlayAgain->setPositionY(itemScore->getPositionY());
+    
+    itemPlayAgain->setPositionY(itemPlayAgain->getPositionY() + itemScore->getContentSize().height * 0.2f);
+    itemHome->setPositionY(itemHome->getPositionY() + itemScore->getContentSize().height * 0.1f);
     
     // Menu
     CCMenu* menu = CCMenu::create();
@@ -179,12 +173,11 @@ void PopUpLoseLayer::updateScore(int level, float score)
         
         LocalStorageManager::setScoreInLevel(score, level);
         scoreInLevel = score;
-        _lblHeadTitle->setString("New Record!");
+        
+        spBadge->setTexture(CCSprite::create("bicho_0003.png")->getTexture());
     }
     
-    _lblMaxScore->setString(CCString::createWithFormat("Best: %lu", scoreInLevel)->getCString());
-    
-    _lblTotalScore->setString(CCString::createWithFormat("Total Score: %lu", totalScore)->getCString());
+    _lblMaxScore->setString(CCString::createWithFormat("%lu", scoreInLevel)->getCString());
 }
 
 void PopUpLoseLayer::_onOptionPressed(CCObject *pSender)
@@ -206,7 +199,7 @@ void PopUpLoseLayer::_onOptionPressed(CCObject *pSender)
         case kTagSendScore:
             if(!NativeUtils::isSignedIn())
             {
-                NativeUtils::signIn();
+                NativeUtils::showLeaderboards();
             }
             else
             {
