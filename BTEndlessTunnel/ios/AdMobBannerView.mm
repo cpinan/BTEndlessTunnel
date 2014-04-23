@@ -24,7 +24,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
     bannerView_.adUnitID = [NSString stringWithUTF8String:MY_BANNER_UNIT_ID];
@@ -32,14 +31,17 @@
     bannerView_.adSize = kGADAdSizeSmartBannerLandscape;
     bannerView_.translatesAutoresizingMaskIntoConstraints = YES;
     
+    [bannerView_ loadRequest:[GADRequest request]];
+    
+    [self load];
+}
+
+- (void) load
+{
+    
     [self.view addSubview:bannerView_];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:bannerView_ attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    
-    //cocos2d::CCSize size = cocos2d::CCDirector::sharedDirector()->getOpenGLView()->getFrameSize();
-    //bannerView_.frame = CGRectMake(0, 0, size.width, size.height * 0.1f);
-    
-    [bannerView_ loadRequest:[GADRequest request]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,20 +53,26 @@
 - (void)dealloc
 {
     bannerView_.delegate = nil;
-    [bannerView_ release];
+    // [bannerView_ release];
     [super dealloc];
 }
 
 - (void)hide
 {
     if(!self.view.hidden)
+    {
         self.view.hidden = YES;
+        [bannerView_ removeFromSuperview];
+    }
 }
 
 - (void)show
 {
     if(self.view.hidden)
+    {
         self.view.hidden = NO;
+        [self load];
+    }
 }
 
 /*

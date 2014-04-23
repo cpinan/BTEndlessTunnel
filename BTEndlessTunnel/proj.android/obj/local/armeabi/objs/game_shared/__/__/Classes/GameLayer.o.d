@@ -212,11 +212,11 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/GameLayer.o: \
  jni/../../Classes/BaseObstacle.h jni/../../Classes/ObstacleSimple.h \
  jni/../../Classes/ObstacleDoble.h jni/../../Classes/ObstacleDobleAir.h \
  jni/../../Classes/VehicleFrog.h jni/../../Classes/Constants.h \
+ jni/../../Classes/PlayGameConstants.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h \
  jni/../../Classes/HomeScene.h jni/../../Classes/HomeLayer.h \
  jni/../../Classes/LocalStorageManager.h jni/../../Classes/Utils.h \
- jni/../../Classes/PlayGameConstants.h \
  /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/ctime \
  /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/algorithm \
  jni/../../Classes/NativeUtils.h jni/../../Classes/JNIHelpers.h
@@ -657,6 +657,8 @@ jni/../../Classes/VehicleFrog.h:
 
 jni/../../Classes/Constants.h:
 
+jni/../../Classes/PlayGameConstants.h:
+
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h:
 
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h:
@@ -668,8 +670,6 @@ jni/../../Classes/HomeLayer.h:
 jni/../../Classes/LocalStorageManager.h:
 
 jni/../../Classes/Utils.h:
-
-jni/../../Classes/PlayGameConstants.h:
 
 /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/ctime:
 

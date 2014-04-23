@@ -203,16 +203,17 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/PopUpLoseLayer.o: \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/data_support/uthash.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponent.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h \
- jni/../../Classes/Constants.h jni/../../Classes/HomeScene.h \
- jni/../../Classes/GameLayer.h jni/../../Classes/BaseVehicle.h \
- jni/../../Classes/AppMacros.h jni/../../Classes/HudLayer.h \
+ jni/../../Classes/Constants.h jni/../../Classes/PlayGameConstants.h \
+ jni/../../Classes/HomeScene.h jni/../../Classes/GameLayer.h \
+ jni/../../Classes/BaseVehicle.h jni/../../Classes/AppMacros.h \
+ jni/../../Classes/HudLayer.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/PauseLayer.h jni/../../Classes/BaseObstacle.h \
  jni/../../Classes/HomeLayer.h jni/../../Classes/LocalStorageManager.h \
- jni/../../Classes/Utils.h jni/../../Classes/PlayGameConstants.h \
- jni/../../Classes/NativeUtils.h jni/../../Classes/JNIHelpers.h
+ jni/../../Classes/Utils.h jni/../../Classes/NativeUtils.h \
+ jni/../../Classes/JNIHelpers.h
 
 jni/../../Classes/PopUpLoseLayer.h:
 
@@ -624,6 +625,8 @@ jni/../../Classes/PopUpLoseLayer.h:
 
 jni/../../Classes/Constants.h:
 
+jni/../../Classes/PlayGameConstants.h:
+
 jni/../../Classes/HomeScene.h:
 
 jni/../../Classes/GameLayer.h:
@@ -649,8 +652,6 @@ jni/../../Classes/HomeLayer.h:
 jni/../../Classes/LocalStorageManager.h:
 
 jni/../../Classes/Utils.h:
-
-jni/../../Classes/PlayGameConstants.h:
 
 jni/../../Classes/NativeUtils.h:
 

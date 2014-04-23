@@ -21,73 +21,76 @@ using namespace cocos2d;
 PopUpLoseLayer::PopUpLoseLayer()
 {
     
-    initWithColor(ccc4BFromccc4F(ccc4f(0, 0, 0, 128)));
-    
-    _score = 0;
-    disable = false;
-    
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint visibleOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
-    CCPoint origin = ccp(visibleOrigin.x + visibleSize.width * 0.5f, visibleOrigin.y + visibleSize.height* 0.5f);
-    
-    // BGWhite
-    CCSprite* bg = CCSprite::create("gameover_screen.png");
-    bg->setPosition(origin);
-    addChild(bg);
-    
-    float w = bg->getContentSize().width;
-    float h = bg->getContentSize().height;
-    CCPoint o = ccp(w * 0.5f, h * 0.5f);
-    
-    // Badge and record
-    spBadge = CCSprite::create("bicho_0004.png");
-    spBadge->setPosition(ccp(o.x, o.y + spBadge->getContentSize().height * 0.5f));
-    bg->addChild(spBadge, 10);
-    
-    _lblScore = CCLabelTTF::create("", FONT_GAME, SIZE_RATE_END, CCSizeMake(w * 0.5f, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
-    _lblScore->setPosition(ccp(o.x + spBadge->getContentSize().width * 0.8f, o.y - spBadge->getContentSize().height * 0.1f));
-    _lblScore->setColor(ccWHITE);
-    _lblScore->setRotation(-3);
-    bg->addChild(_lblScore);
-    
-    _lblMaxScore = CCLabelTTF::create("", FONT_GAME, _lblScore->getFontSize(), CCSizeMake(w * 0.5f, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
-    _lblMaxScore->setPosition(ccp(_lblScore->getPositionX(), _lblScore->getPositionY() - spBadge->getContentSize().height * 0.28f));
-    _lblMaxScore->setColor(ccWHITE);
-    _lblMaxScore->setRotation(_lblScore->getRotation());
-    bg->addChild(_lblMaxScore);
-    
-    // Send score button
-    CCMenuItemImage* itemScore = CCMenuItemImage::create("btn_chart_2.png", "btn_chart_2.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
-    itemScore->setTag(kTagSendScore);
-    itemScore->setPositionX(o.x - itemScore->getContentSize().width);
-    itemScore->setPositionY(o.y - itemScore->getContentSize().height * 1.5f);
-    
-    // Home button
-    CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home.png", "pause_home.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
-    itemHome->setTag(kTagGoHome);
-    itemHome->setPositionX(itemScore->getPositionX() + itemScore->getContentSize().width * 1.1f);
-    itemHome->setPositionY(itemScore->getPositionY());
-    
-    // Play again button
-    CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay.png", "pause_replay.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
-    itemPlayAgain->setTag(kTagPlayAgain);
-    itemPlayAgain->setPositionX(itemHome->getPositionX() + itemScore->getContentSize().width * 1.1f);
-    itemPlayAgain->setPositionY(itemScore->getPositionY());
-    
-    itemPlayAgain->setPositionY(itemPlayAgain->getPositionY() + itemScore->getContentSize().height * 0.2f);
-    itemHome->setPositionY(itemHome->getPositionY() + itemScore->getContentSize().height * 0.1f);
-    
-    // Menu
-    CCMenu* menu = CCMenu::create();
-    menu->setAnchorPoint(ccp(0, 0));
-    menu->setPosition(CCPointZero);
-    
-    menu->addChild(itemScore);
-    menu->addChild(itemHome);
-    menu->addChild(itemPlayAgain);
-    
-    bg->addChild(menu);
-    
+    if(initWithColor(ccc4BFromccc4F(ccc4f(0, 0, 0, 100.0f / 255.0f))))
+    {
+     
+        _score = 0;
+        disable = false;
+        
+        CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+        CCPoint visibleOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
+        CCPoint origin = ccp(visibleOrigin.x + visibleSize.width * 0.5f, visibleOrigin.y + visibleSize.height* 0.5f);
+        
+        // BGWhite
+        CCSprite* bg = CCSprite::create("gameover_screen.png");
+        bg->setPosition(origin);
+        addChild(bg);
+        
+        float w = bg->getContentSize().width;
+        float h = bg->getContentSize().height;
+        CCPoint o = ccp(w * 0.5f, h * 0.5f);
+        
+        // Badge and record
+        spBadge = CCSprite::create("bicho_0004.png");
+        spBadge->setPosition(ccp(o.x, o.y + spBadge->getContentSize().height * 0.5f));
+        bg->addChild(spBadge, 10);
+        
+        _lblScore = CCLabelTTF::create("", FONT_GAME, SIZE_RATE_END, CCSizeMake(w * 0.5f, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+        _lblScore->setPosition(ccp(o.x + spBadge->getContentSize().width * 0.8f, o.y - spBadge->getContentSize().height * 0.1f));
+        _lblScore->setColor(ccWHITE);
+        _lblScore->setRotation(-3);
+        bg->addChild(_lblScore);
+        
+        _lblMaxScore = CCLabelTTF::create("", FONT_GAME, _lblScore->getFontSize(), CCSizeMake(w * 0.5f, 20), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
+        _lblMaxScore->setPosition(ccp(_lblScore->getPositionX(), _lblScore->getPositionY() - spBadge->getContentSize().height * 0.28f));
+        _lblMaxScore->setColor(ccWHITE);
+        _lblMaxScore->setRotation(_lblScore->getRotation());
+        bg->addChild(_lblMaxScore);
+        
+        // Send score button
+        CCMenuItemImage* itemScore = CCMenuItemImage::create("btn_chart_2.png", "btn_chart_2.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+        itemScore->setTag(kTagSendScore);
+        itemScore->setPositionX(o.x - itemScore->getContentSize().width);
+        itemScore->setPositionY(o.y - itemScore->getContentSize().height * 1.5f);
+        
+        // Home button
+        CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home.png", "pause_home.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+        itemHome->setTag(kTagGoHome);
+        itemHome->setPositionX(itemScore->getPositionX() + itemScore->getContentSize().width * 1.1f);
+        itemHome->setPositionY(itemScore->getPositionY());
+        
+        // Play again button
+        CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay.png", "pause_replay.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+        itemPlayAgain->setTag(kTagPlayAgain);
+        itemPlayAgain->setPositionX(itemHome->getPositionX() + itemScore->getContentSize().width * 1.1f);
+        itemPlayAgain->setPositionY(itemScore->getPositionY());
+        
+        itemPlayAgain->setPositionY(itemPlayAgain->getPositionY() + itemScore->getContentSize().height * 0.2f);
+        itemHome->setPositionY(itemHome->getPositionY() + itemScore->getContentSize().height * 0.1f);
+        
+        // Menu
+        CCMenu* menu = CCMenu::create();
+        menu->setAnchorPoint(ccp(0, 0));
+        menu->setPosition(CCPointZero);
+        
+        menu->addChild(itemScore);
+        menu->addChild(itemHome);
+        menu->addChild(itemPlayAgain);
+        
+        bg->addChild(menu);
+
+        
+    }
 }
 
 void PopUpLoseLayer::updateScore(int level, float score)

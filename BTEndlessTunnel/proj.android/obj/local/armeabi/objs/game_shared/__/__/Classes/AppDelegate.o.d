@@ -207,8 +207,9 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/AppDelegate.o: \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h \
  jni/../../Classes/AppMacros.h jni/../../Classes/Constants.h \
- jni/../../Classes/HomeScene.h jni/../../Classes/GameLayer.h \
- jni/../../Classes/BaseVehicle.h jni/../../Classes/HudLayer.h \
+ jni/../../Classes/PlayGameConstants.h jni/../../Classes/HomeScene.h \
+ jni/../../Classes/GameLayer.h jni/../../Classes/BaseVehicle.h \
+ jni/../../Classes/HudLayer.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
@@ -632,6 +633,8 @@ jni/../../Classes/AppDelegate.h:
 jni/../../Classes/AppMacros.h:
 
 jni/../../Classes/Constants.h:
+
+jni/../../Classes/PlayGameConstants.h:
 
 jni/../../Classes/HomeScene.h:
 

@@ -77,17 +77,16 @@ public class UtilActivity extends BaseGameActivity {
 		// until the ad is loaded.
 		adViewLayout.addView(adView);
 
-		if (ConfigUtils.AD_MOB_DEBUG) {
-			// Create an ad request. Check logcat output for the hashed
-			// device ID to
-			// get test ads on a physical device.
-			AdRequest adRequest = new AdRequest.Builder()
-					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-					.addTestDevice("INSERT_YOUR_HASHED_DEVICE_ID_HERE").build();
+		// Create an ad request. Check logcat output for the hashed
+		// device ID to
+		// get test ads on a physical device.
+		AdRequest adRequest = new AdRequest.Builder()
+				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+				.addTestDevice("INSERT_YOUR_HASHED_DEVICE_ID_HERE").build();
 
-			// Start loading the ad in the background.
-			adView.loadAd(adRequest);
-		}
+		// Start loading the ad in the background.
+		adView.loadAd(adRequest);
+
 		adViewLayout.setBackgroundColor(Color.BLACK);
 		adViewLayout.setBackgroundColor(0);
 		showAd();
@@ -162,13 +161,17 @@ public class UtilActivity extends BaseGameActivity {
 	}
 
 	public void showAd() {
-		if (ConfigUtils.USE_AD_MOB && adView != null)
+		if (ConfigUtils.USE_AD_MOB && adView != null) {
 			adViewLayout.setVisibility(View.VISIBLE);
+			adView.resume();
+		}
 	}
 
 	public void hideAd() {
-		if (ConfigUtils.USE_AD_MOB && adView != null)
+		if (ConfigUtils.USE_AD_MOB && adView != null) {
 			adViewLayout.setVisibility(View.GONE);
+			adView.pause();
+		}
 	}
 
 	@Override

@@ -211,10 +211,9 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/HomeLayer.o: \
  jni/../../Classes/PauseLayer.h jni/../../Classes/PopUpLoseLayer.h \
  jni/../../Classes/BaseObstacle.h jni/../../Classes/SettingsLayer.h \
  jni/../../Classes/NativeUtils.h jni/../../Classes/JNIHelpers.h \
- jni/../../Classes/Constants.h \
+ jni/../../Classes/Constants.h jni/../../Classes/PlayGameConstants.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h \
- jni/../../Classes/PlayGameConstants.h \
  jni/../../Classes/LocalStorageManager.h
 
 jni/../../Classes/HomeLayer.h:
@@ -653,10 +652,10 @@ jni/../../Classes/JNIHelpers.h:
 
 jni/../../Classes/Constants.h:
 
+jni/../../Classes/PlayGameConstants.h:
+
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h:
 
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h:
-
-jni/../../Classes/PlayGameConstants.h:
 
 jni/../../Classes/LocalStorageManager.h:

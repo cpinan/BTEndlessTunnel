@@ -52,10 +52,10 @@ SettingsLayer::SettingsLayer()
         menu->addChild(itemAccel);
         
         // Home button
-        CCMenuItemImage* itemHome = CCMenuItemImage::create("home.png", "home.png", this, menu_selector(SettingsLayer::_onOptionPressed));
+        CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home.png", "pause_home.png", this, menu_selector(SettingsLayer::_onOptionPressed));
         itemHome->setTag(kTagSettingGoHome);
         itemHome->setPositionX(origin.x);
-        itemHome->setPositionY(origin.y - itemHome->getContentSize().height * 3.5f);
+        itemHome->setPositionY(origin.y - itemHome->getContentSize().height * 2.5f);
         menu->addChild(itemHome);
         
         // Menu
