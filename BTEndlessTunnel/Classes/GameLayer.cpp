@@ -260,7 +260,7 @@ void GameLayer::_createMap()
     
     // Creamos la nube    
     _spCloud = CCSprite::create(SP_NUBE);
-    _spCloud->setPosition(ccp(WIN_SIZE.width + _spCloud->getContentSize().width * 0.7f, visibleSize.height - _spCloud->getContentSize().height * 2.3f + visibleOrigin.y));
+    _spCloud->setPosition(ccp(WIN_SIZE.width + _spCloud->getContentSize().width * 0.7f, visibleSize.height - _spCloud->getContentSize().height * 0.9f + visibleOrigin.y));
     addChild(_spCloud, kDeepCloud);
     
     // Creamos el BG que esta mas atras
