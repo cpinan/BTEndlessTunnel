@@ -65,7 +65,6 @@ void PlayGameSingleton::showLeaderboards()
     
     if(!isSignedIn())
     {
-        CCMessageBox("Game Center", "Login");
         authenticate();
         return;
     }
@@ -95,7 +94,6 @@ void PlayGameSingleton::showAchievements()
     
     if(!isSignedIn())
     {
-        CCMessageBox("Game Center", "Login");
         authenticate();
         return;
     }

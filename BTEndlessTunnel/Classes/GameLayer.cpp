@@ -1163,7 +1163,7 @@ void GameLayer::_finishTutorial(cocos2d::CCObject *object)
     scheduleUpdate();
     _resumeAllActions();
     _gameIsReady();
-    pauseGame();
+    // pauseGame();
 }
 
 void GameLayer::_checkAchievements()
