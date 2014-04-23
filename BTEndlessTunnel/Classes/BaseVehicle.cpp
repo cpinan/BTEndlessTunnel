@@ -50,7 +50,6 @@ BaseVehicle::~BaseVehicle()
 void BaseVehicle::doJump()
 {
     int y = getPositionY() - getPlayerY() - getContentSize().height * 0.5f;
-    // CCLog("Try jump: %d in state %d", y, state);
     if(y <= 1 && state != kStateJump/* && getActionByTag(kActionJumpTag) == NULL*/)
     {
         state = kStateJump;

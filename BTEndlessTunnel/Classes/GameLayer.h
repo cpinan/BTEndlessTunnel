@@ -15,6 +15,11 @@ struct MusicPlaying
     const char* description;
 };
 
+enum GameTag
+{
+    kTagTutorialLayer = 100
+};
+
 enum GameMode
 {
     kGameModeHome = 0,
@@ -30,7 +35,8 @@ enum GameState
     kGamePreparing = 1,
     kGameReady = 2,
     kGamePause = 3,
-    kGameFinish = 4
+    kGameFinish = 4,
+    kGameTutorial = 5
 };
 
 enum GameLevel
@@ -54,7 +60,8 @@ enum GameDeep
     kDeepGameFinish = 500,
     kDeepScore = 1000,
     kDeepPauseLayer = 2500,
-    kDeepPopUpLoseLayer = 3500
+    kDeepPopUpLoseLayer = 3500,
+    kDeepTutorial = 2200
 };
 
 #define kScoreFactor 100.0f
@@ -117,6 +124,10 @@ private:
     
     void _runLightning(float dt);
     void _preloadLightning();
+    
+    void _gameIsReady();
+    void _showTutorial();
+    void _finishTutorial(cocos2d::CCObject* object);
     
     float _lightningTimer;
     

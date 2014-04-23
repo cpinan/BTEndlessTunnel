@@ -87,8 +87,6 @@ void PlayGameSingleton::submitScore(long score, const char *leaderBoardID)
     NSString* name = [NSString stringWithUTF8String:leaderBoardID];
     [[GCHelper sharedInstance] submitScore: score forCategory:name];
     
-    CCLog("Score submitted: %lu", score);
-
 }
 
 #pragma mark - Achievements

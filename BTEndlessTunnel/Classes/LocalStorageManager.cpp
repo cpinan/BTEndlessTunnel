@@ -144,3 +144,29 @@ bool LocalStorageManager::isMute()
 {
     return defaults()->getBoolForKey(USER_MANAGE_MUSIC, false);
 }
+
+bool LocalStorageManager::showTutorial()
+{
+    int usingJoypad = 0;
+    if(isUsingJoypad())
+        usingJoypad = 1;
+    
+    CCString* key = CCString::createWithFormat(USER_TUTORIAL, usingJoypad);
+    return defaults()->getBoolForKey(key->getCString(), true);
+}
+
+void LocalStorageManager::isTutorialOn(bool state, int mode)
+{
+    int usingJoypad = mode;
+    if(usingJoypad == -1)
+    {
+        if(isUsingJoypad())
+            usingJoypad = 1;
+        else
+            usingJoypad = 0;
+    }
+    
+    CCString* key = CCString::createWithFormat(USER_TUTORIAL, usingJoypad);
+    defaults()->setBoolForKey(key->getCString(), state);
+    defaults()->flush();
+}

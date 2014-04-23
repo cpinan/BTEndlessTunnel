@@ -54,6 +54,9 @@ public:
     static void setMute(bool state);
     static bool isMute();
     
+    static bool showTutorial();
+    static void isTutorialOn(bool state, int mode = -1);
+    
 };
 
 #endif /* defined(__BTEndlessTunnel__LocalStorageManager__) */
