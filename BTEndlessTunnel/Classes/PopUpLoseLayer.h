@@ -29,6 +29,7 @@ private:
     void _finishHideLayer();
     
 private:
+    const char* _leaderboardID;
     long _score;
     cocos2d::CCLabelTTF* _lblScore;
     cocos2d::CCLabelTTF* _lblMaxScore;

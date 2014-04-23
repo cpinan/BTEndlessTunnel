@@ -41,15 +41,9 @@ PlayGameSingleton& PlayGameSingleton::sharedInstance()
 
 #pragma mark - Single Leaderboard
 void PlayGameSingleton::showSingleLeaderboard(const char* leaderBoardID)
-{
-    
+{    
     if(!isSignedIn())
         authenticate();
-    
-    UIWindow *window =  [[UIApplication sharedApplication] keyWindow];
-    
-    if(!rootController)
-        rootController = window.rootViewController;
     
     NSString* name = [NSString stringWithUTF8String:leaderBoardID];
     [[GCHelper sharedInstance] showLeaderboard:name];

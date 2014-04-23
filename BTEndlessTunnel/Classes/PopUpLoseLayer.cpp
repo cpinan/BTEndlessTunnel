@@ -23,7 +23,8 @@ PopUpLoseLayer::PopUpLoseLayer()
     
     if(initWithColor(ccc4BFromccc4F(ccc4f(0, 0, 0, 100.0f / 255.0f))))
     {
-     
+        _leaderboardID = "";
+        
         _score = 0;
         disable = false;
         
@@ -163,14 +164,17 @@ void PopUpLoseLayer::updateScore(int level, float score)
     {
         if(level == kGameLevelEasy)
         {
+            _leaderboardID = LEAD_EASY_MODE;
             Utils::submitScore(LEAD_EASY_MODE, longScore);
         }
         else if (level == kGameLevelNormal)
         {
+            _leaderboardID = LEAD_NORMAL_MODE;
             Utils::submitScore(LEAD_NORMAL_MODE, longScore);
         }
         else if(level == kGameLevelHard)
         {
+            _leaderboardID = LEAD_HARD_MODE;
             Utils::submitScore(LEAD_HARD_MODE, longScore);
         }
         
@@ -200,10 +204,14 @@ void PopUpLoseLayer::_onOptionPressed(CCObject *pSender)
             break;
             
         case kTagSendScore:
+            
             if(!NativeUtils::isSignedIn())
+            {
+                CCMessageBox("Login", "Game Service");
                 NativeUtils::signIn();
+            }
             else
-                NativeUtils::showLeaderboards();
+                NativeUtils::showLeaderboard(_leaderboardID);
 
             break;
 
