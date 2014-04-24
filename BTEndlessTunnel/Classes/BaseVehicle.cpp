@@ -140,10 +140,10 @@ void BaseVehicle::doMove(CCPoint velocity)
 
 CCRect BaseVehicle::getGroundCollision()
 {
-    float x = boundingBox().getMinX() + getContentSize().width * 0.4f;
+    float x = boundingBox().getMinX() + getContentSize().width * 0.3f;
     float y = playerY;
     
-    float width = getContentSize().width * 0.5f;
+    float width = getContentSize().width * 0.55f;
     float height = getContentSize().height * 0.3f;
     
     CCRect rect = CCRectMake(x, y, width, height);
@@ -153,9 +153,9 @@ CCRect BaseVehicle::getGroundCollision()
 
 CCRect BaseVehicle::getAirCollision()
 {
-    float x = boundingBox().getMaxX() - getContentSize().width * 0.65f;
-    float y = boundingBox().getMinY() + getContentSize().height * 0.15f;
-    float w = getContentSize().width * 0.5f;
+    float x = boundingBox().getMinX() + getContentSize().width * 0.3f;
+    float y = boundingBox().getMinY() + getContentSize().height * 0.16f;
+    float w = getContentSize().width * 0.55f;
     float h = getContentSize().width * 0.2f;
     
     CCRect rect;

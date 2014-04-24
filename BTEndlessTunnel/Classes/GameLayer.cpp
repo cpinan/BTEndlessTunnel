@@ -918,7 +918,7 @@ void GameLayer::_gameLogic(float dt)
         
         obstacle->doUpdate(positionX, _worldSpeed * dt * DT_SPEED_OBSTACULOS);
         
-        if(obstacle->getIsObjectAlerted() && !obstacle->getPassPlayerSFX() && obstacle->collision(*_player))
+        if(obstacle->getPositionX() < WIN_SIZE.width && obstacle->getPositionX() > 0 && obstacle->collision(*_player))
         {
             _lblScore->setVisible(false);
             _menuPause->setVisible(false);
@@ -1338,7 +1338,7 @@ void GameLayer::draw()
                         
                         CCPoint origin = ccp(left, top);
                         CCPoint destination = ccp(right, bottom);
-                        ccDrawSolidRect(origin, destination, ccc4f(0.0f, 1.0f, 0.0f, 0.5f));
+                        ccDrawSolidRect(origin, destination, ccc4f(0.0f, 1.0f, 0.0f, 0.25f));
                         
                         
                     }
@@ -1354,7 +1354,7 @@ void GameLayer::draw()
                     
                     CCPoint origin = ccp(left, top);
                     CCPoint destination = ccp(right, bottom);
-                    ccDrawSolidRect(origin, destination, ccc4f(0.0f, 0.0f, 1.0f, 0.5f));
+                    ccDrawSolidRect(origin, destination, ccc4f(0.0f, 0.0f, 1.0f, 0.25f));
                     
                 }
                 
@@ -1367,12 +1367,12 @@ void GameLayer::draw()
         // Verde
         CCPoint originGreenPlayer = ccp(_player->getGroundCollision().getMinX(), _player->getGroundCollision().getMinY());
         CCPoint destionationGreenPlayer = ccp(_player->getGroundCollision().getMaxX(), _player->getGroundCollision().getMaxY());
-        ccDrawSolidRect(originGreenPlayer, destionationGreenPlayer, ccc4f(0.0f, 1.0f, 0.0f, 0.5f));
+        ccDrawSolidRect(originGreenPlayer, destionationGreenPlayer, ccc4f(0.0f, 1.0f, 0.0f, 0.25f));
         
         // Rojo
         CCPoint originRedPlayer = ccp(_player->getAirCollision().getMinX(), _player->getAirCollision().getMinY());
         CCPoint destionationRedPlayer = ccp(_player->getAirCollision().getMaxX(), _player->getAirCollision().getMaxY());
-        ccDrawSolidRect(originRedPlayer, destionationRedPlayer, ccc4f(1.0f, 0.0f, 0.0f, 0.5f));
+        ccDrawSolidRect(originRedPlayer, destionationRedPlayer, ccc4f(1.0f, 0.0f, 0.0f, 0.25f));
         
         
     }

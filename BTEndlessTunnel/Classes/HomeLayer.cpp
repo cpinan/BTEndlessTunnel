@@ -41,11 +41,9 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     
     CCMoveTo* move1 = CCMoveTo::create(0.9f, ccp(visibleOrigin.x + visibleSize.width + logo->getContentSize().width * 1.2f, logo->getPositionY()));
     
-    // CCMoveTo* move2 = CCMoveTo::create(1.0f, ccp(visibleOrigin.x + visibleSize.width * 0.65f, logo->getPositionY()));
-    
     CCJumpTo* move2 = CCJumpTo::create(1.5f, finalPos, visibleSize.height * 0.35f, 5);
     
-    logo->runAction(CCSequence::create(CCDelayTime::create(1), move1, move2, NULL));
+    logo->runAction(CCSequence::create(CCDelayTime::create(0.15f), move1, move2, NULL));
     
     addChild(logo , -1);
     
