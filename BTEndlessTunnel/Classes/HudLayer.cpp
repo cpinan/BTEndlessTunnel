@@ -9,8 +9,9 @@
 #include "HudLayer.h"
 #include "AppMacros.h"
 
-#define JOYPAD_BG "joy_cont_L.png"
+#define JOYPAD_BG "joystick.png"
 #define JOYPAD_THUMB "joy_L.png"
+#define JOYPAD_OPACITY 150
 
 using namespace cocos2d;
 
@@ -20,7 +21,9 @@ HudLayer::HudLayer()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     
     joypadBG = CCSprite::create(JOYPAD_BG);
+    joypadBG->setOpacity(JOYPAD_OPACITY);
     joypadThumb = CCSprite::create(JOYPAD_THUMB);
+    joypadThumb->setOpacity(JOYPAD_OPACITY);
     
     CCPoint joypadPosition = ccp(origin.x + joypadBG->getContentSize().width * 0.9f, origin.y + joypadBG->getContentSize().height * 0.6f);
     
@@ -42,6 +45,10 @@ HudLayer::HudLayer()
 
 void HudLayer::runTutorialJoypad()
 {
+    
+    joypadBG->setOpacity(255);
+    joypadThumb->setOpacity(255);
+    
     joypadBG->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.5f, 1.2f), CCScaleTo::create(0.5f, 1.0f), NULL)));
     
     joypadThumb->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.5f, 1.2f), CCScaleTo::create(0.5f, 1.0f), NULL)));
@@ -52,9 +59,11 @@ void HudLayer::stopTutorialJoypad()
 {
     joypadBG->stopAllActions();
     joypadBG->setScale(1);
+    joypadBG->setOpacity(JOYPAD_OPACITY);
     
     joypadThumb->stopAllActions();
     joypadThumb->setScale(1);
+    joypadThumb->setOpacity(JOYPAD_OPACITY);
 }
 
 HudLayer::~HudLayer()

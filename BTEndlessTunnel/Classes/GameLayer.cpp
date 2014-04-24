@@ -1095,9 +1095,9 @@ void GameLayer::_showTutorial()
     if(language == kLanguageSpanish)
     {
         tap_to_jump = "Tap para saltar";
-        joypad_move = "Joypad para moverse";
+        joypad_move = "Para moverte";
         tilt_move = "Inclina para mover";
-        tap_continue = "Tap aqui para continuar";
+        tap_continue = "Tap aquí para continuar";
         avoid_obstacles = "¡Evade los obstáculos!";
     }
     
@@ -1117,7 +1117,7 @@ void GameLayer::_showTutorial()
     spriteJump->setPositionX(visibleOrigin.x + visibleSize.width - spriteJump->getContentSize().width * 0.5f);
     spriteJump->setPositionY(visibleOrigin.y + spriteJump->getContentSize().height * 0.4f);
     layer->addChild(spriteJump);
-    spriteJump->runAction(CCRepeatForever::create(CCSequence::create(CCMoveBy::create(0.5f, ccp(0, -5)), CCMoveBy::create(0.5f, ccp(0, 5)), NULL)));
+    spriteJump->runAction(CCRepeatForever::create(CCSequence::create(CCMoveBy::create(0.5f, ccp(0, -9)), CCMoveBy::create(0.5f, ccp(0, 9)), NULL)));
 
     // Jump Tutorial
     CCLabelTTF* lblJump = CCLabelTTF::create(tap_to_jump, FONT_GAME, SIZE_TUT_INST);
