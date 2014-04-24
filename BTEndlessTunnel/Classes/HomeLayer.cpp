@@ -48,7 +48,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     // Achievements
     menuItemAchievements = CCMenuItemImage::create("achievement_off.png", "achievement.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemAchievements->setTag(kTagAchievements);
-    menuItemAchievements->setPositionX(visibleOrigin.x + menuItemAchievements->getContentSize().width);
+    menuItemAchievements->setPositionX(visibleOrigin.x + menuItemAchievements->getContentSize().width * 0.8f);
     menuItemAchievements->setPositionY(visibleOrigin.y + menuItemAchievements->getContentSize().height * 0.75f);
     
     // Leaderboards
@@ -64,18 +64,21 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuItemHard = CCMenuItemImage::create("hard_off.png", "hard.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemHard->setTag(kTagHardMode);
     menuItemHard->setAnchorPoint(ccp(0, 0));
-    menuItemHard->setPositionX(menuItemAchievements->getPositionX() - menuItemAchievements->getContentSize().width * 0.7f);
+    menuItemHard->setPositionX(menuItemAchievements->getPositionX() - menuItemAchievements->getContentSize().width * 0.5f);
     menuItemHard->setPositionY(menuItemAchievements->getPositionY() + menuItemAchievements->getContentSize().height * 0.75f);
     menuItemHard->setRotation(-3);
     menuItemHard->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(2 * time_dt), CCScaleTo::create(0.5f * time_dt, scale), CCScaleTo::create(0.5f * time_dt, 1.0f), CCDelayTime::create(0), NULL)));
     
+    float dtHeight = 1.35f;
+    if(visibleSize.height >= 768)
+        dtHeight = 1.7f;
     
     // Normal Mode
     menuItemNormal = CCMenuItemImage::create("medium_off.png", "medium.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemNormal->setTag(kTagNormalMode);
     menuItemNormal->setAnchorPoint(ccp(0, 0));
     menuItemNormal->setPositionX(menuItemHard->getPositionX());
-    menuItemNormal->setPositionY(menuItemHard->getPositionY() + menuItemAchievements->getContentSize().height * 1.35f);
+    menuItemNormal->setPositionY(menuItemHard->getPositionY() + menuItemAchievements->getContentSize().height * dtHeight);
     menuItemNormal->setRotation(-2);
     menuItemNormal->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(1 * time_dt), CCScaleTo::create(0.5f * time_dt, scale), CCScaleTo::create(0.5f * time_dt, 1.0f), CCDelayTime::create(1 * time_dt), NULL)));
     
@@ -84,7 +87,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuItemEasy->setTag(kTagEasyMode);
     menuItemEasy->setAnchorPoint(ccp(0, 0));
     menuItemEasy->setPositionX(menuItemNormal->getPositionX());
-    menuItemEasy->setPositionY(menuItemNormal->getPositionY() + menuItemAchievements->getContentSize().height * 1.35f);
+    menuItemEasy->setPositionY(menuItemNormal->getPositionY() + menuItemAchievements->getContentSize().height * dtHeight);
     menuItemEasy->setRotation(-2);
     menuItemEasy->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.5f * time_dt, scale), CCScaleTo::create(0.5f * time_dt, 1.0f), CCDelayTime::create(2 * time_dt), NULL)));
     

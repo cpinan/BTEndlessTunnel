@@ -15,7 +15,6 @@ ObstacleSimple::ObstacleSimple() : BaseObstacle("wall_02.png")
     sameCollisionArea = true;
     obstacType = kSimpleObstacle;
     
-    // CCRect collideArea = CCRect(0, 0, getContentSize().width, getContentSize().height);
     CCRect collideArea = CCRect(getContentSize().width * 0.25f, getContentSize().height * 0.1f,getContentSize().width * 0.6f, getContentSize().height * 0.8f);
     
     vCollision.push_back(collideArea);
