@@ -10,7 +10,7 @@
 
 using namespace cocos2d;
 
-ObstacleDoble::ObstacleDoble() : BaseObstacle("muro_doble_tierra.png")
+ObstacleDoble::ObstacleDoble() : BaseObstacle("obstaculo_1.png")
 {
     obstacType = kJumpObstacle;
     sameCollisionArea = false;

@@ -59,19 +59,19 @@ PopUpLoseLayer::PopUpLoseLayer()
         bg->addChild(_lblMaxScore);
         
         // Send score button
-        CCMenuItemImage* itemScore = CCMenuItemImage::create("btn_chart_2.png", "btn_chart_2.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+        CCMenuItemImage* itemScore = CCMenuItemImage::create("btn_chart_2_off.png", "btn_chart_2.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
         itemScore->setTag(kTagSendScore);
         itemScore->setPositionX(o.x - itemScore->getContentSize().width);
         itemScore->setPositionY(o.y - itemScore->getContentSize().height * 1.5f);
         
         // Home button
-        CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home.png", "pause_home.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+        CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home_off.png", "pause_home.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
         itemHome->setTag(kTagGoHome);
         itemHome->setPositionX(itemScore->getPositionX() + itemScore->getContentSize().width * 1.1f);
         itemHome->setPositionY(itemScore->getPositionY());
         
         // Play again button
-        CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay.png", "pause_replay.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+        CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay_off.png", "pause_replay.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
         itemPlayAgain->setTag(kTagPlayAgain);
         itemPlayAgain->setPositionX(itemHome->getPositionX() + itemScore->getContentSize().width * 1.1f);
         itemPlayAgain->setPositionY(itemScore->getPositionY());

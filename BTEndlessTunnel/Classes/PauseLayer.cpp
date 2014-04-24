@@ -35,18 +35,18 @@ PauseLayer::PauseLayer()
         
         
         // Play again button
-        CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay.png", "pause_replay.png", this, menu_selector(PauseLayer::_onOptionPressed));
+        CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay_off.png", "pause_replay.png", this, menu_selector(PauseLayer::_onOptionPressed));
         itemPlayAgain->setTag(kTagPausePlayAgain);
         itemPlayAgain->setPositionX(o.x - itemPlayAgain->getContentSize().width);
         itemPlayAgain->setPositionY(o.y - itemPlayAgain->getContentSize().height * 0.9f);
         
-        CCMenuItemImage* itemResume = CCMenuItemImage::create("pause_play.png", "pause_play.png", this, menu_selector(PauseLayer::_onOptionPressed));
+        CCMenuItemImage* itemResume = CCMenuItemImage::create("pause_play_off.png", "pause_play.png", this, menu_selector(PauseLayer::_onOptionPressed));
         itemResume->setTag(kTagPauseResumeGame);
         itemResume->setPositionX(itemPlayAgain->getPositionX() + itemResume->getContentSize().width * 1.1f);
         itemResume->setPositionY(itemPlayAgain->getPositionY());
         
         // Home button
-        CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home.png", "pause_home.png", this, menu_selector(PauseLayer::_onOptionPressed));
+        CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home_off.png", "pause_home.png", this, menu_selector(PauseLayer::_onOptionPressed));
         itemHome->setTag(kTagPauseGoHome);
         itemHome->setPositionX(itemResume->getPositionX() + itemResume->getContentSize().width * 1.1f);
         itemHome->setPositionY(itemResume->getPositionY());

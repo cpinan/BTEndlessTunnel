@@ -334,7 +334,7 @@ void GameLayer::configureGame(GameLevel gameLevel)
     CCPoint visOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCSize visSize = CCDirector::sharedDirector()->getVisibleSize();
     
-    _menuPause = CCMenuItemImage::create("pause.png", "pause.png", this, menu_selector(GameLayer::pauseGame));
+    _menuPause = CCMenuItemImage::create("pause_off.png", "pause.png", this, menu_selector(GameLayer::pauseGame));
     _menuPause->setVisible(false);
     _menuPause->setPositionX(visOrigin.x + _menuPause->getContentSize().width * 0.9f);
     _menuPause->setPositionY(visOrigin.y + visSize.height - _menuPause->getContentSize().width * 0.6f);
@@ -984,10 +984,9 @@ void GameLayer::_runLightning(float dt)
             
             lightning->setPosition(ccp(x, y));
             
-            lightning->runAction((CCAction*) _lightningAnimation->copy()->autorelease());
+            CCAnimate* action = (CCAnimate*) _lightningAnimation->copy()->autorelease();
+            lightning->runAction(CCSequence::create(action, CCCallFuncN::create(this, callfuncN_selector(GameLayer::_removeNode)), NULL));
             addChild(lightning, kDeepTracks - 50);
-            
-            
             SimpleAudioEngine::sharedEngine()->playEffect(SFX_LIGHTNING);
             _lightningTimer = 0;
         }
@@ -1004,7 +1003,11 @@ void GameLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEven
     {
         if(_gameState == kGameReady)
         {
-            _player->doJump();
+            CCTouch* touch = (CCTouch *) pTouches->anyObject();
+            CCPoint location = touch->getLocationInView();
+            
+            if(location.x >= WIN_SIZE.width * 0.5f)
+                _player->doJump();
         }
     }
 }

@@ -16,15 +16,9 @@ ObstacleDobleAir::~ObstacleDobleAir()
     removeAllChildren();
 }
 
-ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("wall_03.png")
+ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("obstaculo_1.png")
 {
     sameCollisionArea = false;
-    
-    /*
-    CCRect collideArea1 = CCRect(getContentSize().width * 0.1f, getContentSize().height * 0.5f, getContentSize().width * 0.5f, getContentSize().height * 0.5f);
-    
-    CCRect collideArea2 = CCRect(getContentSize().width * 0.5f, getContentSize().height * 0.0f, getContentSize().width * 0.5f, getContentSize().height * 0.5f);
-    */
     
     CCRect collideArea;
     
