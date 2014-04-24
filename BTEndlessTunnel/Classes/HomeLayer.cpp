@@ -37,13 +37,11 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     logo = CCSprite::create("logo.png");
     logo->setPositionX(-logo->getContentSize().width * 1.2f);
     logo->setPositionY(visibleOrigin.y + visibleSize.height * 0.55f);
+    
     CCPoint finalPos = ccp(visibleOrigin.x + visibleSize.width * 0.65f, logo->getPositionY());
+    CCMoveTo* move1 = CCMoveTo::create(0.9f, finalPos);
     
-    CCMoveTo* move1 = CCMoveTo::create(0.9f, ccp(visibleOrigin.x + visibleSize.width + logo->getContentSize().width * 1.2f, logo->getPositionY()));
-    
-    CCJumpTo* move2 = CCJumpTo::create(1.5f, finalPos, visibleSize.height * 0.35f, 5);
-    
-    logo->runAction(CCSequence::create(CCDelayTime::create(0.15f), move1, move2, NULL));
+    logo->runAction(CCSequence::create(CCDelayTime::create(0.25f), move1, NULL));
     
     addChild(logo , -1);
     
@@ -106,11 +104,11 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuRateApp->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.75f, 1.2f), CCScaleTo::create(0.75f, 1.0f), NULL)));
     
     // Sound management
-    CCMenuItemImage* menuSoundOn = CCMenuItemImage::create("snd_on.png", "snd_on.png", NULL, NULL);
-    CCMenuItemImage* menuSoundOff = CCMenuItemImage::create("snd_off.png", "snd_off.png", NULL, NULL);
+    CCMenuItemImage* menuSoundOn = CCMenuItemImage::create("sound_on.png", "sound_on.png", NULL, NULL);
+    CCMenuItemImage* menuSoundOff = CCMenuItemImage::create("sound_off.png", "sound_off.png", NULL, NULL);
     
     menuSound = CCMenuItemToggle::createWithTarget(this, menu_selector(HomeLayer::_manageMusic), menuSoundOn, menuSoundOff, NULL);
-    menuSound->setPositionX(menuItemLeaderboard->getPositionX() + menuSoundOn->getContentSize().width * 1.7f);
+    menuSound->setPositionX(menuItemLeaderboard->getPositionX() + menuItemAchievements->getContentSize().width * 1.2f);
     menuSound->setPositionY(menuItemLeaderboard->getPositionY());
     
     if(LocalStorageManager::isMute())

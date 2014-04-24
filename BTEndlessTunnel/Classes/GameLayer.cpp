@@ -352,18 +352,19 @@ void GameLayer::configureGame(GameLevel gameLevel)
     
     if(_gameLevel == kGameLevelEasy)
     {
+        _worldSpeed *= 1.2f;
         _vectorMap.insert(_vectorMap.begin(), easyMap, easyMap + sizeof(easyMap) / sizeof(int));
     }
     else if(_gameLevel == kGameLevelNormal)
     {
         _minDistanceObstaclesX *= 0.9f;
-        _worldSpeed *= 1.6f;
+        _worldSpeed *= 1.8f;
         _vectorMap.insert(_vectorMap.begin(), normalMap, normalMap + sizeof(normalMap) / sizeof(int));
     }
     else if(_gameLevel == kGameLevelHard)
     {
         _minDistanceObstaclesX *= 0.7f;
-        _worldSpeed *= 2.2f;
+        _worldSpeed *= 2.4f;
         _vectorMap.insert(_vectorMap.begin(), hardMap, hardMap + sizeof(hardMap) / sizeof(int));
     }
     
@@ -387,10 +388,10 @@ void GameLayer::_initLayers()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCSize size = CCDirector::sharedDirector()->getVisibleSize();
     
-    _lblScore = CCLabelTTF::create("0", FONT_GAME, SIZE_SCORE_GAME, CCSizeMake(380, 50), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
+    _lblScore = CCLabelTTF::create("0", FONT_GAME, SIZE_SCORE_GAME, CCSizeMake(380, 70), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
-    _lblScore->setPosition(ccp(origin.x + size.width * 0.56f, origin.y + size.height * 0.85f));
+    _lblScore->setPosition(ccp(origin.x + size.width * 0.56f, origin.y + size.height * 0.82f));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();
