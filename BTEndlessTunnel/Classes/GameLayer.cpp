@@ -694,12 +694,6 @@ void GameLayer::runGame()
     }
     
     unscheduleUpdate();
-
-    if(!LocalStorageManager::isMute())
-    {
-        _showAudioPlaying();
-    }
-    
     scheduleUpdate();
 }
 
@@ -1083,10 +1077,30 @@ void GameLayer::_gameIsReady()
     _gameState = kGameReady;
     setTouchEnabled(true);
     _menuPause->setVisible(true);
+    
+    if(!LocalStorageManager::isMute())
+        _showAudioPlaying();
 }
 
 void GameLayer::_showTutorial()
 {
+    
+    ccLanguageType language = CCApplication::sharedApplication()->getCurrentLanguage();
+    const char* tap_to_jump = "Tap to Jump";
+    const char* joypad_move = "Joypad to move";
+    const char* tilt_move = "Tilt to move";
+    const char* tap_continue = "Tap here to continue";
+    const char* avoid_obstacles = "Avoid the obstacles!";
+    
+    if(language == kLanguageSpanish)
+    {
+        tap_to_jump = "Tap para saltar";
+        joypad_move = "Joypad para moverse";
+        tilt_move = "Inclina para mover";
+        tap_continue = "Tap aqui para continuar";
+        avoid_obstacles = "¡Evade los obstáculos!";
+    }
+    
     _gameState = kGameTutorial;
     
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -1099,48 +1113,50 @@ void GameLayer::_showTutorial()
     CCLayerColor* layer = CCLayerColor::create(ccc4BFromccc4F(ccc4f(0, 0, 0, 0.5f)));
     layer->setTag(kTagTutorialLayer);
     
-    CCSprite* spriteJump = CCSprite::create("touch.png");
+    CCSprite* spriteJump = CCSprite::create("tap.png");
     spriteJump->setPositionX(visibleOrigin.x + visibleSize.width - spriteJump->getContentSize().width * 0.5f);
     spriteJump->setPositionY(visibleOrigin.y + spriteJump->getContentSize().height * 0.4f);
     layer->addChild(spriteJump);
-    
+    spriteJump->runAction(CCRepeatForever::create(CCSequence::create(CCMoveBy::create(0.5f, ccp(0, -5)), CCMoveBy::create(0.5f, ccp(0, 5)), NULL)));
+
     // Jump Tutorial
-    CCLabelTTF* lblJump = CCLabelTTF::create("Tap to Jump", FONT_GAME, 45.0f);
+    CCLabelTTF* lblJump = CCLabelTTF::create(tap_to_jump, FONT_GAME, SIZE_TUT_INST);
     lblJump->setPosition(center);
-    lblJump->setPositionY(visibleOrigin.y + lblJump->getPositionY() - visibleSize.height * 0.05f);
+    lblJump->setPositionY(spriteJump->getPositionY() + spriteJump->getContentSize().height * 0.6f);
     lblJump->setPositionX(lblJump->getPositionX() + visibleSize.width * 0.3f);
     layer->addChild(lblJump);
     
     if(_isJoypad)
     {
         // Press Joypad Tutorial
-        CCLabelTTF* lblJoypad = CCLabelTTF::create("Joypad to move", FONT_GAME, 45.0f);
+        CCLabelTTF* lblJoypad = CCLabelTTF::create(joypad_move, FONT_GAME, SIZE_TUT_INST);
         lblJoypad->setPosition(center);
-        lblJoypad->setPositionY(lblJump->getPositionY() - visibleSize.height * 0.15f);
+        lblJoypad->setPositionY(lblJump->getPositionY() - visibleSize.height * 0.1f);
         lblJoypad->setPositionX(lblJoypad->getPositionX() - visibleSize.width * 0.32f);
         layer->addChild(lblJoypad);
+        
+        _hudLayer->runTutorialJoypad();
     }
     else
     {
         // Accelerometer
-        CCLabelTTF* lblAccelerometer = CCLabelTTF::create("Tilt to move", FONT_GAME, 45.0f);
+        CCLabelTTF* lblAccelerometer = CCLabelTTF::create(tilt_move, FONT_GAME, SIZE_TUT_INST);
         lblAccelerometer->setPosition(center);
         lblAccelerometer->setPositionY(lblJump->getPositionY());
         lblAccelerometer->setPositionX(lblAccelerometer->getPositionX() - visibleSize.width * 0.35f);
         layer->addChild(lblAccelerometer);
     }
     
-    // Avoid the obstacles
-    CCLabelTTF* lblAvoid = CCLabelTTF::create("Avoid the obstacles!", FONT_GAME, 45.0f, CCSizeMake(visibleSize.width * 0.8f, visibleSize.height), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
-    lblAvoid->setPosition(center);
-    lblAvoid->setPositionY(visibleOrigin.y + lblAvoid->getPositionY() + visibleSize.height * 0.05f);
-    layer->addChild(lblAvoid);
-    
-    CCLabelTTF* lblCloseTutorial = CCLabelTTF::create("<< Tap here to continue >>", FONT_GAME, 70.0f);
+    CCLabelTTF* lblCloseTutorial = CCLabelTTF::create(tap_continue, FONT_GAME, SIZE_TUT_TITLE);
     CCMenuItemLabel* menuCloseTutorial = CCMenuItemLabel::create(lblCloseTutorial, this, menu_selector(GameLayer::_finishTutorial));
     menuCloseTutorial->setPosition(center);
-    menuCloseTutorial->setPositionY(visibleOrigin.y + menuCloseTutorial->getPositionY() + visibleSize.height * 0.22f);
+    menuCloseTutorial->setPositionY(visibleOrigin.y + visibleSize.height - menuCloseTutorial->getContentSize().height * 1.2f);
     
+    // Avoid the obstacles
+    CCLabelTTF* lblAvoid = CCLabelTTF::create(avoid_obstacles, FONT_GAME, SIZE_TUT_INST, CCSizeMake(visibleSize.width * 0.8f, visibleSize.height), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    lblAvoid->setPosition(center);
+    lblAvoid->setPositionY(menuCloseTutorial->getContentSize().height * 1.9f);
+    layer->addChild(lblAvoid);
     
     CCMenu* menu = CCMenu::create(menuCloseTutorial, NULL);
     menu->setPosition(CCPointZero);
@@ -1150,16 +1166,21 @@ void GameLayer::_showTutorial()
     
     unscheduleUpdate();
     _pauseAllActions();
+    
+    menuCloseTutorial->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -5), CCRotateTo::create(0.5f, 5), NULL)));
 }
 
 void GameLayer::_finishTutorial(cocos2d::CCObject *object)
 {
     
     CCMenuItem* item = (CCMenuItem *) object;
-    item->removeFromParent();
+    item->setEnabled(false);
+    
+    if(_isJoypad)
+        _hudLayer->stopTutorialJoypad();
     
     CCLayerColor* layer = (CCLayerColor *) getChildByTag(kTagTutorialLayer);
-    layer->removeFromParentAndCleanup(true);
+    layer->removeFromParent();
     
     scheduleUpdate();
     _resumeAllActions();

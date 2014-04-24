@@ -101,7 +101,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuRateApp->setTag(kTagRateApp);
     menuRateApp->setPositionX(visibleOrigin.x + visibleSize.width * 0.7f);
     menuRateApp->setPositionY(visibleOrigin.y + menuRateApp->getContentSize().height * 1.8f);
-    menuRateApp->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.75f, 1.2f), CCScaleTo::create(0.75f, 1.0f), NULL)));
+    menuRateApp->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -5), CCRotateTo::create(0.5f, 5), NULL)));
     
     // Sound management
     CCMenuItemImage* menuSoundOn = CCMenuItemImage::create("sound_on.png", "sound_on.png", NULL, NULL);

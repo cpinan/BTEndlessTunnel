@@ -21,9 +21,13 @@ public:
     HudLayer();
     
     void updateControl(BaseVehicle& player, float dt);
+    void runTutorialJoypad();
+    void stopTutorialJoypad();
     
 private:
     SneakyJoystick* joypad;
+    cocos2d::CCSprite* joypadBG;
+    cocos2d::CCSprite* joypadThumb;
     
 };
 

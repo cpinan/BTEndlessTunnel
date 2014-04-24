@@ -19,11 +19,8 @@ HudLayer::HudLayer()
     
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     
-    CCSprite* joypadBG = CCSprite::create(JOYPAD_BG);
-    joypadBG->setOpacity(128);
-    
-    CCSprite* joypadThumb = CCSprite::create(JOYPAD_THUMB);
-    joypadThumb->setOpacity(joypadBG->getOpacity());
+    joypadBG = CCSprite::create(JOYPAD_BG);
+    joypadThumb = CCSprite::create(JOYPAD_THUMB);
     
     CCPoint joypadPosition = ccp(origin.x + joypadBG->getContentSize().width * 0.9f, origin.y + joypadBG->getContentSize().height * 0.6f);
     
@@ -41,6 +38,23 @@ HudLayer::HudLayer()
     joypad = baseStick->getJoystick();
     addChild(baseStick);
 
+}
+
+void HudLayer::runTutorialJoypad()
+{
+    joypadBG->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.5f, 1.2f), CCScaleTo::create(0.5f, 1.0f), NULL)));
+    
+    joypadThumb->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.5f, 1.2f), CCScaleTo::create(0.5f, 1.0f), NULL)));
+    
+}
+
+void HudLayer::stopTutorialJoypad()
+{
+    joypadBG->stopAllActions();
+    joypadBG->setScale(1);
+    
+    joypadThumb->stopAllActions();
+    joypadThumb->setScale(1);
 }
 
 HudLayer::~HudLayer()
