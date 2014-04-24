@@ -1131,7 +1131,7 @@ void GameLayer::_showTutorial()
         // Press Joypad Tutorial
         CCLabelTTF* lblJoypad = CCLabelTTF::create(joypad_move, FONT_GAME, SIZE_TUT_INST);
         lblJoypad->setPosition(center);
-        lblJoypad->setPositionY(lblJump->getPositionY());
+        lblJoypad->setPositionY(lblJump->getPositionY() - spriteJump->getContentSize().height * 0.1f);
         lblJoypad->setPositionX(lblJoypad->getPositionX() - visibleSize.width * 0.32f);
         layer->addChild(lblJoypad);
         
@@ -1150,12 +1150,12 @@ void GameLayer::_showTutorial()
     CCLabelTTF* lblCloseTutorial = CCLabelTTF::create(tap_continue, FONT_GAME, SIZE_TUT_TITLE);
     CCMenuItemLabel* menuCloseTutorial = CCMenuItemLabel::create(lblCloseTutorial, this, menu_selector(GameLayer::_finishTutorial));
     menuCloseTutorial->setPosition(center);
-    menuCloseTutorial->setPositionY(visibleOrigin.y + visibleSize.height - menuCloseTutorial->getContentSize().height * 1.2f);
+    menuCloseTutorial->setPositionY(visibleOrigin.y + visibleSize.height - menuCloseTutorial->getContentSize().height * 1.9f);
     
     // Avoid the obstacles
     CCLabelTTF* lblAvoid = CCLabelTTF::create(avoid_obstacles, FONT_GAME, SIZE_TUT_INST, CCSizeMake(visibleSize.width * 0.8f, visibleSize.height), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     lblAvoid->setPosition(center);
-    lblAvoid->setPositionY(menuCloseTutorial->getContentSize().height * 1.9f);
+    lblAvoid->setPositionY(visibleOrigin.y +  menuCloseTutorial->getContentSize().height * 1.2f);
     layer->addChild(lblAvoid);
     
     CCMenu* menu = CCMenu::create(menuCloseTutorial, NULL);
@@ -1297,7 +1297,7 @@ void GameLayer::_checkAchievements()
         // Jump 50 Obstacles
         if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         {
-            if(totalObstaclesJumped >= 50)
+            if(totalObstaclesJumped >= 50/* && !LocalStorageManager::isAchievementUnlocked(ACH_JUMP_50_OBSTACLES)*/)
                 Utils::unlockAchievement(ACH_JUMP_50_OBSTACLES);
         }
         else
@@ -1308,7 +1308,7 @@ void GameLayer::_checkAchievements()
         // Jump 1000 Obstacles
         if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         {
-            if(totalObstaclesJumped >= 1000)
+            if(totalObstaclesJumped >= 1000/* && !LocalStorageManager::isAchievementUnlocked(ACH_JUMP_1000_OBSTACLES)*/)
                 Utils::unlockAchievement(ACH_JUMP_1000_OBSTACLES);
         }
         else
