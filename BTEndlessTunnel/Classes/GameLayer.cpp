@@ -1131,7 +1131,7 @@ void GameLayer::_showTutorial()
         // Press Joypad Tutorial
         CCLabelTTF* lblJoypad = CCLabelTTF::create(joypad_move, FONT_GAME, SIZE_TUT_INST);
         lblJoypad->setPosition(center);
-        lblJoypad->setPositionY(lblJump->getPositionY() - visibleSize.height * 0.1f);
+        lblJoypad->setPositionY(lblJump->getPositionY());
         lblJoypad->setPositionX(lblJoypad->getPositionX() - visibleSize.width * 0.32f);
         layer->addChild(lblJoypad);
         
