@@ -37,9 +37,17 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     logo = CCSprite::create("logo.png");
     logo->setPositionX(-logo->getContentSize().width * 1.2f);
     logo->setPositionY(visibleOrigin.y + visibleSize.height * 0.55f);
-    logo->runAction(CCMoveTo::create(0.7f, ccp(visibleOrigin.x + visibleSize.width * 0.65f, logo->getPositionY())));
-    addChild(logo , -1);
+    CCPoint finalPos = ccp(visibleOrigin.x + visibleSize.width * 0.65f, logo->getPositionY());
     
+    CCMoveTo* move1 = CCMoveTo::create(0.9f, ccp(visibleOrigin.x + visibleSize.width + logo->getContentSize().width * 1.2f, logo->getPositionY()));
+    
+    // CCMoveTo* move2 = CCMoveTo::create(1.0f, ccp(visibleOrigin.x + visibleSize.width * 0.65f, logo->getPositionY()));
+    
+    CCJumpTo* move2 = CCJumpTo::create(1.5f, finalPos, visibleSize.height * 0.35f, 5);
+    
+    logo->runAction(CCSequence::create(CCDelayTime::create(1), move1, move2, NULL));
+    
+    addChild(logo , -1);
     
     // Achievements
     menuItemAchievements = CCMenuItemImage::create("achievement.png", "achievement.png", this, menu_selector(HomeLayer::_onOptionPressed));
@@ -53,14 +61,18 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuItemLeaderboard->setPositionX(menuItemAchievements->getPositionX() + menuItemAchievements->getContentSize().width * 1.2f);
     menuItemLeaderboard->setPositionY(menuItemAchievements->getPositionY());
     
+    float scale = 1.05f;
+    float time_dt = 1.3f;
     
     // Hard Mode
     menuItemHard = CCMenuItemImage::create("hard.png", "hard.png", this, menu_selector(HomeLayer::_onOptionPressed));
     menuItemHard->setTag(kTagHardMode);
     menuItemHard->setAnchorPoint(ccp(0, 0));
     menuItemHard->setPositionX(menuItemAchievements->getPositionX() - menuItemAchievements->getContentSize().width * 0.7f);
-    menuItemHard->setPositionY(menuItemAchievements->getPositionY() + menuItemAchievements->getContentSize().height * 0.75F);
+    menuItemHard->setPositionY(menuItemAchievements->getPositionY() + menuItemAchievements->getContentSize().height * 0.75f);
     menuItemHard->setRotation(-3);
+    menuItemHard->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(2 * time_dt), CCScaleTo::create(0.5f * time_dt, scale), CCScaleTo::create(0.5f * time_dt, 1.0f), CCDelayTime::create(0), NULL)));
+    
     
     // Normal Mode
     menuItemNormal = CCMenuItemImage::create("medium.png", "medium.png", this, menu_selector(HomeLayer::_onOptionPressed));
@@ -69,6 +81,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuItemNormal->setPositionX(menuItemHard->getPositionX());
     menuItemNormal->setPositionY(menuItemHard->getPositionY() + menuItemAchievements->getContentSize().height * 1.35f);
     menuItemNormal->setRotation(-2);
+    menuItemNormal->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(1 * time_dt), CCScaleTo::create(0.5f * time_dt, scale), CCScaleTo::create(0.5f * time_dt, 1.0f), CCDelayTime::create(1 * time_dt), NULL)));
     
     // Easy Mode
     menuItemEasy = CCMenuItemImage::create("easy.png", "easy.png", this, menu_selector(HomeLayer::_onOptionPressed));
@@ -77,6 +90,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuItemEasy->setPositionX(menuItemNormal->getPositionX());
     menuItemEasy->setPositionY(menuItemNormal->getPositionY() + menuItemAchievements->getContentSize().height * 1.35f);
     menuItemEasy->setRotation(-2);
+    menuItemEasy->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.5f * time_dt, scale), CCScaleTo::create(0.5f * time_dt, 1.0f), CCDelayTime::create(2 * time_dt), NULL)));
     
     // Settings
     menuItemSettings = CCMenuItemImage::create("ajustes.png", "ajustes.png", this, menu_selector(HomeLayer::_onOptionPressed));
@@ -91,6 +105,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menuRateApp->setTag(kTagRateApp);
     menuRateApp->setPositionX(visibleOrigin.x + visibleSize.width * 0.7f);
     menuRateApp->setPositionY(visibleOrigin.y + menuRateApp->getContentSize().height * 1.8f);
+    menuRateApp->runAction(CCRepeatForever::create(CCSequence::create(CCScaleTo::create(0.75f, 1.2f), CCScaleTo::create(0.75f, 1.0f), NULL)));
     
     // Sound management
     CCMenuItemImage* menuSoundOn = CCMenuItemImage::create("snd_on.png", "snd_on.png", NULL, NULL);

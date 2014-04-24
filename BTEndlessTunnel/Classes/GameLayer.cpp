@@ -1100,13 +1100,13 @@ void GameLayer::_showTutorial()
     
     CCSprite* spriteJump = CCSprite::create("touch.png");
     spriteJump->setPositionX(visibleOrigin.x + visibleSize.width - spriteJump->getContentSize().width * 0.5f);
-    spriteJump->setPositionY(spriteJump->getContentSize().height * 0.4f);
+    spriteJump->setPositionY(visibleOrigin.y + spriteJump->getContentSize().height * 0.4f);
     layer->addChild(spriteJump);
     
     // Jump Tutorial
     CCLabelTTF* lblJump = CCLabelTTF::create("Tap to Jump", FONT_GAME, 45.0f);
     lblJump->setPosition(center);
-    lblJump->setPositionY(lblJump->getPositionY() - visibleSize.height * 0.05f);
+    lblJump->setPositionY(visibleOrigin.y + lblJump->getPositionY() - visibleSize.height * 0.05f);
     lblJump->setPositionX(lblJump->getPositionX() + visibleSize.width * 0.3f);
     layer->addChild(lblJump);
     
@@ -1115,7 +1115,7 @@ void GameLayer::_showTutorial()
         // Press Joypad Tutorial
         CCLabelTTF* lblJoypad = CCLabelTTF::create("Joypad to move", FONT_GAME, 45.0f);
         lblJoypad->setPosition(center);
-        lblJoypad->setPositionY(lblJump->getPositionY() - visibleSize.height * 0.12f);
+        lblJoypad->setPositionY(lblJump->getPositionY() - visibleSize.height * 0.15f);
         lblJoypad->setPositionX(lblJoypad->getPositionX() - visibleSize.width * 0.32f);
         layer->addChild(lblJoypad);
     }
@@ -1130,15 +1130,15 @@ void GameLayer::_showTutorial()
     }
     
     // Avoid the obstacles
-    CCLabelTTF* lblAvoid = CCLabelTTF::create("Avoid the obstacles!", FONT_GAME, 55.0f, CCSizeMake(visibleSize.width * 0.8f, visibleSize.height), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
+    CCLabelTTF* lblAvoid = CCLabelTTF::create("Avoid the obstacles!", FONT_GAME, 45.0f, CCSizeMake(visibleSize.width * 0.8f, visibleSize.height), kCCTextAlignmentCenter, kCCVerticalTextAlignmentCenter);
     lblAvoid->setPosition(center);
-    lblAvoid->setPositionY(lblAvoid->getPositionY() + visibleSize.height * 0.15f);
+    lblAvoid->setPositionY(visibleOrigin.y + lblAvoid->getPositionY() + visibleSize.height * 0.05f);
     layer->addChild(lblAvoid);
     
-    CCLabelTTF* lblCloseTutorial = CCLabelTTF::create("<< Tap here to continue >>", FONT_GAME, 80.0f);
+    CCLabelTTF* lblCloseTutorial = CCLabelTTF::create("<< Tap here to continue >>", FONT_GAME, 70.0f);
     CCMenuItemLabel* menuCloseTutorial = CCMenuItemLabel::create(lblCloseTutorial, this, menu_selector(GameLayer::_finishTutorial));
     menuCloseTutorial->setPosition(center);
-    menuCloseTutorial->setPositionY(menuCloseTutorial->getPositionY() + visibleSize.height * 0.35f);
+    menuCloseTutorial->setPositionY(visibleOrigin.y + menuCloseTutorial->getPositionY() + visibleSize.height * 0.22f);
     
     
     CCMenu* menu = CCMenu::create(menuCloseTutorial, NULL);

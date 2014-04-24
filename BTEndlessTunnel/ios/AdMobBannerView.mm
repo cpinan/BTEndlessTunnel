@@ -34,14 +34,16 @@
     [bannerView_ loadRequest:[GADRequest request]];
     
     [self load];
+    /*
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:bannerView_ attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    */
 }
 
 - (void) load
 {
     
     [self.view addSubview:bannerView_];
-    /*
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:bannerView_ attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];*/
+
 }
 
 - (void)didReceiveMemoryWarning
