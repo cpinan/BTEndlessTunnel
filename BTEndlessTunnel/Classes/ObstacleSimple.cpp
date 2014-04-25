@@ -10,7 +10,7 @@
 
 using namespace cocos2d;
 
-ObstacleSimple::ObstacleSimple() : BaseObstacle("muro_2.png")
+ObstacleSimple::ObstacleSimple() : BaseObstacle("muro_2b.png")
 {
     sameCollisionArea = true;
     obstacType = kSimpleObstacle;

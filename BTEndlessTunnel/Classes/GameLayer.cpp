@@ -353,9 +353,9 @@ void GameLayer::_createMap()
         x += spFloor->getContentSize().width;
     }
     
-    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.6f;
+    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.65f;
     OBSTACLE_DOBLE_GROUND_Y = _playerStartY + _wallHeight * 0.7f;
-    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.3f;
+    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.4f;
     OBSTACLE_DOBLE_AIR_Y = _playerStartY + _wallHeight * 1.8f;
     
 }
