@@ -68,7 +68,7 @@ SettingsLayer::SettingsLayer()
             itemAccel->setOpacity(CONTROL_ALPHA);
         
         // Home button
-        CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home.png", "pause_home.png", this, menu_selector(SettingsLayer::_onOptionPressed));
+        CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home_off.png", "pause_home.png", this, menu_selector(SettingsLayer::_onOptionPressed));
         itemHome->setTag(kTagSettingGoHome);
         itemHome->setPositionX(center.x);
         itemHome->setPositionY(center.y - itemHome->getContentSize().height * 1.6f);
