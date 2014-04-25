@@ -11,6 +11,8 @@
 
 #include "cocos2d.h"
 #include "GameLayer.h"
+#include "SettingsLayer.h"
+
 
 enum HomeButtons
 {
@@ -49,9 +51,14 @@ private:
     void _hideToLeft();
     void _hideToRight();
     
+    void _enableButtons();
+    void _disableButtons();
+    
 private:
     bool disable;
     GameLayer* _gameLayer;
+    SettingsLayer* _settingsLayer;
+    cocos2d::CCMenu* menu;
 };
 
 #endif /* defined(__BTEndlessTunnel__HomeLayer__) */

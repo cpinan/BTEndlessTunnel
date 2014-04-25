@@ -7,7 +7,6 @@
 //
 
 #include "HomeLayer.h"
-#include "SettingsLayer.h"
 #include "NativeUtils.h"
 #include "Constants.h"
 #include "SimpleAudioEngine.h"
@@ -21,6 +20,9 @@ using namespace CocosDenshion;
 
 HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
 {
+    
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HomeLayer::_enableButtons), NOTIFICATION_ENABLE_BUTTONS, NULL);
+    
     disable = false;
         
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -118,7 +120,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
         menuSound->setSelectedIndex(1);
     
     // Menu
-    CCMenu* menu = CCMenu::create();
+    menu = CCMenu::create();
     menu->setPosition(CCPointZero);
     menu->addChild(menuItemEasy);
     menu->addChild(menuItemNormal);
@@ -131,13 +133,18 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     
     addChild(menu);
     
+    _settingsLayer = new SettingsLayer();
+    _settingsLayer->autorelease();
+    _settingsLayer->setVisible(false);
+    addChild(_settingsLayer, 9999);
+    
     NativeUtils::showAd();
     
 }
 
 void HomeLayer::_manageMusic(cocos2d::CCObject* pSender)
 {
-    if(disable)
+    if(disable || _settingsLayer->isVisible())
         return;
     
     SimpleAudioEngine::sharedEngine()->playEffect(SFX_BUTTON);
@@ -148,12 +155,12 @@ void HomeLayer::_manageMusic(cocos2d::CCObject* pSender)
 
 HomeLayer::~HomeLayer()
 {
-    
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_ENABLE_BUTTONS);
 }
 
 void HomeLayer::_onOptionPressed(CCObject *pSender)
 {
-    if(disable)
+    if(disable || _settingsLayer->isVisible())
         return;
     
     SimpleAudioEngine::sharedEngine()->playEffect(SFX_BUTTON);
@@ -178,7 +185,8 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
             break;
             
         case kTagSettings:
-            CCDirector::sharedDirector()->pushScene(SettingsLayer::scene());
+            _disableButtons();
+            _settingsLayer->setVisible(true);
             break;
             
         case kTagLeaderboard:
@@ -199,6 +207,7 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
     
     if(runGame)
     {
+        _disableButtons();
         NativeUtils::hideAd();
         disable = true;
         _hideToLeft();
@@ -233,4 +242,24 @@ void HomeLayer::_finishHideLayer()
     this->setVisible(false);
     _gameLayer->playGame();
     this->removeFromParent();    
+}
+
+void HomeLayer::_enableButtons()
+{
+    CCObject* object;
+    CCARRAY_FOREACH(menu->getChildren(), object)
+    {
+        CCMenuItem* item = (CCMenuItem*) object;
+        item->setEnabled(true);
+    }
+}
+
+void HomeLayer::_disableButtons()
+{
+    CCObject* object;
+    CCARRAY_FOREACH(menu->getChildren(), object)
+    {
+        CCMenuItem* item = (CCMenuItem*) object;
+        item->setEnabled(false);
+    }
 }

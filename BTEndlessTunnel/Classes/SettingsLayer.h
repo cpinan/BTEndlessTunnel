@@ -26,6 +26,8 @@ public:
     
 private:
     void _onOptionPressed(cocos2d::CCObject* pSender);
+    cocos2d::CCMenuItemImage* itemJoypad;
+    cocos2d::CCMenuItemImage* itemAccel;
 };
 
 #endif /* defined(__BTEndlessTunnel__SettingsLayer__) */
