@@ -1011,6 +1011,7 @@ void GameLayer::_runLightning(float dt)
         _lightningTimer += dt;
         if(_lightningTimer > LIGHT_TIME)
         {
+            
             CCSprite* lightning = CCSprite::create("");
             
             CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
@@ -1025,6 +1026,8 @@ void GameLayer::_runLightning(float dt)
             CCAnimate* action = (CCAnimate*) _lightningAnimation->copy()->autorelease();
             lightning->runAction(CCSequence::create(action, CCCallFuncN::create(this, callfuncN_selector(GameLayer::_removeNode)), NULL));
             addChild(lightning, kDeepTracks - 50);
+            
+            
             SimpleAudioEngine::sharedEngine()->playEffect(SFX_LIGHTNING);
             _lightningTimer = 0;
         }
