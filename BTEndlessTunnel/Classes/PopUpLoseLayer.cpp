@@ -209,10 +209,7 @@ void PopUpLoseLayer::_onOptionPressed(CCObject *pSender)
         case kTagSendScore:
             
             if(!NativeUtils::isSignedIn())
-            {
-                CCMessageBox("Login", "Game Service");
                 NativeUtils::signIn();
-            }
             else
                 NativeUtils::showLeaderboard(_leaderboardID);
 
