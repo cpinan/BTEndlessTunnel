@@ -16,7 +16,7 @@ ObstacleDobleAir::~ObstacleDobleAir()
     removeAllChildren();
 }
 
-ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("obstaculo_1.png")
+ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("obstaculo_1_c.png")
 {
     sameCollisionArea = false;
     
@@ -28,18 +28,19 @@ ObstacleDobleAir::ObstacleDobleAir() : BaseObstacle("obstaculo_1.png")
     collideArea = CCRect(getContentSize().width * 0.2f, getContentSize().height * 0.5f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
     vCollision.push_back(collideArea);
     
-    collideArea = CCRect(getContentSize().width * 0.4f, getContentSize().height * 0.35f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
+    collideArea = CCRect(getContentSize().width * 0.3f, getContentSize().height * 0.35f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
     vCollision.push_back(collideArea);
     
-    collideArea = CCRect(getContentSize().width * 0.6f, getContentSize().height * 0.2f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
+    collideArea = CCRect(getContentSize().width * 0.4f, getContentSize().height * 0.25f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
     vCollision.push_back(collideArea);
     
-    _spShadow = CCSprite::create(SP_SHADOW);
-    _spShadow->setPosition(ccp(_spShadow->getContentSize().width * 0.8f, -_spShadow->getContentSize().height * 1.25f));
-    _spShadow->setOpacity(128);
+    collideArea = CCRect(getContentSize().width * 0.5f, getContentSize().height * 0.1f, getContentSize().width * 0.2f, getContentSize().height * 0.25f);
+    vCollision.push_back(collideArea);
+    
+    _spShadow = CCSprite::create("sombra_obstaculo_1c.png");
+    _spShadow->setPosition(ccp(_spShadow->getContentSize().width * 0.6f, -_spShadow->getContentSize().height * 0.4f));
     addChild(_spShadow, -1);
     
-    //vCollision.push_back(collideArea2);
 
 }
 

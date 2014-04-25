@@ -7,6 +7,7 @@
 //
 
 #include "HomeScene.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 
@@ -25,6 +26,7 @@ HomeScene::HomeScene(GameMode gameMode, GameLevel gameLevel)
     if(gameMode == kGameModeHome)
     {
         HomeLayer* homeLayer = new HomeLayer(gameLayer);
+        homeLayer->setVisible(!TEST_OBSTACLE);
         homeLayer->autorelease();
         addChild(homeLayer, kZHomeLayer);
     }

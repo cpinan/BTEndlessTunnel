@@ -179,6 +179,7 @@ private:
     float OBSTACLE_SIMPLE_BOT_Y;
     float OBSTACLE_SIMPLE_TOP_Y;
     float OBSTACLE_DOBLE_AIR_Y;
+    float OBSTACLE_DOBLE_GROUND_Y;
     
     cocos2d::CCLabelTTF* _lblScore;
     cocos2d::CCPoint _accelVelocity;

@@ -132,6 +132,41 @@ GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel)
     _createMap();
     _initLayers();
     _gameLevel = gameLevel;
+    
+    if(TEST_OBSTACLE)
+    {
+        
+        BaseObstacle* obs;
+        
+        obs = new ObstacleSimple();
+        obs->autorelease();
+        obs->setTag(1000);
+        obs->setPositionX(WIN_SIZE.width * 0.2f);
+        obs->setPositionY(OBSTACLE_SIMPLE_BOT_Y);
+        addChild(obs, -100);
+        
+        obs = new ObstacleSimple();
+        obs->autorelease();
+        obs->setTag(1001);
+        obs->setPositionX(WIN_SIZE.width * 0.4f);
+        obs->setPositionY(OBSTACLE_SIMPLE_TOP_Y);
+        addChild(obs, -100);
+        
+        obs = new ObstacleDoble();
+        obs->autorelease();
+        obs->setTag(1002);
+        obs->setPositionX(WIN_SIZE.width * 0.6f);
+        obs->setPositionY(OBSTACLE_DOBLE_GROUND_Y);
+        addChild(obs, -100);
+        
+        obs = new ObstacleDobleAir();
+        obs->autorelease();
+        obs->setTag(1003);
+        obs->setPositionX(WIN_SIZE.width * 0.8f);
+        obs->setPositionY(OBSTACLE_DOBLE_AIR_Y);
+        addChild(obs, -100);
+    }
+    
 }
 
 void GameLayer::_preloadLightning()
@@ -318,9 +353,10 @@ void GameLayer::_createMap()
         x += spFloor->getContentSize().width;
     }
     
-    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.85f;
-    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.5f;
-    OBSTACLE_DOBLE_AIR_Y = _playerStartY + _wallHeight * 1.9f;
+    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.75f;
+    OBSTACLE_DOBLE_GROUND_Y = _playerStartY + _wallHeight * 0.7f;
+    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.25f;
+    OBSTACLE_DOBLE_AIR_Y = _playerStartY + _wallHeight * 1.8f;
     
 }
 
@@ -466,7 +502,7 @@ void GameLayer::_createObstacle(float x)
     else if(type == 2)
     {
         obstacle = new ObstacleDoble();
-        y = OBSTACLE_SIMPLE_BOT_Y;
+        y = OBSTACLE_DOBLE_GROUND_Y;
         z = WIN_SIZE.height * 0.5f;
     }
     else if(type == 3)
@@ -552,7 +588,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     else if(type == 6)
     {
         // Crear 3 obstaculos dobles en tierra
-        y = OBSTACLE_SIMPLE_BOT_Y;
+        y = OBSTACLE_DOBLE_GROUND_Y;
         z = WIN_SIZE.height * 0.5f;
         
         for(i = 0; i < 3; i++)
@@ -602,7 +638,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     else if(type == 8)
     {
         // Crear 2 obstaculos dobles en tierra
-        y = OBSTACLE_SIMPLE_BOT_Y;
+        y = OBSTACLE_DOBLE_GROUND_Y;
         z = WIN_SIZE.height * 0.5f;
         
         for(i = 0; i < 2; i++)
@@ -1400,6 +1436,65 @@ void GameLayer::draw()
         ccDrawSolidRect(originRedPlayer, destionationRedPlayer, ccc4f(1.0f, 0.0f, 0.0f, 0.25f));
         
         
+    }
+    
+    if(TEST_OBSTACLE)
+    {
+        
+        CCArray* _testObstacles = CCArray::create();
+        _testObstacles->addObject((CCSprite *) getChildByTag(1000));
+        _testObstacles->addObject((CCSprite *) getChildByTag(1001));
+        _testObstacles->addObject((CCSprite *) getChildByTag(1002));
+        _testObstacles->addObject((CCSprite *) getChildByTag(1003));
+        
+        CCObject* object;
+        
+        CCARRAY_FOREACH(_testObstacles, object)
+        {
+            BaseObstacle* obstacle = (BaseObstacle*) object;
+            if(obstacle != NULL)
+            {
+                int i;
+                CCRect area;
+                float left, top, right, bottom;
+                
+                std::vector<CCRect> areas = obstacle->getVCollision();
+                
+                if(areas.size() > 0)
+                {
+                    for(i = 0; i < areas.size(); i++)
+                    {
+                        area = obstacle->currentCollisionArea(areas[i]);
+                        
+                        left = area.getMinX();
+                        top = area.getMinY();
+                        right = area.getMaxX();
+                        bottom = area.getMaxY();
+                        
+                        CCPoint origin = ccp(left, top);
+                        CCPoint destination = ccp(right, bottom);
+                        ccDrawSolidRect(origin, destination, ccc4f(0.0f, 1.0f, 0.0f, 0.25f));
+                        
+                        
+                    }
+                }
+                
+                if(obstacle->getObstacType() == kSimpleObstacle)
+                {
+                    area = obstacle->boundingBox();
+                    top = area.getMinY() + obstacle->getContentSize().height * 0.0f;
+                    bottom = top + obstacle->getContentSize().height * 0.37f;
+                    left = area.getMinX();
+                    right = area.getMaxX();
+                    
+                    CCPoint origin = ccp(left, top);
+                    CCPoint destination = ccp(right, bottom);
+                    ccDrawSolidRect(origin, destination, ccc4f(0.0f, 0.0f, 1.0f, 0.25f));
+                    
+                }
+                
+            }
+        }
     }
     
 }

@@ -62,6 +62,7 @@
 #define MIN_DISTANCE_OBSTACLES WIN_SIZE.width / 1.8f
 
 #define DRAW_COLLISIONS false
+#define TEST_OBSTACLE false
 
 // Admob
 #define MY_BANNER_UNIT_ID "ca-app-pub-3855348217239115/6798161781"
