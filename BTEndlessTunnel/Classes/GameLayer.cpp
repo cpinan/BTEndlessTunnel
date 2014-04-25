@@ -353,9 +353,9 @@ void GameLayer::_createMap()
         x += spFloor->getContentSize().width;
     }
     
-    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.75f;
+    OBSTACLE_SIMPLE_BOT_Y = _playerStartY + _wallHeight * 0.6f;
     OBSTACLE_DOBLE_GROUND_Y = _playerStartY + _wallHeight * 0.7f;
-    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.25f;
+    OBSTACLE_SIMPLE_TOP_Y = _playerStartY + _wallHeight * 1.3f;
     OBSTACLE_DOBLE_AIR_Y = _playerStartY + _wallHeight * 1.8f;
     
 }
@@ -1206,7 +1206,7 @@ void GameLayer::_showTutorial()
     unscheduleUpdate();
     _pauseAllActions();
     
-    menuCloseTutorial->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -5), CCRotateTo::create(0.5f, 5), NULL)));
+    menuCloseTutorial->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -2), CCRotateTo::create(0.5f, 2), NULL)));
 }
 
 void GameLayer::_finishTutorial(cocos2d::CCObject *object)
@@ -1372,7 +1372,6 @@ void GameLayer::draw()
     if(DRAW_COLLISIONS && _gameState == kGameReady)
     {
         
-        
         CCObject* object;
         
         CCARRAY_FOREACH(_arrayObstacles, object)
@@ -1482,7 +1481,7 @@ void GameLayer::draw()
                 if(obstacle->getObstacType() == kSimpleObstacle)
                 {
                     area = obstacle->boundingBox();
-                    top = area.getMinY() + obstacle->getContentSize().height * 0.0f;
+                    top = area.getMinY() + obstacle->getContentSize().height * 0.1f;
                     bottom = top + obstacle->getContentSize().height * 0.37f;
                     left = area.getMinX();
                     right = area.getMaxX();
