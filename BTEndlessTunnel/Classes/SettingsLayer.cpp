@@ -10,10 +10,12 @@
 #include "AppMacros.h"
 #include "LocalStorageManager.h"
 #include "Constants.h"
+#include "SimpleAudioEngine.h"
 
 #define CONTROL_ALPHA 100
 
 using namespace cocos2d;
+using namespace CocosDenshion;
 
 CCScene* SettingsLayer::scene()
 {
@@ -83,6 +85,7 @@ SettingsLayer::SettingsLayer()
 void SettingsLayer::_onOptionPressed(CCObject *pSender)
 {
     CCMenuItem* item = (CCMenuItem*) pSender;
+    SimpleAudioEngine::sharedEngine()->playEffect(SFX_BUTTON);
     
     switch(item->getTag())
     {

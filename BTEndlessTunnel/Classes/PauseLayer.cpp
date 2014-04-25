@@ -10,8 +10,10 @@
 #include "AppMacros.h"
 #include "Constants.h"
 #include "HomeScene.h"
+#include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
+using namespace CocosDenshion;
 
 PauseLayer::PauseLayer()
 {
@@ -72,6 +74,7 @@ PauseLayer::PauseLayer()
 void PauseLayer::_onOptionPressed(CCObject *pSender)
 {
     CCMenuItem* item = (CCMenuItem*) pSender;
+    SimpleAudioEngine::sharedEngine()->playEffect(SFX_BUTTON);
     
     switch (item->getTag()) {
         case kTagPauseResumeGame:

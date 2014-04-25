@@ -742,6 +742,8 @@ void GameLayer::pauseGame()
     {
         if(!_pause)
         {
+            SimpleAudioEngine::sharedEngine()->playEffect(SFX_BUTTON);
+            
             _pause = true;
             _previousGameState = _gameState;
             _gameState = kGamePause;

@@ -15,8 +15,10 @@
 #include "PlayGameConstants.h"
 #include "GameLayer.h"
 #include "NativeUtils.h"
+#include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
+using namespace CocosDenshion;
 
 PopUpLoseLayer::PopUpLoseLayer()
 {
@@ -193,6 +195,7 @@ void PopUpLoseLayer::_onOptionPressed(CCObject *pSender)
         return;
     
     CCMenuItem* item = (CCMenuItem*) pSender;
+    SimpleAudioEngine::sharedEngine()->playEffect(SFX_BUTTON);
     
     switch (item->getTag()) {
         case kTagPlayAgain:
