@@ -1124,6 +1124,9 @@ void GameLayer::_gameIsReady()
 void GameLayer::_showTutorial()
 {
     
+    unscheduleUpdate();
+    _pauseAllActions();
+    
     ccLanguageType language = CCApplication::sharedApplication()->getCurrentLanguage();
     const char* tap_to_jump = "Tap to Jump";
     const char* joypad_move = "Joypad to move";
@@ -1135,7 +1138,7 @@ void GameLayer::_showTutorial()
     {
         tap_to_jump = "Tap para saltar";
         joypad_move = "Para moverte";
-        tilt_move = "Inclina para mover";
+        tilt_move = "Para moverte";
         tap_continue = "Tap aquí para continuar";
         avoid_obstacles = "¡Evade los obstáculos!";
     }
@@ -1178,10 +1181,19 @@ void GameLayer::_showTutorial()
     }
     else
     {
+        
+        CCSprite* tilt = CCSprite::create("tilt_icon.png");
+        tilt->setScale(1.9f);
+        tilt->setPositionX(center.x - visibleSize.width * 0.35f);
+        tilt->setPositionY(lblJump->getPositionY() - tilt->getContentSize().height * 0.95f);
+        layer->addChild(tilt);
+        
+        tilt->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -8), CCRotateTo::create(0.5f, 8), NULL)));
+        
         // Accelerometer
         CCLabelTTF* lblAccelerometer = CCLabelTTF::create(tilt_move, FONT_GAME, SIZE_TUT_INST);
         lblAccelerometer->setPosition(center);
-        lblAccelerometer->setPositionY(lblJump->getPositionY());
+        lblAccelerometer->setPositionY(lblJump->getPositionY() + tilt->getContentSize().height * 0.55f);
         lblAccelerometer->setPositionX(lblAccelerometer->getPositionX() - visibleSize.width * 0.35f);
         layer->addChild(lblAccelerometer);
     }
@@ -1203,14 +1215,13 @@ void GameLayer::_showTutorial()
     
     addChild(layer, kDeepTutorial);
     
-    unscheduleUpdate();
-    _pauseAllActions();
-    
     menuCloseTutorial->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -2), CCRotateTo::create(0.5f, 2), NULL)));
 }
 
 void GameLayer::_finishTutorial(cocos2d::CCObject *object)
 {
+    
+    LocalStorageManager::isTutorialOn(false);
     
     CCMenuItem* item = (CCMenuItem *) object;
     item->setEnabled(false);
