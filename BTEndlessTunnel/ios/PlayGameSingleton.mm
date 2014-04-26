@@ -45,12 +45,14 @@ void PlayGameSingleton::showSingleLeaderboard(const char* leaderBoardID)
     if(!isSignedIn())
         authenticate();
     
+    CCDirector::sharedDirector()->stopAnimation();
     NSString* name = [NSString stringWithUTF8String:leaderBoardID];
     [[GCHelper sharedInstance] showLeaderboard:name];
 }
 
 void PlayGameSingleton::finishSingleLeaderboard()
 {
+    CCDirector::sharedDirector()->startAnimation();
 }
 
 #pragma mark - Leaderboards Picker
@@ -63,11 +65,13 @@ void PlayGameSingleton::showLeaderboards()
         return;
     }
     
+    CCDirector::sharedDirector()->stopAnimation();
     [[GCHelper sharedInstance] showLeaderboard:nil];
 }
 
 void PlayGameSingleton::finishLeaderboards()
 {
+    CCDirector::sharedDirector()->startAnimation();
 }
 
 #pragma mark - Submit score
@@ -92,11 +96,13 @@ void PlayGameSingleton::showAchievements()
         return;
     }
     
+    CCDirector::sharedDirector()->stopAnimation();
     [[GCHelper sharedInstance] showAchievements];
 }
 
 void PlayGameSingleton::finishAchievements()
 {
+    CCDirector::sharedDirector()->startAnimation();
 }
 
 #pragma mark - Manage achievements

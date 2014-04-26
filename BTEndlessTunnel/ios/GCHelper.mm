@@ -7,6 +7,7 @@
 //
 
 #import "GCHelper.h"
+#import "PlayGameSingleton.h"
 #import "Globals.h"
 
 @implementation GCHelper
@@ -71,10 +72,12 @@ static GCHelper *sharedHelper = nil;
     if (!gameCenterAvailable)
         return;
     
-   // NSLog(@"Authenticating local user...");
+    NSLog(@"Authenticating local user...");
     
     
     if ([GKLocalPlayer localPlayer].authenticated == NO) {
+        
+        NSLog(@"Processing...");
         
         GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
         
@@ -82,15 +85,15 @@ static GCHelper *sharedHelper = nil;
             if (localPlayer.authenticated) {
                 //localPlayer.playerID
                 user_data_id = [localPlayer.playerID UTF8String];
-               // NSLog(@"Already authenticated");
+                NSLog(@"Already authenticated");
                 // [self authenticatedPlayer: localPlayer];
                 //already authenticated
             } else if(viewController) {
-                //NSLog(@"Present the login form");
+                NSLog(@"Present the login form");
                 // [self presentViewController:viewController];//present the login form
                 [self showAuthenticationDialogWhenReasonable: viewController];
             } else {
-               // NSLog(@"Problem with auth");
+                NSLog(@"Problem with auth");
                 [self disableGameCenter];
                 //problem with authentication,probably bc the user doesn't use Game Center
             } 
@@ -99,7 +102,7 @@ static GCHelper *sharedHelper = nil;
     } else {
         
         
-        //NSLog(@"Already authenticated!");
+        NSLog(@"Already authenticated!");
         
         
     }
@@ -149,6 +152,7 @@ static GCHelper *sharedHelper = nil;
     
     [rootController dismissViewControllerAnimated:NO completion:nil];
     [leaderboardController release];
+    PlayGameSingleton::sharedInstance().finishLeaderboards();
 }
 
 -(void)showAchievements
@@ -186,6 +190,7 @@ static GCHelper *sharedHelper = nil;
     
     [rootController dismissViewControllerAnimated:NO completion:nil];
 	[viewController release];
+    PlayGameSingleton::sharedInstance().finishAchievements();
 }
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
@@ -196,7 +201,7 @@ static GCHelper *sharedHelper = nil;
     
     [rootController dismissViewControllerAnimated:NO completion:nil];
 	[gameCenterViewController release];
-    
+    PlayGameSingleton::sharedInstance().finishAchievements();
 }
 
 - (void)submitScore: (int64_t) score forCategory: (NSString*) category

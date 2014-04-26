@@ -216,6 +216,7 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/GameLayer.o: \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h \
  jni/../../Classes/HomeScene.h jni/../../Classes/HomeLayer.h \
+ jni/../../Classes/SettingsLayer.h \
  jni/../../Classes/LocalStorageManager.h jni/../../Classes/Utils.h \
  /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/ctime \
  /Users/mac/Documents/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include/algorithm \
@@ -666,6 +667,8 @@ jni/../../Classes/PlayGameConstants.h:
 jni/../../Classes/HomeScene.h:
 
 jni/../../Classes/HomeLayer.h:
+
+jni/../../Classes/SettingsLayer.h:
 
 jni/../../Classes/LocalStorageManager.h:
 

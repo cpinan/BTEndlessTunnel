@@ -51,11 +51,11 @@ int drawable common_signin_btn_text_normal_dark 0x7f020014
 int drawable common_signin_btn_text_normal_light 0x7f020015
 int drawable common_signin_btn_text_pressed_dark 0x7f020016
 int drawable common_signin_btn_text_pressed_light 0x7f020017
-int drawable ic_launcher 0x7f020018
-int drawable ic_plusone_medium_off_client 0x7f020019
-int drawable ic_plusone_small_off_client 0x7f02001a
-int drawable ic_plusone_standard_off_client 0x7f02001b
-int drawable ic_plusone_tall_off_client 0x7f02001c
+int drawable ic_plusone_medium_off_client 0x7f020018
+int drawable ic_plusone_small_off_client 0x7f020019
+int drawable ic_plusone_standard_off_client 0x7f02001a
+int drawable ic_plusone_tall_off_client 0x7f02001b
+int drawable icon 0x7f02001c
 int id admob 0x7f050005
 int id hybrid 0x7f050004
 int id none 0x7f050000

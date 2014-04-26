@@ -700,7 +700,7 @@ void GameLayer::didAccelerate(CCAcceleration *pAccelerationValue)
         {
             float x = pAccelerationValue->x * _player->getSpeed() * 0.5f;
             float y = pAccelerationValue->y * _player->getSpeed() * 0.5f;
-            _accelVelocity = ccpMult(ccp(x,y), _player->getSpeed());
+            _accelVelocity = ccpMult(ccp(x,y), _player->getSpeed() * 0.5f);
         }
     }
 }

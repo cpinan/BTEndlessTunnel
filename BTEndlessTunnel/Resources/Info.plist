@@ -12,27 +12,18 @@
 	<string></string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon-120</string>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
-		<string>Icon-72.png</string>
-		<string>Icon-Small-50.png</string>
-		<string>Icon-Small.png</string>
-		<string>Icon-Small@2x.png</string>
+		<string>AppIcon40x40</string>
+		<string>AppIcon60x60</string>
+		<string>AppIcon29x29</string>
+		<string>AppIcon57x57</string>
 	</array>
 	<key>CFBundleIconFiles~ipad</key>
 	<array>
-		<string>Icon-100</string>
-		<string>Icon-152</string>
-		<string>Icon-76</string>
-		<string>Icon-144</string>
-		<string>Icon-120</string>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
-		<string>Icon-72.png</string>
-		<string>Icon-Small-50.png</string>
-		<string>Icon-Small.png</string>
-		<string>Icon-Small@2x.png</string>
+		<string>AppIcon29x29</string>
+		<string>AppIcon40x40</string>
+		<string>AppIcon50x50</string>
+		<string>AppIcon76x76</string>
+		<string>AppIcon72x72</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.carlospinan.turborace</string>
@@ -42,6 +33,8 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>

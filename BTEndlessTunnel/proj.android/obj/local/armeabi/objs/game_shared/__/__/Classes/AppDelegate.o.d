@@ -214,7 +214,8 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/AppDelegate.o: \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/PauseLayer.h jni/../../Classes/PopUpLoseLayer.h \
- jni/../../Classes/BaseObstacle.h jni/../../Classes/HomeLayer.h
+ jni/../../Classes/BaseObstacle.h jni/../../Classes/HomeLayer.h \
+ jni/../../Classes/SettingsLayer.h
 
 jni/../../Classes/AppDelegate.h:
 
@@ -657,3 +658,5 @@ jni/../../Classes/PopUpLoseLayer.h:
 jni/../../Classes/BaseObstacle.h:
 
 jni/../../Classes/HomeLayer.h:
+
+jni/../../Classes/SettingsLayer.h:
