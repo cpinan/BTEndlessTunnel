@@ -22,7 +22,8 @@ enum HomeButtons
     kTagRateApp = 3,
     kTagLeaderboard = 4,
     kTagAchievements = 5,
-    kTagSettings = 6
+    kTagSettings = 6,
+    kTagHowToPlay = 7
 };
 
 class HomeLayer : public cocos2d::CCLayer
@@ -41,6 +42,7 @@ private:
     cocos2d::CCMenuItemImage* menuItemLeaderboard;
     cocos2d::CCMenuItemImage* menuItemSettings;
     cocos2d::CCMenuItemLabel* menuRateApp;
+    cocos2d::CCMenuItemLabel* menuHowToPlay;
     cocos2d::CCMenuItemToggle* menuSound;
     
 private:
@@ -53,6 +55,8 @@ private:
     
     void _enableButtons();
     void _disableButtons();
+    
+    void _manageHowToPlay();
     
 private:
     bool disable;

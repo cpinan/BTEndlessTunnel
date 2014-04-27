@@ -388,19 +388,20 @@ void GameLayer::configureGame(GameLevel gameLevel)
     
     if(_gameLevel == kGameLevelEasy)
     {
-        _worldSpeed *= 1.2f;
+        _minDistanceObstaclesX *= 2.0f; // 1.0
+        _worldSpeed *= 1.0f; // 0.9
         _vectorMap.insert(_vectorMap.begin(), easyMap, easyMap + sizeof(easyMap) / sizeof(int));
     }
     else if(_gameLevel == kGameLevelNormal)
     {
-        _minDistanceObstaclesX *= 0.9f;
-        _worldSpeed *= 1.8f;
+        _minDistanceObstaclesX *= 1.5f; // 0.9
+        _worldSpeed *= 1.5f; // 1.8
         _vectorMap.insert(_vectorMap.begin(), normalMap, normalMap + sizeof(normalMap) / sizeof(int));
     }
     else if(_gameLevel == kGameLevelHard)
     {
-        _minDistanceObstaclesX *= 0.7f;
-        _worldSpeed *= 2.4f;
+        _minDistanceObstaclesX *= 1.0f; // 0.7
+        _worldSpeed *= 2.0f; // 2.4
         _vectorMap.insert(_vectorMap.begin(), hardMap, hardMap + sizeof(hardMap) / sizeof(int));
     }
     
@@ -472,7 +473,7 @@ void GameLayer::_initElements()
         _createObstacle(x);
         
         BaseObstacle* lastObstacle = (BaseObstacle*) _arrayObstacles->lastObject();
-        x = lastObstacle->getPositionX() + MIN_DISTANCE_OBSTACLES;
+        x = lastObstacle->getPositionX() + _minDistanceObstaclesX;
     }
 
 }
@@ -534,6 +535,9 @@ void GameLayer::_createMultipleObstacles(float x, int type)
     int z = 0, i = 0;
     BaseObstacle* obstacle;
     
+    float distance = 0;
+    float dt_distance = 0.8f;
+    
     if(type == 4)
     {
         // Crear 2 obstaculos simples abajo
@@ -543,11 +547,12 @@ void GameLayer::_createMultipleObstacles(float x, int type)
         for(i = 0; i < 2; i++)
         {
             obstacle = new ObstacleSimple();
+            distance = obstacle->getContentSize().width * dt_distance * 1.5f;
             obstacle->setNumObjects(0);
             if(i == 0)
             {
                 obstacle->setNumObjects(2);
-                obstacle->setDistanceObjects(_minDistanceObstaclesX * 0.5f);
+                obstacle->setDistanceObjects(distance);
             }
             
             obstacle->setTag((i - 1) * -1);
@@ -555,7 +560,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
             addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
-            x += _minDistanceObstaclesX * 0.5f;
+            x += distance;
         }
         
     }
@@ -568,12 +573,12 @@ void GameLayer::_createMultipleObstacles(float x, int type)
         for(i = 0; i < 2; i++)
         {
             obstacle = new ObstacleSimple();
-            
+            distance = obstacle->getContentSize().width * dt_distance * 1.5f;
             obstacle->setNumObjects(0);
             if(i == 0)
             {
                 obstacle->setNumObjects(2);
-                obstacle->setDistanceObjects(_minDistanceObstaclesX * 0.5f);
+                obstacle->setDistanceObjects(distance);
             }
             
             obstacle->setTag((i - 1) * -1);
@@ -581,7 +586,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
             addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
-            x += _minDistanceObstaclesX * 0.5f;
+            x += distance;
         }
         
     }
@@ -594,12 +599,12 @@ void GameLayer::_createMultipleObstacles(float x, int type)
         for(i = 0; i < 3; i++)
         {
             obstacle = new ObstacleDoble();
-            
+            distance = obstacle->getContentSize().width * dt_distance;
             obstacle->setNumObjects(0);
             if(i == 0)
             {
                 obstacle->setNumObjects(3);
-                obstacle->setDistanceObjects(_minDistanceObstaclesX * 0.3f);
+                obstacle->setDistanceObjects(distance);
             }
             
             obstacle->setTag((i - 1) * -1);
@@ -607,7 +612,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
             addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
-            x += _minDistanceObstaclesX * 0.3f;
+            x += distance;
         }
         
     }
@@ -619,12 +624,12 @@ void GameLayer::_createMultipleObstacles(float x, int type)
         for(i = 0; i < 3; i++)
         {
             obstacle = new ObstacleDobleAir();
-            
+            distance = obstacle->getContentSize().width * dt_distance;
             obstacle->setNumObjects(0);
             if(i == 0)
             {
                 obstacle->setNumObjects(3);
-                obstacle->setDistanceObjects(_minDistanceObstaclesX * 0.3f);
+                obstacle->setDistanceObjects(distance);
             }
             
             obstacle->setTag((i - 1) * -1);
@@ -632,7 +637,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
             addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
-            x += _minDistanceObstaclesX * 0.3f;
+            x += distance;
         }
     }
     else if(type == 8)
@@ -644,12 +649,12 @@ void GameLayer::_createMultipleObstacles(float x, int type)
         for(i = 0; i < 2; i++)
         {
             obstacle = new ObstacleDoble();
-            
+            distance = obstacle->getContentSize().width * dt_distance;
             obstacle->setNumObjects(0);
             if(i == 0)
             {
                 obstacle->setNumObjects(2);
-                obstacle->setDistanceObjects(_minDistanceObstaclesX * 0.3f);
+                obstacle->setDistanceObjects(distance);
             }
             
             obstacle->setTag((i - 1) * -1);
@@ -657,7 +662,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
             addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
-            x += _minDistanceObstaclesX * 0.3f;
+            x += distance;
         }
         
     }
@@ -669,12 +674,12 @@ void GameLayer::_createMultipleObstacles(float x, int type)
         for(i = 0; i < 2; i++)
         {
             obstacle = new ObstacleDobleAir();
-            
+            distance = obstacle->getContentSize().width * dt_distance;
             obstacle->setNumObjects(0);
             if(i == 0)
             {
                 obstacle->setNumObjects(2);
-                obstacle->setDistanceObjects(_minDistanceObstaclesX * 0.3f);
+                obstacle->setDistanceObjects(distance);
             }
             
             obstacle->setTag((i - 1) * -1);
@@ -682,7 +687,7 @@ void GameLayer::_createMultipleObstacles(float x, int type)
             obstacle->autorelease();
             _arrayObstacles->addObject(obstacle);
             addChild(obstacle, (WIN_SIZE.height - z) + kDeepGameElements);
-            x += _minDistanceObstaclesX * 0.3f;
+            x += distance;
         }
     }
     
@@ -916,6 +921,7 @@ void GameLayer::_gameLogic(float dt)
         obstacle = (BaseObstacle*) object;
         float positionX = obstacle->getPositionX();
         
+        /*
         // Show object
         if(obstacle->getNumObjects() > 0 && !obstacle->getIsObjectAlerted() && positionX - obstacle->getContentSize().width < WIN_SIZE.width * 1.3f)
         {
@@ -948,6 +954,7 @@ void GameLayer::_gameLogic(float dt)
             }
 
         }
+        */
         
         obstacle->doUpdate(positionX, _worldSpeed * dt * DT_SPEED_OBSTACULOS);
         
@@ -994,7 +1001,7 @@ void GameLayer::_gameLogic(float dt)
         
         if(currentTag == 1)
         {
-            float x = lastObstacle->getPositionX() + MIN_DISTANCE_OBSTACLES;
+            float x = lastObstacle->getPositionX() + _minDistanceObstaclesX;
             _createObstacle(x);
         }
 
@@ -1338,7 +1345,7 @@ void GameLayer::_checkAchievements()
         LocalStorageManager::unlockAchievement(ACH_GET_15K_IN_NORMAL_MODE);
     }
     
-    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_10K_IN_HARD_MODE) && _gameLevel == kGameLevelEasy && longScore >= 10000)
+    if(!LocalStorageManager::isAchievementUnlocked(ACH_GET_10K_IN_HARD_MODE) && _gameLevel == kGameLevelHard && longScore >= 10000)
     {
         Utils::unlockAchievement(ACH_GET_10K_IN_HARD_MODE);
         LocalStorageManager::unlockAchievement(ACH_GET_10K_IN_HARD_MODE);

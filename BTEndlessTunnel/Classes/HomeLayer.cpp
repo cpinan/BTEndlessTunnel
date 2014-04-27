@@ -23,6 +23,8 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HomeLayer::_enableButtons), NOTIFICATION_ENABLE_BUTTONS, NULL);
     
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HomeLayer::_manageHowToPlay), NOTIFICATION_HOW_TO_PLAY, NULL);
+    
     disable = false;
         
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -104,9 +106,22 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     
     menuRateApp = CCMenuItemLabel::create(lblRateApp, this, menu_selector(HomeLayer::_onOptionPressed));
     menuRateApp->setTag(kTagRateApp);
-    menuRateApp->setPositionX(visibleOrigin.x + visibleSize.width * 0.7f);
-    menuRateApp->setPositionY(visibleOrigin.y + menuRateApp->getContentSize().height * 1.5f);
-    menuRateApp->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -5), CCRotateTo::create(0.5f, 5), NULL)));
+    menuRateApp->setPositionX(visibleOrigin.x + visibleSize.width * 0.75f);
+    menuRateApp->setPositionY(visibleOrigin.y + menuRateApp->getContentSize().height * 2.2f);
+    menuRateApp->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -2), CCRotateTo::create(0.5f, 2), NULL)));
+    
+    // How to Player
+    CCLabelTTF* lblHowToPlay = CCLabelTTF::create("How to Play", FONT_GAME, SIZE_RATE_APP);
+    lblHowToPlay->setColor(ccWHITE);
+    
+    menuHowToPlay = CCMenuItemLabel::create(lblHowToPlay, this, menu_selector(HomeLayer::_onOptionPressed));
+    menuHowToPlay->setTag(kTagHowToPlay);
+    menuHowToPlay->setPositionX(menuRateApp->getPositionX() - menuHowToPlay->getContentSize().width * 1.3f);
+    menuHowToPlay->setPositionY(menuRateApp->getPositionY());
+    menuHowToPlay->runAction(CCRepeatForever::create(CCSequence::create(CCRotateTo::create(0.5f, -2), CCRotateTo::create(0.5f, 2), NULL)));
+    
+    if(LocalStorageManager::showTutorial())
+        menuHowToPlay->setVisible(false);
     
     // Sound management
     CCMenuItemImage* menuSoundOn = CCMenuItemImage::create("sound_on_off.png", "sound_on.png", NULL, NULL);
@@ -130,6 +145,7 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     menu->addChild(menuItemSettings);
     menu->addChild(menuSound);
     menu->addChild(menuRateApp);
+    menu->addChild(menuHowToPlay);
     
     addChild(menu);
     
@@ -156,6 +172,7 @@ void HomeLayer::_manageMusic(cocos2d::CCObject* pSender)
 HomeLayer::~HomeLayer()
 {
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_ENABLE_BUTTONS);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFICATION_HOW_TO_PLAY);
 }
 
 void HomeLayer::_onOptionPressed(CCObject *pSender)
@@ -169,6 +186,13 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
     bool runGame = false;
     
     switch (item->getTag()) {
+            
+        case kTagHowToPlay:
+            LocalStorageManager::isTutorialOn(true);
+            runGame = true;
+            _gameLayer->configureGame(kGameLevelEasy);
+            break;
+        
         case kTagEasyMode:
             runGame = true;
             _gameLayer->configureGame(kGameLevelEasy);
@@ -234,6 +258,7 @@ void HomeLayer::_hideToRight()
     CCMoveBy* move = CCMoveBy::create(HIDE_TIME, ccp(WIN_SIZE.width * 0.8f, 0));
     menuItemSettings->runAction((CCAction*) move->copy()->autorelease());
     menuRateApp->runAction((CCAction*) move->copy()->autorelease());
+    menuHowToPlay->runAction((CCAction*) move->copy()->autorelease());
     logo->runAction((CCAction*) move->copy()->autorelease());
 }
 
@@ -262,4 +287,10 @@ void HomeLayer::_disableButtons()
         CCMenuItem* item = (CCMenuItem*) object;
         item->setEnabled(false);
     }
+}
+
+void HomeLayer::_manageHowToPlay()
+{
+    bool state = !LocalStorageManager::showTutorial();
+    menuHowToPlay->setVisible(state);
 }

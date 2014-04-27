@@ -2,6 +2,7 @@
 #define __SNEAKY_JOYSTICK_H__
 
 #include "cocos2d.h"
+class SneakyJoystickSkinnedBase;
 
 class SneakyJoystick : public cocos2d::CCNode, public cocos2d::CCTargetedTouchDelegate 
 {
@@ -9,6 +10,8 @@ protected:
 	float joystickRadiusSq;
 	float thumbRadiusSq;
 	float deadRadiusSq;
+    
+    CC_SYNTHESIZE(bool, enabled, Enabled);
 
 	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, stickPosition, StickPosition);
 	CC_SYNTHESIZE_READONLY(float, degrees, Degrees);
@@ -17,6 +20,7 @@ protected:
 	CC_SYNTHESIZE_READONLY(bool, isDPad, IsDPad);
 	CC_SYNTHESIZE(bool, hasDeadzone, HasDeadzone);
 	CC_SYNTHESIZE(int, numberOfDirections, NumberOfDirections);
+    CC_SYNTHESIZE(SneakyJoystickSkinnedBase*, baseStick, BaseStick);
 
 	CC_SYNTHESIZE_READONLY(float, joystickRadius, JoystickRadius);
 	CC_SYNTHESIZE_READONLY(float, thumbRadius, ThumbRadius);

@@ -1,4 +1,6 @@
 #include "SneakyJoystick.h"
+#include "Constants.h"
+#include "SneakyJoystickSkinnedBase.h"
 
 using namespace cocos2d;
 
@@ -13,6 +15,7 @@ SneakyJoystick::~SneakyJoystick()
 
 bool SneakyJoystick::initWithRect(CCRect rect)
 {
+    enabled = true;
 	bool pRet = false;
 	//if(CCSprite::init()){
 		stickPosition = CCPointZero;
@@ -119,11 +122,28 @@ void SneakyJoystick::setDeadRadius(float r)
 
 bool SneakyJoystick::ccTouchBegan(CCTouch *touch, CCEvent *event)
 {
-	CCPoint location = CCDirector::sharedDirector()->convertToGL(touch->getLocationInView());
-
-	//if([background containsPoint:[background convertToNodeSpace:location]]){
-	location = this->convertToNodeSpace(location);
-	//Do a fast rect check before doing a circle hit check:
+    
+    CCPoint location = CCDirector::sharedDirector()->convertToGL(touch->getLocationInView());
+    if(location.x >= WIN_SIZE.width * 0.5)
+        return false;
+    
+    location = this->convertToNodeSpace(location);
+    
+    /*
+    if(!enabled)
+    {
+        this->updateVelocity(location);
+        return true;
+    }
+    */
+    
+    // getBaseStick()->getBackgroundSprite()->setPosition(location);
+    // getBaseStick()->getThumbSprite()->setPosition(location);
+    
+    this->updateVelocity(location);
+    return true;
+    
+    /*
 	if(location.x < -joystickRadius || location.x > joystickRadius || location.y < -joystickRadius || location.y > joystickRadius){
 		return false;
 	}else{
@@ -134,6 +154,7 @@ bool SneakyJoystick::ccTouchBegan(CCTouch *touch, CCEvent *event)
 		}
 	}
 	return false;
+    */
 }
 
 void SneakyJoystick::ccTouchMoved(CCTouch *touch, CCEvent *event)

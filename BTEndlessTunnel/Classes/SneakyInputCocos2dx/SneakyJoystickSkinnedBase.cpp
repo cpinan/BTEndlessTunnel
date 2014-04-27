@@ -41,7 +41,11 @@ bool SneakyJoystickSkinnedBase::init()
 void SneakyJoystickSkinnedBase::updatePositions(float delta)
 {
 	if(joystick && thumbSprite)
-		thumbSprite->setPosition(joystick->getStickPosition());
+    {
+        //float w = backgroundSprite->getContentSize().width * 0.5f;
+        //float h = backgroundSprite->getContentSize().height * 0.5f;
+        thumbSprite->setPosition(joystick->getStickPosition());
+    }
 }
 
 void SneakyJoystickSkinnedBase::setContentSize(CCSize s)

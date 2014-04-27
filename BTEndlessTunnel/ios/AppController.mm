@@ -30,7 +30,7 @@ static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // [[GCHelper sharedInstance] authenticateLocalUser];
+    [[GCHelper sharedInstance] authenticateLocalUser];
     // PlayGameSingleton::sharedInstance().authenticate();
 
     // Override point for customization after application launch.

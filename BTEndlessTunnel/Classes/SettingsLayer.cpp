@@ -91,6 +91,7 @@ void SettingsLayer::_onOptionPressed(CCObject *pSender)
     {
         case kTagSettingGoHome:
             CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFICATION_ENABLE_BUTTONS);
+            CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFICATION_HOW_TO_PLAY);
             this->setVisible(false);
             break;
             

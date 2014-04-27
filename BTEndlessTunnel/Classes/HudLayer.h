@@ -17,6 +17,9 @@
 class HudLayer : public cocos2d::CCLayer
 {
 public:
+    
+     SneakyJoystick* joypad;
+    
     virtual ~HudLayer();
     HudLayer();
     
@@ -25,7 +28,7 @@ public:
     void stopTutorialJoypad();
     
 private:
-    SneakyJoystick* joypad;
+    SneakyJoystickSkinnedBase* baseStick;
     cocos2d::CCSprite* joypadBG;
     cocos2d::CCSprite* joypadThumb;
     
