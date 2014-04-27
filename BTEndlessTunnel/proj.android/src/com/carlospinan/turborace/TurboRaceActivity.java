@@ -40,5 +40,4 @@ public class TurboRaceActivity extends UtilActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
-
 }

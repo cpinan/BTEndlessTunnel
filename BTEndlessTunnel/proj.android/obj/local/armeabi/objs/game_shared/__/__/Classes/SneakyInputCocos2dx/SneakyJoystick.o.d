@@ -203,7 +203,10 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/SneakyInputCocos2dx/SneakyJoyst
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/CCScheduler.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/data_support/uthash.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponent.h \
- /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h
+ /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h \
+ jni/../../Classes/SneakyInputCocos2dx/../Constants.h \
+ jni/../../Classes/SneakyInputCocos2dx/../PlayGameConstants.h \
+ jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h
 
 jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h:
 
@@ -612,3 +615,9 @@ jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h:
 /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponent.h:
 
 /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h:
+
+jni/../../Classes/SneakyInputCocos2dx/../Constants.h:
+
+jni/../../Classes/SneakyInputCocos2dx/../PlayGameConstants.h:
+
+jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h:

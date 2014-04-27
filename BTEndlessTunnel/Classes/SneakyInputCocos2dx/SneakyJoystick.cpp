@@ -1,5 +1,5 @@
 #include "SneakyJoystick.h"
-#include "Constants.h"
+#include "../Constants.h"
 #include "SneakyJoystickSkinnedBase.h"
 
 using namespace cocos2d;

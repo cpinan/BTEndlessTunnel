@@ -156,6 +156,8 @@ HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
     
     NativeUtils::showAd();
     
+    this->setKeypadEnabled(true);
+    
 }
 
 void HomeLayer::_manageMusic(cocos2d::CCObject* pSender)
@@ -293,4 +295,18 @@ void HomeLayer::_manageHowToPlay()
 {
     bool state = !LocalStorageManager::showTutorial();
     menuHowToPlay->setVisible(state);
+}
+
+void HomeLayer::keyBackClicked()
+{
+    this->setKeypadEnabled(false);
+    
+    CCDirector::sharedDirector()->stopAnimation();
+    SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->stopAllEffects();
+    CCDirector::sharedDirector()->end();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
 }

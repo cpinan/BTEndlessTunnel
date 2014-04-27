@@ -97,6 +97,8 @@ int hardMap[] = {
     6,7,6,7,6,3,3,6,3,8,9,8,9,8,1,8,0,8,1
 };
 
+static int _currentMusic = 0;
+
 vector<int> _vectorMap;
 vector<MusicPlaying> _vectorMusics;
 MusicPlaying _music;
@@ -206,8 +208,11 @@ void GameLayer::_selectRandomMusic()
     mp.description = "Turtle Blues - PlayOnLoop.com";
     _vectorMusics.push_back(mp);
     
-    random_shuffle(_vectorMusics.begin(), _vectorMusics.end());
-    _music = _vectorMusics[0];
+    _music = _vectorMusics[_currentMusic];
+    
+    _currentMusic++;
+    if(_currentMusic > _vectorMusics.size() - 1)
+        _currentMusic = 0;
     
 }
 

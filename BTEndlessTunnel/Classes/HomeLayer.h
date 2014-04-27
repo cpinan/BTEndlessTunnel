@@ -32,6 +32,8 @@ public:
     HomeLayer(GameLayer* gameLayer);
     virtual ~HomeLayer();
     
+    void keyBackClicked();
+    
 private:
     cocos2d::CCSprite* tablero;
     cocos2d::CCSprite* logo;
