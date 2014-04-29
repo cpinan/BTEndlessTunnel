@@ -64,7 +64,7 @@ enum GameDeep
     kDeepTutorial = 2200
 };
 
-#define kScoreFactor 100.0f
+#define kScoreFactor 40.0f
 
 #include "cocos2d.h"
 
@@ -87,7 +87,9 @@ public:
     void resumeGame();
     void playGame();
     void runGame();
+    
     void update(float dt);
+    
     void didAccelerate(cocos2d::CCAcceleration *pAccelerationValue);
     
     void draw();
@@ -122,14 +124,9 @@ private:
     
     void _selectRandomMusic();
     
-    void _runLightning(float dt);
-    void _preloadLightning();
-    
     void _gameIsReady();
     void _showTutorial();
     void _finishTutorial(cocos2d::CCObject* object);
-    
-    float _lightningTimer;
     
     
 private:
@@ -156,13 +153,11 @@ private:
     cocos2d::CCArray* _arrayObstacles;
     
     cocos2d::CCMenuItemImage* _menuPause;
-    cocos2d::CCAnimate* _lightningAnimation;
     
     bool _pause;
     bool _gameOver;
     bool _isJoypad;
     
-    float _score;
     float _worldSpeed;
     float _minDistanceObstaclesX;
     
@@ -181,7 +176,7 @@ private:
     float OBSTACLE_DOBLE_AIR_Y;
     float OBSTACLE_DOBLE_GROUND_Y;
     
-    cocos2d::CCLabelTTF* _lblScore;
+    cocos2d::CCLabelBMFont* _lblScore;
     cocos2d::CCPoint _accelVelocity;
     
     

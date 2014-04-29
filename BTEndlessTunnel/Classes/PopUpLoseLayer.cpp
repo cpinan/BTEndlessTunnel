@@ -61,21 +61,21 @@ PopUpLoseLayer::PopUpLoseLayer()
         bg->addChild(_lblMaxScore);
         
         // Send score button
-        CCMenuItemImage* itemScore = CCMenuItemImage::create("btn_chart_2_off.png", "btn_chart_2.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
+        CCMenuItemImage* itemScore = CCMenuItemImage::create("fb-icon.png", "fb-icon.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
         itemScore->setTag(kTagSendScore);
-        itemScore->setPositionX(o.x - itemScore->getContentSize().width);
-        itemScore->setPositionY(o.y - itemScore->getContentSize().height * 1.5f);
+        itemScore->setPositionX(o.x - itemScore->getContentSize().width * 1.5f);
+        itemScore->setPositionY(o.y - itemScore->getContentSize().height * 1.7f);
         
         // Home button
         CCMenuItemImage* itemHome = CCMenuItemImage::create("pause_home_off.png", "pause_home.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
         itemHome->setTag(kTagGoHome);
-        itemHome->setPositionX(itemScore->getPositionX() + itemScore->getContentSize().width * 1.1f);
+        itemHome->setPositionX(itemScore->getPositionX() + itemScore->getContentSize().width * 1.5f);
         itemHome->setPositionY(itemScore->getPositionY());
         
         // Play again button
         CCMenuItemImage* itemPlayAgain = CCMenuItemImage::create("pause_replay_off.png", "pause_replay.png", this, menu_selector(PopUpLoseLayer::_onOptionPressed));
         itemPlayAgain->setTag(kTagPlayAgain);
-        itemPlayAgain->setPositionX(itemHome->getPositionX() + itemScore->getContentSize().width * 1.1f);
+        itemPlayAgain->setPositionX(itemHome->getPositionX() + itemScore->getContentSize().width * 1.5f);
         itemPlayAgain->setPositionY(itemScore->getPositionY());
         
         itemPlayAgain->setPositionY(itemPlayAgain->getPositionY() + itemScore->getContentSize().height * 0.2f);
@@ -96,11 +96,15 @@ PopUpLoseLayer::PopUpLoseLayer()
     }
 }
 
-void PopUpLoseLayer::updateScore(int level, float score)
+void PopUpLoseLayer::updateScore(int level, float score, int obstaclesAvoided)
 {
-    _lblScore->setString(CCString::createWithFormat("%d", (int) score)->getCString());
+
+    _lblScore->setString(CCString::createWithFormat("%d (%d x %d)", (int) score, obstaclesAvoided, (int) kScoreFactor)->getCString());
     long longScore = (long) score;
+    
+    _level = level;
     _score = longScore;
+    _obstaclesAvoided = obstaclesAvoided;
     // Check Achievements
     
     int totalGamesPlayed = LocalStorageManager::getTotalGamesPlayed();
@@ -207,12 +211,7 @@ void PopUpLoseLayer::_onOptionPressed(CCObject *pSender)
             break;
             
         case kTagSendScore:
-            
-            if(!NativeUtils::isSignedIn())
-                NativeUtils::signIn();
-            else
-                NativeUtils::showLeaderboard(_leaderboardID);
-
+            NativeUtils::shareOnFacebook(_score, _level, _obstaclesAvoided);
             break;
 
     }

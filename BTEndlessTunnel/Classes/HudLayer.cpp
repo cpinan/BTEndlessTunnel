@@ -39,6 +39,7 @@ HudLayer::HudLayer()
     
     joypad = baseStick->getJoystick();
     joypad->setBaseStick(baseStick);
+    joypad->start();
     addChild(baseStick);
 }
 

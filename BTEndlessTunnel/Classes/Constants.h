@@ -11,8 +11,10 @@
 
 #include "cocos2d.h"
 #include "PlayGameConstants.h"
+#include "AppMacros.h"
 
 #define FONT_GAME !IOS() ? "Carton_Six.ttf" : "CartonSix"
+#define FONT_GAME_BMP "CartonSixBMP.fnt"
 #define SIZE_SCORE_GAME 45.0f * CC_CONTENT_SCALE_FACTOR()
 #define SIZE_RATE_APP 30.0f * CC_CONTENT_SCALE_FACTOR()
 #define SIZE_RATE_END 30.0f * CC_CONTENT_SCALE_FACTOR()
@@ -59,9 +61,9 @@
 #define MAX_PARALLAX 5
 #define MAX_OBSTACLES 10
 
-#define START_X_OBSTACLES WIN_SIZE.width * 1.9f
-#define START_WORLD_SPEED WIN_SIZE.width * 0.5f
-#define MIN_DISTANCE_OBSTACLES WIN_SIZE.width / 1.8f
+#define START_X_OBSTACLES designResolutionSize.width * 1.9f
+#define START_WORLD_SPEED designResolutionSize.width * 0.5f
+#define MIN_DISTANCE_OBSTACLES designResolutionSize.width / 1.8f
 
 #define DRAW_COLLISIONS false
 #define TEST_OBSTACLE false

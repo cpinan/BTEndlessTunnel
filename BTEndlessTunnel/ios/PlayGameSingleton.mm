@@ -7,17 +7,32 @@
 //
 
 #import "PlayGameSingleton.h"
-#include "AdMobBannerView.h"
-#include "Globals.h"
+#import "AdMobBannerView.h"
+#import "Globals.h"
+#import <FacebookSDK/FacebookSDK.h>
 #import "GCHelper.h"
-
+#import "GameLayer.h"
 #import <UIKit/UIKit.h>
 
-#include "cocos2d.h"
+#import "cocos2d.h"
 
 #define APP_ID 864587748 //id from iTunesConnect
 
 using namespace cocos2d;
+
+// A function for parsing URL parameters returned by the Feed Dialog.
+NSDictionary* parseURLParams(NSString* query)
+{
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
+}
 
 #pragma mark - Declare Views
 AdMobBannerView* adMobBannerView = 0;
@@ -201,6 +216,114 @@ void PlayGameSingleton::rateApp()
     NSString *reviewURL = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%d", APP_ID];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+    
+}
+
+void PlayGameSingleton::shareOnFacebook(long score, int level, int obstacles)
+{
+    
+    ccLanguageType language = CCApplication::sharedApplication()->getCurrentLanguage();
+    
+    NSString* str_level = @"fácil";
+    if(level == kGameLevelNormal)
+        str_level = @"normal";
+    else if(level == kGameLevelHard)
+        str_level = @"difícil";
+    
+    if(language == kLanguageEnglish)
+    {
+       if(level == kGameLevelEasy)
+           str_level = @"easy";
+        else if(level == kGameLevelHard)
+            str_level = @"hard";
+    }
+    
+    NSString* linkToShare = @"https://itunes.apple.com/us/app/turbo-race/id864587748?ls=1&mt=8";
+    
+    NSString* name = @"Turbo Race";
+    
+    NSString* caption = @"Estoy jugando Turbo Race";
+    if(language == kLanguageEnglish)
+        caption = @"I am playing Turbo Race";
+    
+    NSString* picture = @"http://carlospinan.com/icon/turbo_race.png";
+    
+    NSString* str_format = @"He obtenido %lu puntos en modo %@ y he esquivado %d obstáculos.";
+    if(language == kLanguageEnglish)
+        str_format = @"I got %lu points in %@ mode and I avoided %d obstacles.";
+    
+    NSString* description = [NSString stringWithFormat:str_format, score, str_level, obstacles];
+    
+    // Check if the Facebook app is installed and we can present the share dialog
+    FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
+    params.link = [NSURL URLWithString:linkToShare];
+    params.name = name;
+    params.caption = caption;
+    params.picture = [NSURL URLWithString:picture];
+    params.description = description;
+    
+    // If the Facebook app is installed and we can present the share dialog
+    if ([FBDialogs canPresentShareDialogWithParams:params]) {
+        
+        // Present share dialog
+        [FBDialogs presentShareDialogWithLink:params.link
+                                         name:params.name
+                                      caption:params.caption
+                                  description:params.description
+                                      picture:params.picture
+                                  clientState:nil
+                                      handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                          if(error) {
+                                              // An error occurred, we need to handle the error
+                                              // See: https://developers.facebook.com/docs/ios/errors
+                                          } else {
+                                              // Success
+                                              NSLog(@"result %@", results);
+                                          }
+                                      }];
+        
+        
+    } else {
+        // Present the feed dialog
+        
+        // Put together the dialog parameters
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       name, @"name",
+                                       caption, @"caption",
+                                       description, @"description",
+                                       linkToShare, @"link",
+                                       picture, @"picture",
+                                       nil];
+        
+        // Show the feed dialog
+        [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                               parameters:params
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      if (error) {
+                                                          // An error occurred, we need to handle the error
+                                                          // See: https://developers.facebook.com/docs/ios/errors
+                                                      } else {
+                                                          if (result == FBWebDialogResultDialogNotCompleted) {
+                                                              // User cancelled.
+                                                              NSLog(@"User cancelled.");
+                                                          } else {
+                                                              // Handle the publish feed callback
+                                                              NSDictionary *urlParams = parseURLParams([resultURL query]);
+                                                              
+                                                              if (![urlParams valueForKey:@"post_id"]) {
+                                                                  // User cancelled.
+                                                                  NSLog(@"User cancelled.");
+                                                                  
+                                                              } else {
+                                                                  // User clicked the Share button
+                                                                  NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
+                                                                  NSLog(@"result %@", result);
+                                                              }
+                                                          }
+                                                      }
+                                                  }];
+        
+    }
     
 }
 

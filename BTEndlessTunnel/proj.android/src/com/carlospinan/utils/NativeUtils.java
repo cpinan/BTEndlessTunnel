@@ -355,6 +355,17 @@ public class NativeUtils {
 		});
 	}
 
+	public static void shareOnFacebook(final int level, final long score,
+			final int obstacles) {
+		app.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				app.shareOnFacebook(level, score, obstacles);
+			}
+		});
+	}
+
 	/*
 	 * Ouya support Note: For Ouya support need uncomment the <category
 	 * android:name="tv.ouya.intent.category.GAME" /> in the AndroidManifest.xml

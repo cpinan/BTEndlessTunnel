@@ -45,7 +45,6 @@
 #define DT_SPEED_BG_FRONT (DT_SPEED_PISTA * 1.3f)
 #define MIN_COLOR 100
 #define MAX_COLOR 255
-#define LIGHT_TIME 5.0f
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -109,14 +108,25 @@ GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel)
 {
     srand(time(0));
     
-    _lightningAnimation = NULL;
+    // Preload obstacles
     
+    BaseObstacle* _tmp;
+    
+    _tmp = new ObstacleSimple();
+    _tmp->release();
+    
+    _tmp = new ObstacleDoble();
+    _tmp->release();
+    
+    _tmp = new ObstacleDobleAir();
+    _tmp->release();
+    
+    // End obstacles
+        
     _color = 255;
     _colorSign = -1;
-    _lightningTimer = 0;
     
     _selectRandomMusic();
-    // _preloadLightning();
     
     _player = NULL;
     _obstaclesJumped = 0;
@@ -171,17 +181,6 @@ GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel)
     
 }
 
-void GameLayer::_preloadLightning()
-{
-    CCAnimation* animation = CCAnimation::create();
-    animation->setDelayPerUnit(1.0 / 12.0f);
-    animation->setRestoreOriginalFrame(false);
-    
-    animation->addSpriteFrameWithFileName("");
-    
-    _lightningAnimation = CCAnimate::create(animation);
-    _lightningAnimation->retain();
-}
 
 void GameLayer::onEnterTransitionDidFinish()
 {
@@ -260,7 +259,6 @@ GameLayer::~GameLayer()
     
     CC_SAFE_RELEASE(_parallaxFloor);
     CC_SAFE_RELEASE(_arrayObstacles);
-    CC_SAFE_RELEASE(_lightningAnimation);
 }
 
 #pragma mark - Init layers, Create Players and Game Elements
@@ -399,20 +397,18 @@ void GameLayer::configureGame(GameLevel gameLevel)
     }
     else if(_gameLevel == kGameLevelNormal)
     {
-        _minDistanceObstaclesX *= 1.5f; // 0.9
-        _worldSpeed *= 1.5f; // 1.8
+        _minDistanceObstaclesX *= 1.3f; // 0.9
+        _worldSpeed *= 1.7f; // 1.8
         _vectorMap.insert(_vectorMap.begin(), normalMap, normalMap + sizeof(normalMap) / sizeof(int));
     }
     else if(_gameLevel == kGameLevelHard)
     {
         _minDistanceObstaclesX *= 1.0f; // 0.7
-        _worldSpeed *= 2.0f; // 2.4
+        _worldSpeed *= 2.2f; // 2.4
         _vectorMap.insert(_vectorMap.begin(), hardMap, hardMap + sizeof(hardMap) / sizeof(int));
     }
     
     _itemMap = 0;
-    
-    _score = 0.0f;
     
     _gameState = kGameStarting;
     
@@ -429,11 +425,12 @@ void GameLayer::_initLayers()
     
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     CCSize size = CCDirector::sharedDirector()->getVisibleSize();
-    
-    _lblScore = CCLabelTTF::create("0", FONT_GAME, SIZE_SCORE_GAME, CCSizeMake(380, 70), kCCTextAlignmentRight, kCCVerticalTextAlignmentTop);
+        
+    _lblScore = CCLabelBMFont::create("0", FONT_GAME_BMP, SIZE_SCORE_GAME, kCCTextAlignmentRight);
     _lblScore->setAnchorPoint(ccp(0, -0.5f));
     _lblScore->setVisible(false);
-    _lblScore->setPosition(ccp(origin.x + size.width * 0.56f, origin.y + size.height * 0.82f));
+    _lblScore->setColor(ccWHITE);
+    _lblScore->setPosition(ccp(origin.x + size.width * 0.9f, origin.y + size.height * 0.82f));
     addChild(_lblScore, kDeepScore);
     
     _pauseLayer = new PauseLayer();
@@ -801,7 +798,7 @@ void GameLayer::_resumeEvents()
 
 void GameLayer::_removeNode(CCNode *node)
 {
-    node->removeFromParent();
+    node->removeFromParentAndCleanup(false);
 }
 
 #pragma mark - Game Logic
@@ -819,11 +816,14 @@ void GameLayer::_gameLogic(float dt)
         _player->doMove(_accelVelocity);
     }
     
+    
     // Increment map speed
     _worldSpeed += dt * 2;
     
-    _score += dt;
-    _lblScore->setString(CCString::createWithFormat("%d", (int) (_score * kScoreFactor))->getCString());
+    //char buffer[100];
+    //sprintf (buffer, "%d", _obstaclesAvoided);
+    
+    _lblScore->setString(CCString::createWithFormat("%d", _obstaclesAvoided)->getCString());
     
     int z = (WIN_SIZE.height - (_player->getPlayerY() + _player->getContentSize().height * 0.75f)) + kDeepGameElements;
     
@@ -925,10 +925,11 @@ void GameLayer::_gameLogic(float dt)
     {
         obstacle = (BaseObstacle*) object;
         float positionX = obstacle->getPositionX();
-        
-        /*
+     
         // Show object
-        if(obstacle->getNumObjects() > 0 && !obstacle->getIsObjectAlerted() && positionX - obstacle->getContentSize().width < WIN_SIZE.width * 1.3f)
+     
+        /*
+        if(1 == 2 && obstacle->getNumObjects() > 0 && !obstacle->getIsObjectAlerted() && positionX - obstacle->getContentSize().width < WIN_SIZE.width * 1.3f)
         {
             obstacle->setIsObjectAlerted(true);
             
@@ -949,8 +950,6 @@ void GameLayer::_gameLogic(float dt)
                     
                     alertSprite->runAction(CCSequence::create(CCBlink::create(blinkTime, 2), CCCallFuncN::create(this, callfuncN_selector(GameLayer::_removeNode)), NULL));
                     
-                    // alertSprite->setOpacity(128);
-                    
                     addChild(alertSprite, kDeepScore);
                     
                     x -= obstacle->getDistanceObjects();
@@ -963,91 +962,61 @@ void GameLayer::_gameLogic(float dt)
         
         obstacle->doUpdate(positionX, _worldSpeed * dt * DT_SPEED_OBSTACULOS);
         
-        if(obstacle->getPositionX() < WIN_SIZE.width && obstacle->getPositionX() > 0 && obstacle->collision(*_player))
+        if(obstacle->getPositionX() < -obstacle->getContentSize().width * 0.5f)
         {
-            _lblScore->setVisible(false);
-            _menuPause->setVisible(false);
-            _player->dead();
-            this->reorderChild(_player, kDeepGameFinish);
-            _gameOver = true;
-            _gameState = kGameFinish;
-            break;
+            _removeObstacles->addObject(obstacle);
         }
         else
         {
-            if(!obstacle->getPassPlayerSFX() && obstacle->getPositionX() + obstacle->getContentSize().width * 1.0f < _player->getPositionX())
+            if(obstacle->getPositionX() < WIN_SIZE.width && obstacle->getPositionX() > 0 && obstacle->collision(*_player))
             {
-                obstacle->setPassPlayerSFX(true);
-                if(obstacle->getObstacType() == kJumpObstacle)
-                {
-                    _obstaclesJumped++;
-                }
-                _obstaclesAvoided++;
-                SimpleAudioEngine::sharedEngine()->playEffect(SFX_SWOOSH);
+                _lblScore->setVisible(false);
+                _menuPause->setVisible(false);
+                _player->dead();
+                this->reorderChild(_player, kDeepGameFinish);
+                _gameOver = true;
+                _gameState = kGameFinish;
+                break;
             }
-            
-            if(obstacle->getPositionX() < -obstacle->getContentSize().width * 0.5f)
+            else
             {
-                _removeObstacles->addObject(obstacle);
+                if(!obstacle->getPassPlayerSFX() && obstacle->getPositionX() + obstacle->getContentSize().width * 1.0f < _player->getPositionX())
+                {
+                    obstacle->setPassPlayerSFX(true);
+                    if(obstacle->getObstacType() == kJumpObstacle)
+                    {
+                        _obstaclesJumped++;
+                    }
+                    _obstaclesAvoided++;
+                    SimpleAudioEngine::sharedEngine()->playEffect(SFX_SWOOSH);
+                }
+                
             }
         }
         
     }
     
     // Remove and Add objects
-    CCARRAY_FOREACH(_removeObstacles, object)
+    if(_removeObstacles->count() > 0)
     {
-        BaseObstacle* lastObstacle = (BaseObstacle*) _arrayObstacles->lastObject();
-        
-        obstacle = (BaseObstacle*) object;
-        int currentTag = obstacle->getTag();
-        _arrayObstacles->removeObject(obstacle);
-        obstacle->removeFromParent();
-        
-        if(currentTag == 1)
+        CCARRAY_FOREACH(_removeObstacles, object)
         {
-            float x = lastObstacle->getPositionX() + _minDistanceObstaclesX;
-            _createObstacle(x);
-        }
-
-    }
-    
-    // _runLightning(dt);
-
-}
-
-void GameLayer::_runLightning(float dt)
-{
-    if(_color < MAX_COLOR - MIN_COLOR)
-    {
-        _lightningTimer += dt;
-        if(_lightningTimer > LIGHT_TIME)
-        {
+            BaseObstacle* lastObstacle = (BaseObstacle*) _arrayObstacles->lastObject();
             
-            CCSprite* lightning = CCSprite::create("");
+            obstacle = (BaseObstacle*) object;
+            int currentTag = obstacle->getTag();
+            _arrayObstacles->removeObject(obstacle);
+            obstacle->removeFromParentAndCleanup(false);
             
-            CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-            CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+            if(currentTag == 1)
+            {
+                float x = lastObstacle->getPositionX() + _minDistanceObstaclesX;
+                _createObstacle(x);
+            }
             
-            float x = Utils::randomBetween(lightning->getContentSize().width, origin.x + visibleSize.width - lightning->getContentSize().width);
-            
-            float y = origin.y + visibleSize.height - lightning->getContentSize().height * 0.5f;
-            
-            lightning->setPosition(ccp(x, y));
-            
-            CCAnimate* action = (CCAnimate*) _lightningAnimation->copy()->autorelease();
-            lightning->runAction(CCSequence::create(action, CCCallFuncN::create(this, callfuncN_selector(GameLayer::_removeNode)), NULL));
-            addChild(lightning, kDeepTracks - 50);
-            
-            
-            SimpleAudioEngine::sharedEngine()->playEffect(SFX_LIGHTNING);
-            _lightningTimer = 0;
         }
     }
-    else
-    {
-        _lightningTimer = 0;
-    }
+
 }
 
 void GameLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
@@ -1112,14 +1081,13 @@ void GameLayer::update(float dt)
             SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
             
             _checkAchievements();
-            _obstaclesAvoided = 0;
             
             setTouchEnabled(false);
             if(!_isJoypad)
                 setAccelerometerEnabled(false);
             _hudLayer->setVisible(false);
             _menuPause->setVisible(false);
-            _popUpLoseLayer->updateScore(_gameLevel, _score * kScoreFactor);
+            _popUpLoseLayer->updateScore(_gameLevel, _obstaclesAvoided * kScoreFactor, _obstaclesAvoided);
             _popUpLoseLayer->runAction(CCMoveBy::create(0.25f, ccp(0, WIN_SIZE.height)));
             NativeUtils::showAd();
             unscheduleUpdate();
@@ -1258,7 +1226,7 @@ void GameLayer::_finishTutorial(cocos2d::CCObject *object)
 void GameLayer::_checkAchievements()
 {
     
-    long longScore = (long) (_score * kScoreFactor);
+    long longScore = (long) (_obstaclesAvoided * kScoreFactor);
     
     // Obstacles avoidment
     

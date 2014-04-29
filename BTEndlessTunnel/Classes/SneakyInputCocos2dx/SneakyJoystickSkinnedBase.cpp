@@ -81,7 +81,10 @@ void SneakyJoystickSkinnedBase::setThumbSprite(CCSprite *aSprite)
 	aSprite->retain();
 	thumbSprite = aSprite;
 	if(aSprite){
-		this->addChild(thumbSprite, 1);
+        thumbStartPosition.x = backgroundSprite->getContentSize().width * 0.5f;
+        thumbStartPosition.y = backgroundSprite->getContentSize().height * 0.5f;
+        thumbSprite->setPosition(thumbStartPosition);
+		backgroundSprite->addChild(thumbSprite, 1);
 		
 		//joystick->setThumbRadius(thumbSprite->getContentSize().width/2);
 	}

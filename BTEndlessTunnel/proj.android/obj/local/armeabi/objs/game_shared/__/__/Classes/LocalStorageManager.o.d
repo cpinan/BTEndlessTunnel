@@ -205,7 +205,7 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/LocalStorageManager.o: \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponent.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h \
  jni/../../Classes/Constants.h jni/../../Classes/PlayGameConstants.h \
- jni/../../Classes/Globals.h
+ jni/../../Classes/AppMacros.h jni/../../Classes/Globals.h
 
 jni/../../Classes/LocalStorageManager.h:
 
@@ -618,5 +618,7 @@ jni/../../Classes/LocalStorageManager.h:
 jni/../../Classes/Constants.h:
 
 jni/../../Classes/PlayGameConstants.h:
+
+jni/../../Classes/AppMacros.h:
 
 jni/../../Classes/Globals.h:

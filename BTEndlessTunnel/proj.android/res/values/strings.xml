@@ -2,5 +2,11 @@
 <resources>
 
     <string name="app_name">Turbo Race</string>
+    <string name="app_id">691133124261812</string>
+    <string name="easy">fácil</string>
+    <string name="normal">normal</string>
+    <string name="hard">difícil</string>
+    <string name="caption">Estoy jugando Turbo Race</string>
+    <string name="fb_description">He obtenido {score} en modo {modo} y he esquivado {obstaculos} obstáculo(s).</string>
 
 </resources>

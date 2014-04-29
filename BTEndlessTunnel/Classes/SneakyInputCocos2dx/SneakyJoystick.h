@@ -42,10 +42,15 @@ protected:
 
 	void touchDelegateRelease();
 	void touchDelegateRetain();
+    
+    void start();
 
 private:
 	void updateVelocity(cocos2d::CCPoint point);
 	void setTouchRadius();
+    
+private:
+    cocos2d::CCPoint _beganPoint;
 
 };
 #endif

@@ -15,6 +15,7 @@ SneakyJoystick::~SneakyJoystick()
 
 bool SneakyJoystick::initWithRect(CCRect rect)
 {
+    _beganPoint = CCPointZero;
     enabled = true;
 	bool pRet = false;
 	//if(CCSprite::init()){
@@ -37,6 +38,11 @@ bool SneakyJoystick::initWithRect(CCRect rect)
 	return pRet;
 }
 
+void SneakyJoystick::start()
+{
+    stickPosition = getBaseStick()->thumbStartPosition;
+}
+
 void SneakyJoystick::onEnterTransitionDidFinish()
 {
 	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 1, true);
@@ -54,14 +60,14 @@ float round(float r) {
 void SneakyJoystick::updateVelocity(CCPoint point)
 {
 	// Calculate distance and angle from the center.
-	float dx = point.x;
-	float dy = point.y;
+	float dx = point.x - _beganPoint.x;
+	float dy = point.y - _beganPoint.y;
 	float dSq = dx * dx + dy * dy;
 	
 	if(dSq <= deadRadiusSq){
 		velocity = CCPointZero;
 		degrees = 0.0f;
-		stickPosition = point;
+		stickPosition = getBaseStick()->thumbStartPosition;
 		return;
 	}
 
@@ -90,7 +96,8 @@ void SneakyJoystick::updateVelocity(CCPoint point)
 	degrees = angle * SJ_RAD2DEG;
 	
 	// Update the thumb's position
-	stickPosition = ccp(dx, dy);
+    CCPoint d = getBaseStick()->thumbStartPosition;
+	stickPosition = ccp(dx + d.x, dy + d.y);
 }
 
 void SneakyJoystick::setIsDPad(bool b)
@@ -129,18 +136,18 @@ bool SneakyJoystick::ccTouchBegan(CCTouch *touch, CCEvent *event)
     
     location = this->convertToNodeSpace(location);
     
-    /*
     if(!enabled)
     {
         this->updateVelocity(location);
         return true;
     }
-    */
     
-    // getBaseStick()->getBackgroundSprite()->setPosition(location);
+    getBaseStick()->getBackgroundSprite()->setPosition(location);
     // getBaseStick()->getThumbSprite()->setPosition(location);
     
-    this->updateVelocity(location);
+    _beganPoint = location;
+    
+    // this->updateVelocity(location);
     return true;
     
     /*
@@ -166,6 +173,7 @@ void SneakyJoystick::ccTouchMoved(CCTouch *touch, CCEvent *event)
 
 void SneakyJoystick::ccTouchEnded(CCTouch *touch, CCEvent *event)
 {
+    _beganPoint = CCPointZero;
 	CCPoint location = CCPointZero;
 	if(!autoCenter){
 		CCPoint location = CCDirector::sharedDirector()->convertToGL(touch->getLocationInView());
@@ -176,6 +184,7 @@ void SneakyJoystick::ccTouchEnded(CCTouch *touch, CCEvent *event)
 
 void SneakyJoystick::ccTouchCancelled(CCTouch *touch, CCEvent *event)
 {
+    _beganPoint = CCPointZero;
 	this->ccTouchEnded(touch, event);
 }
 

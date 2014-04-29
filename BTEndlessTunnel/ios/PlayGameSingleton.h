@@ -64,6 +64,9 @@ public:
     
     void rateApp();
     
+    void shareOnFacebook(long score, int level, int obstacles);
+    
+    
 private:
     void* rootController;
 };

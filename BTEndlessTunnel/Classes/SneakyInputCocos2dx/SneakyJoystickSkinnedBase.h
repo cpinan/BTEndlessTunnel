@@ -20,5 +20,7 @@ public:
 	void setBackgroundSprite(cocos2d::CCSprite *aSprite);
 	void setThumbSprite(cocos2d::CCSprite *aSprite);
 	void setJoystick(SneakyJoystick *aJoystick);
+    
+    cocos2d::CCPoint thumbStartPosition;
 };
 #endif

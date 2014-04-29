@@ -192,3 +192,17 @@ void NativeUtils::rateApp()
     PlayGameSingleton::sharedInstance().rateApp();
 #endif
 }
+
+void NativeUtils::shareOnFacebook(long score, int level, int obstacles)
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	JniHelpers::jniCommonVoidCall(
+                                  "shareOnFacebook",
+                                  CLASS_NAME,
+                                  level, score, obstacles);
+#endif
+    
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    PlayGameSingleton::sharedInstance().shareOnFacebook(score, level, obstacles);
+#endif
+}

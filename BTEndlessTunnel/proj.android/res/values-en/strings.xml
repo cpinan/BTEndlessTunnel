@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="easy">easy</string>
+    <string name="normal">normal</string>
+    <string name="hard">hard</string>
+    <string name="caption">I am playing Turbo Race</string>
+    <string name="fb_description">I got {score} points in {modo} mode and I avoided {obstaculos} obstacle(s).</string>
+
+</resources>

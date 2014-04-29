@@ -26,6 +26,10 @@
 		041CE78518F50003006D05D9 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 041CE73618F50003006D05D9 /* libGoogleAdMobAds.a */; };
 		041CE78618F50003006D05D9 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 041CE73718F50003006D05D9 /* README.txt */; };
 		041DE38618FF751900301586 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 041DE38318FF751900301586 /* audio */; };
+		04396284191012FD0032FE72 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04396283191012FD0032FE72 /* FacebookSDK.framework */; };
+		04396287191031A50032FE72 /* JNIHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04396285191031A50032FE72 /* JNIHelpers.cpp */; };
+		0439628A19104C020032FE72 /* CartonSixBMP.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 0439628819104C020032FE72 /* CartonSixBMP.fnt */; };
+		0439628B19104C020032FE72 /* CartonSixBMP.png in Resources */ = {isa = PBXBuildFile; fileRef = 0439628919104C020032FE72 /* CartonSixBMP.png */; };
 		0444D42C1902C4C2001E04D7 /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0444D42A1902C4C2001E04D7 /* Globals.cpp */; };
 		04E5C29618FF879B000C47FF /* GCHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E5C29518FF879B000C47FF /* GCHelper.mm */; };
 		04E5C29818FF883C000C47FF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E5C29718FF883C000C47FF /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -355,6 +359,11 @@
 		041CE73618F50003006D05D9 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		041CE73718F50003006D05D9 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		041DE38318FF751900301586 /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = audio; sourceTree = "<group>"; };
+		04396283191012FD0032FE72 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ios/FacebookSDK.framework; sourceTree = "<group>"; };
+		04396285191031A50032FE72 /* JNIHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JNIHelpers.cpp; path = Classes/JNIHelpers.cpp; sourceTree = "<group>"; };
+		04396286191031A50032FE72 /* JNIHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JNIHelpers.h; path = Classes/JNIHelpers.h; sourceTree = "<group>"; };
+		0439628819104C020032FE72 /* CartonSixBMP.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CartonSixBMP.fnt; sourceTree = "<group>"; };
+		0439628919104C020032FE72 /* CartonSixBMP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CartonSixBMP.png; sourceTree = "<group>"; };
 		0444D42A1902C4C2001E04D7 /* Globals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Globals.cpp; path = Classes/Globals.cpp; sourceTree = "<group>"; };
 		0444D42B1902C4C2001E04D7 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Globals.h; path = Classes/Globals.h; sourceTree = "<group>"; };
 		04E5C29418FF879B000C47FF /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCHelper.h; path = ios/GCHelper.h; sourceTree = "<group>"; };
@@ -1018,6 +1027,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0414D2A7190B30190056C584 /* QuartzCore.framework in Frameworks */,
+				04396284191012FD0032FE72 /* FacebookSDK.framework in Frameworks */,
 				0414D29F190B2FC90056C584 /* SystemConfiguration.framework in Frameworks */,
 				04E5C29818FF883C000C47FF /* GameKit.framework in Frameworks */,
 				07E8792718F49D54002E38F1 /* StoreKit.framework in Frameworks */,
@@ -1063,6 +1073,8 @@
 		041DE32318FF750300301586 /* CommonResources */ = {
 			isa = PBXGroup;
 			children = (
+				0439628819104C020032FE72 /* CartonSixBMP.fnt */,
+				0439628919104C020032FE72 /* CartonSixBMP.png */,
 				073DC21A190712F4009FCDF8 /* Carton_Six.ttf */,
 				070A18AF1905A8E00094F95A /* 1024x768 */,
 				041DE38318FF751900301586 /* audio */,
@@ -1190,6 +1202,7 @@
 		07CBA2A618DCAFB9004E8B35 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				04396283191012FD0032FE72 /* FacebookSDK.framework */,
 				04E5C28518FF7FBE000C47FF /* GameCenter */,
 				041CE6A118F50003006D05D9 /* GoogleAdMobSDK */,
 				07E8781D18F46656002E38F1 /* PlayGameSingleton.h */,
@@ -2350,6 +2363,8 @@
 		07CBA62B18DCAFEA004E8B35 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				04396285191031A50032FE72 /* JNIHelpers.cpp */,
+				04396286191031A50032FE72 /* JNIHelpers.h */,
 				07E8782918F46688002E38F1 /* NativeUtils.cpp */,
 				07E8782A18F46688002E38F1 /* NativeUtils.h */,
 				07E8782B18F46688002E38F1 /* PlayGameConstants.h */,
@@ -2473,6 +2488,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0439628B19104C020032FE72 /* CartonSixBMP.png in Resources */,
 				077CBB6218F84EB5005FD669 /* Default@2x.png in Resources */,
 				0414D29E190B2B160056C584 /* AppIcon76x76@2x.png in Resources */,
 				0414D299190B2B160056C584 /* AppIcon60x60.png in Resources */,
@@ -2499,6 +2515,7 @@
 				073DC21719070B82009FCDF8 /* iTunesArtwork.png in Resources */,
 				0414D29D190B2B160056C584 /* AppIcon76x76.png in Resources */,
 				0414D29C190B2B160056C584 /* AppIcon72x72@2x.png in Resources */,
+				0439628A19104C020032FE72 /* CartonSixBMP.fnt in Resources */,
 				07CBA4B718DCAFBE004E8B35 /* project.pbxproj in Resources */,
 				0414D296190B2B160056C584 /* AppIcon50x50@2x.png in Resources */,
 				0414D29B190B2B160056C584 /* AppIcon72x72.png in Resources */,
@@ -2599,6 +2616,7 @@
 				07CBA4C518DCAFBE004E8B35 /* CCBKeyframe.cpp in Sources */,
 				07CBA46818DCAFBD004E8B35 /* ZipUtils.cpp in Sources */,
 				07CBA56D18DCAFBF004E8B35 /* WebSocket.cpp in Sources */,
+				04396287191031A50032FE72 /* JNIHelpers.cpp in Sources */,
 				07CBA2F418DCAFB9004E8B35 /* CCArray.cpp in Sources */,
 				07CBA47718DCAFBD004E8B35 /* CCTextureAtlas.cpp in Sources */,
 				07CBA37118DCAFBA004E8B35 /* CCLayer.cpp in Sources */,

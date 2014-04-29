@@ -22,7 +22,7 @@ class PopUpLoseLayer : public cocos2d::CCLayerColor
 {
 public:
     PopUpLoseLayer();
-    void updateScore(int level, float score);
+    void updateScore(int level, float score, int obstaclesAvoided);
     
 private:
     void _onOptionPressed(cocos2d::CCObject* pSender);
@@ -30,7 +30,11 @@ private:
     
 private:
     const char* _leaderboardID;
+    
+    int _obstaclesAvoided;
+    int _level;
     long _score;
+    
     cocos2d::CCLabelTTF* _lblScore;
     cocos2d::CCLabelTTF* _lblMaxScore;
     cocos2d::CCSprite* spBadge;

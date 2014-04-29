@@ -50,6 +50,8 @@ public:
     static void hideAd();
     
     static void rateApp();
+    
+    static void shareOnFacebook(long score, int level, int obstacles);
 	
 	/*
 	* Ouya connection

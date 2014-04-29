@@ -204,8 +204,8 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/PopUpLoseLayer.o: \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponent.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/cocos2dx/support/component/CCComponentContainer.h \
  jni/../../Classes/Constants.h jni/../../Classes/PlayGameConstants.h \
- jni/../../Classes/HomeScene.h jni/../../Classes/GameLayer.h \
- jni/../../Classes/BaseVehicle.h jni/../../Classes/AppMacros.h \
+ jni/../../Classes/AppMacros.h jni/../../Classes/HomeScene.h \
+ jni/../../Classes/GameLayer.h jni/../../Classes/BaseVehicle.h \
  jni/../../Classes/HudLayer.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystick.h \
  jni/../../Classes/SneakyInputCocos2dx/SneakyJoystickSkinnedBase.h \
@@ -629,13 +629,13 @@ jni/../../Classes/Constants.h:
 
 jni/../../Classes/PlayGameConstants.h:
 
+jni/../../Classes/AppMacros.h:
+
 jni/../../Classes/HomeScene.h:
 
 jni/../../Classes/GameLayer.h:
 
 jni/../../Classes/BaseVehicle.h:
-
-jni/../../Classes/AppMacros.h:
 
 jni/../../Classes/HudLayer.h:
 
