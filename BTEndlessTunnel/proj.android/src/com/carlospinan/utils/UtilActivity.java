@@ -1,5 +1,6 @@
 package com.carlospinan.utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -289,49 +290,64 @@ public class UtilActivity extends BaseGameActivity {
 
 	public void publishFeedDialog(String name, String caption,
 			String description, String link, String picture) {
-		Bundle params = new Bundle();
-		params.putString("name", name);
-		params.putString("caption", caption);
-		params.putString("description", description);
-		params.putString("link", link);
-		params.putString("picture", picture);
 
-		WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(
-				getApplicationContext(), Session.getActiveSession(), params))
-				.setOnCompleteListener(new OnCompleteListener() {
+		final Context context = UtilActivity.this;
+		final Session session = Session.getActiveSession();
+		if (session != null && session.isOpened()) {
 
-					@Override
-					public void onComplete(Bundle values,
-							FacebookException error) {
-						if (error == null) {
-							// When the story is posted, echo the success
-							// and the post Id.
-							final String postId = values.getString("post_id");
-							if (postId != null) {
-								Toast.makeText(getApplicationContext(),
-										"Posted story, id: " + postId,
+			Bundle params = new Bundle();
+			params.putString("name", name);
+			params.putString("caption", caption);
+			params.putString("description", description);
+			params.putString("link", link);
+			params.putString("picture", picture);
+
+			WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(context,
+					Session.getActiveSession(), params)).setOnCompleteListener(
+					new OnCompleteListener() {
+
+						@Override
+						public void onComplete(Bundle values,
+								FacebookException error) {
+							if (error == null) {
+								// When the story is posted, echo the success
+								// and the post Id.
+								final String postId = values
+										.getString("post_id");
+								if (postId != null) {
+									Toast.makeText(context,
+											"Posted story, id: " + postId,
+											Toast.LENGTH_SHORT).show();
+								} else {
+									// User clicked the Cancel button
+									Toast.makeText(context,
+											"Publish cancelled",
+											Toast.LENGTH_SHORT).show();
+								}
+							} else if (error instanceof FacebookOperationCanceledException) {
+								// User clicked the "x" button
+								Toast.makeText(context, "Publish cancelled",
 										Toast.LENGTH_SHORT).show();
 							} else {
-								// User clicked the Cancel button
-								Toast.makeText(getApplicationContext(),
-										"Publish cancelled", Toast.LENGTH_SHORT)
-										.show();
+								// Generic, ex: network error
+								Toast.makeText(context, "Error posting story",
+										Toast.LENGTH_SHORT).show();
 							}
-						} else if (error instanceof FacebookOperationCanceledException) {
-							// User clicked the "x" button
-							Toast.makeText(getApplicationContext(),
-									"Publish cancelled", Toast.LENGTH_SHORT)
-									.show();
-						} else {
-							// Generic, ex: network error
-							Toast.makeText(getApplicationContext(),
-									"Error posting story", Toast.LENGTH_SHORT)
-									.show();
 						}
-					}
 
-				}).build();
-		feedDialog.show();
+					}).build();
+			feedDialog.show();
+
+		} else {
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setMessage("Facebook connection error.");
+			builder.setNeutralButton(
+					context.getResources().getString(android.R.string.ok), null);
+			builder.create().show();
+
+		}
+
 	}
 
 	private void onSessionStateChange(Session session, SessionState state,

@@ -248,18 +248,21 @@ void PlayGameSingleton::shareOnFacebook(long score, int level, int obstacles)
     
     NSString* picture = @"http://carlospinan.com/icon/turbo_race.png";
     
-    NSString* str_format = @"He obtenido %lu puntos en modo %@ y he esquivado %d obstáculos.";
+    NSString* str_format = @"He obtenido %ld puntos en modo %@ y he esquivado %d obstáculos.";
     if(language == kLanguageEnglish)
-        str_format = @"I got %lu points in %@ mode and I avoided %d obstacles.";
+        str_format = @"I got %ld points in %@ mode and I avoided %d obstacles.";
     
     NSString* description = [NSString stringWithFormat:str_format, score, str_level, obstacles];
     
+    NSURL* params_link = [NSURL URLWithString:linkToShare];
+    NSURL* params_picture = [NSURL URLWithString:picture];
+    
     // Check if the Facebook app is installed and we can present the share dialog
     FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
-    params.link = [NSURL URLWithString:linkToShare];
+    params.link = params_link;
     params.name = name;
     params.caption = caption;
-    params.picture = [NSURL URLWithString:picture];
+    params.picture = params_picture;
     params.description = description;
     
     // If the Facebook app is installed and we can present the share dialog
@@ -287,7 +290,7 @@ void PlayGameSingleton::shareOnFacebook(long score, int level, int obstacles)
         // Present the feed dialog
         
         // Put together the dialog parameters
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+        NSMutableDictionary *params2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        name, @"name",
                                        caption, @"caption",
                                        description, @"description",
@@ -297,7 +300,7 @@ void PlayGameSingleton::shareOnFacebook(long score, int level, int obstacles)
         
         // Show the feed dialog
         [FBWebDialogs presentFeedDialogModallyWithSession:nil
-                                               parameters:params
+                                               parameters:params2
                                                   handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                       if (error) {
                                                           // An error occurred, we need to handle the error
@@ -324,6 +327,10 @@ void PlayGameSingleton::shareOnFacebook(long score, int level, int obstacles)
                                                   }];
         
     }
+    
+    [params_link release];
+    [params_picture release];
+    [description release];
     
 }
 

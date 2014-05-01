@@ -970,6 +970,12 @@ void GameLayer::_gameLogic(float dt)
         {
             if(obstacle->getPositionX() < WIN_SIZE.width && obstacle->getPositionX() > 0 && obstacle->collision(*_player))
             {
+                if(_hudLayer->isVisible())
+                {
+                    _hudLayer->setVisible(false);
+                    _hudLayer->joypad->setEnabled(false);
+                }
+                
                 _lblScore->setVisible(false);
                 _menuPause->setVisible(false);
                 _player->dead();
@@ -1101,6 +1107,9 @@ void GameLayer::_gameIsReady()
     _gameState = kGameReady;
     setTouchEnabled(true);
     _menuPause->setVisible(true);
+    
+    if(_hudLayer->isVisible())
+        _hudLayer->joypad->setEnabled(true);
     
     if(!LocalStorageManager::isMute())
         _showAudioPlaying();

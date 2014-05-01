@@ -38,6 +38,7 @@ HudLayer::HudLayer()
     baseStick->setPosition(joypadPosition);
     
     joypad = baseStick->getJoystick();
+    joypad->setEnabled(false);
     joypad->setBaseStick(baseStick);
     joypad->start();
     addChild(baseStick);
@@ -45,9 +46,6 @@ HudLayer::HudLayer()
 
 void HudLayer::runTutorialJoypad()
 {
-    
-    joypad->setEnabled(false);
-    
     joypadBG->setOpacity(255);
     joypadThumb->setOpacity(255);
     
