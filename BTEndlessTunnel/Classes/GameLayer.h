@@ -64,7 +64,7 @@ enum GameDeep
     kDeepTutorial = 2200
 };
 
-#define kScoreFactor 40.0f
+#define kScoreFactor 50.0f
 
 #include "cocos2d.h"
 
