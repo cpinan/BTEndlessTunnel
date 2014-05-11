@@ -51,6 +51,7 @@ public class UtilActivity extends BaseGameActivity {
 	public static final String TAG = "UtilActivity";
 	private UiLifecycleHelper uiHelper;
 	private Tracker tracker;
+	private EasyTracker easyTracker;
 	private static final String HIT_TYPE = "Turbo Race Android";
 
 	private Session.StatusCallback statusCallback = new Session.StatusCallback() {
@@ -97,6 +98,8 @@ public class UtilActivity extends BaseGameActivity {
 		tracker = GoogleAnalytics.getInstance(this).getTracker(
 				getResources().getString(R.string.ga_trackingId));
 
+		easyTracker = EasyTracker.getInstance(this);
+
 	}
 
 	public void sendAnalyticData(String screen_name) {
@@ -104,6 +107,9 @@ public class UtilActivity extends BaseGameActivity {
 		tracker.send(MapBuilder.createAppView()
 				.set(Fields.SCREEN_NAME, HIT_TYPE + ": " + screen_name).build());
 
+		easyTracker.set(Fields.SCREEN_NAME, HIT_TYPE + ": " + screen_name);
+
+		easyTracker.send(MapBuilder.createAppView().build());
 	}
 
 	public void showAdbuddiz() {
