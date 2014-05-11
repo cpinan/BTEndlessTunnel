@@ -1,5 +1,7 @@
 package com.carlospinan.utils;
 
+import java.util.HashMap;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,12 +24,18 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.facebook.widget.WebDialog.OnCompleteListener;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.appstate.AppStateManager;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.basegameutils.BaseGameActivity;
+import com.purplebrain.adbuddiz.sdk.AdBuddiz;
+import com.purplebrain.adbuddiz.sdk.AdBuddizLogLevel;
 
 /**
  * 
@@ -43,6 +51,8 @@ public class UtilActivity extends BaseGameActivity {
 	private FrameLayout adViewLayout = null;
 	public static final String TAG = "UtilActivity";
 	private UiLifecycleHelper uiHelper;
+	private Tracker tracker;
+	private static final String HIT_TYPE = "TurboRaceAndroid";
 
 	private Session.StatusCallback statusCallback = new Session.StatusCallback() {
 		@Override
@@ -75,11 +85,38 @@ public class UtilActivity extends BaseGameActivity {
 			_initAdMob();
 		}
 
+		if (ConfigUtils.USE_ADBUDDIZ) {
+			AdBuddiz.setPublisherKey(getResources().getString(
+					R.string.adbuddiz_key));
+			if (ConfigUtils.TEST_ADBUDDIZ) {
+				AdBuddiz.setLogLevel(AdBuddizLogLevel.Info);
+				AdBuddiz.setTestModeActive();
+			}
+			AdBuddiz.cacheAds(UtilActivity.this);
+		}
+
+		tracker = GoogleAnalytics.getInstance(this).getTracker(
+				getResources().getString(R.string.ga_trackingId));
+
+	}
+
+	public void sendAnalyticData(String screen_name) {
+
+		// Log.d(UtilActivity.TAG, screen_name);
+
+		HashMap<String, String> hitParameters = new HashMap<String, String>();
+		hitParameters.put(Fields.HIT_TYPE, HIT_TYPE);
+		hitParameters.put(Fields.SCREEN_NAME, screen_name);
+
+		tracker.send(hitParameters);
+	}
+
+	public void showAdbuddiz() {
+		if (AdBuddiz.isReadyToShowAd(this))
+			AdBuddiz.showAd(UtilActivity.this);
 	}
 
 	private void _initAdMob() {
-
-		// setContentView(R.layout.admob);
 
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
@@ -234,6 +271,18 @@ public class UtilActivity extends BaseGameActivity {
 	}
 
 	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this); // Add this method.
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this); // Add this method.
+	}
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -341,7 +390,7 @@ public class UtilActivity extends BaseGameActivity {
 		} else {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setMessage("Facebook connection error.");
+			builder.setMessage("Facebook app not available.");
 			builder.setNeutralButton(
 					context.getResources().getString(android.R.string.ok), null);
 			builder.create().show();

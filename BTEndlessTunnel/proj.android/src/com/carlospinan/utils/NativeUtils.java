@@ -366,6 +366,26 @@ public class NativeUtils {
 		});
 	}
 
+	public static void showAdBuddiz() {
+		app.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				app.showAdbuddiz();
+			}
+		});
+	}
+
+	public static void sendAnalytics(final String screen) {
+		app.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				app.sendAnalyticData(screen);
+			}
+		});
+	}
+
 	/*
 	 * Ouya support Note: For Ouya support need uncomment the <category
 	 * android:name="tv.ouya.intent.category.GAME" /> in the AndroidManifest.xml

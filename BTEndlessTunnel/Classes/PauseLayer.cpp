@@ -11,6 +11,7 @@
 #include "Constants.h"
 #include "HomeScene.h"
 #include "SimpleAudioEngine.h"
+#include "NativeUtils.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;

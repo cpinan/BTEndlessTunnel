@@ -11,6 +11,7 @@
 #include "LocalStorageManager.h"
 #include "Constants.h"
 #include "SimpleAudioEngine.h"
+#include "NativeUtils.h"
 
 #define CONTROL_ALPHA 100
 
@@ -96,12 +97,14 @@ void SettingsLayer::_onOptionPressed(CCObject *pSender)
             break;
             
         case kTagSettingJoypadMode:
+            NativeUtils::sendAnalytics("Joypad Mode");
             itemJoypad->setOpacity(255);
             itemAccel->setOpacity(CONTROL_ALPHA);
             LocalStorageManager::setControlType(true);
             break;
             
         case kTagSettingAccelMode:
+            NativeUtils::sendAnalytics("Tilt Mode");
             itemJoypad->setOpacity(CONTROL_ALPHA);
             itemAccel->setOpacity(255);
             LocalStorageManager::setControlType(false);

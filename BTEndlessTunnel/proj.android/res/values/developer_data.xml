@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
 
-    <string name="rsa_base64_public_key"></string>
+    <string name="rsa_base64_public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjhRbZtDwl1Ll7DsV3jUl42odKiJ5FYE11g2Z8BBxHi39hEx6/2JWoWw+Rmxi3i/DJpKZXD0soCJFEVEPa85lTwB3MqDPZJkhh8Fkvp/GTI5SqLMx3BcdICtn1RkAhTO69Ol6O59ZGZbpenFbrFDs/ik1kCbAFK+LuscU1L51Yv6x7MbHaQr4rwAoJRHWwb+GfHIlf3ilAc6bnPDrQJ/YYjwoit+Hk13g7ZcdjpLcI50anXld5/tdsFxHGOdf6HfrbeG06Nt/FCXe0OfyXYL0YQWZca0pilBkKSkVgsfSFh853mPckbZi4xGi6rrRkdh2T9I++T78j+XcnIttwe22EwIDAQAB</string>
+    <string name="adbuddiz_key">ea46fa1e-f12b-4bfe-aa22-6625ac052223</string>
+
+    <!-- Replace placeholder ID with your tracking ID -->
+    <string name="ga_trackingId">UA-17852693-12</string>
+
+    <!-- Enable automatic activity tracking -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- Enable automatic exception tracking -->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
 
 </resources>

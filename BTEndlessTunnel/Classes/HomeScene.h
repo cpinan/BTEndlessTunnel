@@ -25,9 +25,9 @@ enum
 class HomeScene : public cocos2d::CCScene
 {
 private:
-    HomeScene(GameMode gameMode, GameLevel gameLevel = kGameLevelNone);
+    HomeScene(GameMode gameMode, GameLevel gameLevel = kGameLevelNone, bool showAds = false);
 public:
-    static HomeScene* scene(GameMode gameMode, GameLevel gameLevel = kGameLevelNone);
+    static HomeScene* scene(GameMode gameMode, GameLevel gameLevel = kGameLevelNone, bool showAds = false);
 };
 
 #endif /* defined(__BTEndlessTunnel__HomeScene__) */

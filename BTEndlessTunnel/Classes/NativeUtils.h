@@ -51,6 +51,10 @@ public:
     
     static void rateApp();
     
+    static void showAdBuddiz();
+    
+    static void sendAnalytics(const char* screen);
+    
     static void shareOnFacebook(long score, int level, int obstacles);
 	
 	/*

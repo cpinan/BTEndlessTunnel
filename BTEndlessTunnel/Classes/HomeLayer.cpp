@@ -18,8 +18,17 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
-HomeLayer::HomeLayer(GameLayer* gameLayer) : _gameLayer(gameLayer)
+void HomeLayer::onEnterTransitionDidFinish()
 {
+    if(_showAds)
+        NativeUtils::showAdBuddiz();
+}
+
+HomeLayer::HomeLayer(GameLayer* gameLayer, bool showAds) : _gameLayer(gameLayer)
+{
+    
+    _showAds = false;
+    _showAds = showAds;
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HomeLayer::_enableButtons), NOTIFICATION_ENABLE_BUTTONS, NULL);
     
@@ -190,6 +199,7 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
     switch (item->getTag()) {
             
         case kTagHowToPlay:
+            NativeUtils::sendAnalytics("How to Play");
             LocalStorageManager::isTutorialOn(true);
             runGame = true;
             _gameLayer->configureGame(kGameLevelEasy);
@@ -197,33 +207,40 @@ void HomeLayer::_onOptionPressed(CCObject *pSender)
         
         case kTagEasyMode:
             runGame = true;
+            NativeUtils::sendAnalytics("Easy Mode");
             _gameLayer->configureGame(kGameLevelEasy);
             break;
             
         case kTagNormalMode:
             runGame = true;
+            NativeUtils::sendAnalytics("Normal Mode");
             _gameLayer->configureGame(kGameLevelNormal);
             break;
             
         case kTagHardMode:
             runGame = true;
+            NativeUtils::sendAnalytics("Hard Mode");
             _gameLayer->configureGame(kGameLevelHard);
             break;
             
         case kTagSettings:
             _disableButtons();
+            NativeUtils::sendAnalytics("Settings");
             _settingsLayer->setVisible(true);
             break;
             
         case kTagLeaderboard:
+            NativeUtils::sendAnalytics("Show Leaderboards");
             NativeUtils::showLeaderboards();
             break;
             
         case kTagAchievements:
+            NativeUtils::sendAnalytics("Show Achievements");
             NativeUtils::showAchievements();
             break;
             
         case kTagRateApp:
+            NativeUtils::sendAnalytics("Rate App");
             NativeUtils::rateApp();
             break;
             

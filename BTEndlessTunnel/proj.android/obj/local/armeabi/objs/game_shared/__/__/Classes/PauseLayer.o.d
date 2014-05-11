@@ -213,7 +213,8 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/PauseLayer.o: \
  jni/../../Classes/PopUpLoseLayer.h jni/../../Classes/BaseObstacle.h \
  jni/../../Classes/HomeLayer.h jni/../../Classes/SettingsLayer.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h \
- /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h
+ /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h \
+ jni/../../Classes/NativeUtils.h jni/../../Classes/JNIHelpers.h
 
 jni/../../Classes/PauseLayer.h:
 
@@ -654,3 +655,7 @@ jni/../../Classes/SettingsLayer.h:
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h:
 
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h:
+
+jni/../../Classes/NativeUtils.h:
+
+jni/../../Classes/JNIHelpers.h:

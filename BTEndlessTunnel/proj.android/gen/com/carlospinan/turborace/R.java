@@ -303,6 +303,14 @@ containing a value of this type.
          */
         public static final int zOrderOnTop=0x7f010022;
     }
+    public static final class bool {
+        /**  Enable automatic activity tracking 
+         */
+        public static final int ga_autoActivityTracking=0x7f0a0000;
+        /**  Enable automatic exception tracking 
+         */
+        public static final int ga_reportUncaughtExceptions=0x7f0a0001;
+    }
     public static final class color {
         public static final int com_facebook_blue=0x7f060002;
         public static final int com_facebook_loginview_text_color=0x7f060006;
@@ -458,8 +466,9 @@ containing a value of this type.
     }
     public static final class string {
         public static final int AD_UNIT_ID=0x7f070034;
-        public static final int app_id=0x7f070043;
-        public static final int app_name=0x7f070042;
+        public static final int adbuddiz_key=0x7f070036;
+        public static final int app_id=0x7f070045;
+        public static final int app_name=0x7f070044;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
          */
@@ -483,7 +492,7 @@ containing a value of this type.
         [CHAR LIMIT=70] 
          */
         public static final int auth_client_using_bad_version_title=0x7f07002d;
-        public static final int caption=0x7f070047;
+        public static final int caption=0x7f070049;
         public static final int com_facebook_choose_friends=0x7f07000f;
         public static final int com_facebook_dialogloginactivity_ok_button=0x7f070000;
         public static final int com_facebook_internet_permission_error_message=0x7f070013;
@@ -580,25 +589,28 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f07002c;
-        public static final int easy=0x7f070044;
-        public static final int fail_increment_achievement=0x7f07003e;
-        public static final int fail_show_achievements=0x7f07003f;
-        public static final int fail_show_leaderboard=0x7f070041;
-        public static final int fail_show_leaderboards=0x7f070040;
-        public static final int fail_submit_score_leaderboard=0x7f07003c;
-        public static final int fail_unlock_achievement=0x7f07003d;
-        public static final int fb_description=0x7f070048;
-        public static final int gamehelper_alert=0x7f070037;
-        public static final int gamehelper_app_misconfigured=0x7f070039;
-        public static final int gamehelper_license_failed=0x7f07003a;
-        public static final int gamehelper_sign_in_failed=0x7f070038;
-        public static final int gamehelper_unknown_error=0x7f07003b;
-        public static final int google_play_game_app_id=0x7f070036;
-        public static final int hard=0x7f070046;
+        public static final int easy=0x7f070046;
+        public static final int fail_increment_achievement=0x7f070040;
+        public static final int fail_show_achievements=0x7f070041;
+        public static final int fail_show_leaderboard=0x7f070043;
+        public static final int fail_show_leaderboards=0x7f070042;
+        public static final int fail_submit_score_leaderboard=0x7f07003e;
+        public static final int fail_unlock_achievement=0x7f07003f;
+        public static final int fb_description=0x7f07004a;
+        /**  Replace placeholder ID with your tracking ID 
+         */
+        public static final int ga_trackingId=0x7f070037;
+        public static final int gamehelper_alert=0x7f070039;
+        public static final int gamehelper_app_misconfigured=0x7f07003b;
+        public static final int gamehelper_license_failed=0x7f07003c;
+        public static final int gamehelper_sign_in_failed=0x7f07003a;
+        public static final int gamehelper_unknown_error=0x7f07003d;
+        public static final int google_play_game_app_id=0x7f070038;
+        public static final int hard=0x7f070048;
         /**  Location client code resources (prefix with location_client) 
          */
         public static final int location_client_powered_by_google=0x7f070033;
-        public static final int normal=0x7f070045;
+        public static final int normal=0x7f070047;
         public static final int rsa_base64_public_key=0x7f070035;
     }
     public static final class style {

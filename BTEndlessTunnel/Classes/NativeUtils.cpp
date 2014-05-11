@@ -148,6 +148,16 @@ void NativeUtils::showLeaderboard(const char* leaderboardID)
 #endif
 }
 
+void NativeUtils::sendAnalytics(const char *screen)
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	JniHelpers::jniCommonVoidCall(
+                                  "sendAnalytics",
+                                  CLASS_NAME,
+                                  screen);
+#endif
+}
+
 void NativeUtils::initAd()
 {
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -190,6 +200,15 @@ void NativeUtils::rateApp()
 #endif
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     PlayGameSingleton::sharedInstance().rateApp();
+#endif
+}
+
+void NativeUtils::showAdBuddiz()
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	JniHelpers::jniCommonVoidCall(
+                                  "showAdBuddiz",
+                                  CLASS_NAME);
 #endif
 }
 

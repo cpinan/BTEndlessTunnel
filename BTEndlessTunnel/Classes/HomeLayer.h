@@ -29,10 +29,12 @@ enum HomeButtons
 class HomeLayer : public cocos2d::CCLayer
 {
 public:
-    HomeLayer(GameLayer* gameLayer);
+    HomeLayer(GameLayer* gameLayer, bool showAds = false);
     virtual ~HomeLayer();
     
     void keyBackClicked();
+    
+    void onEnterTransitionDidFinish();
     
 private:
     cocos2d::CCSprite* tablero;
@@ -61,6 +63,7 @@ private:
     void _manageHowToPlay();
     
 private:
+    bool _showAds;
     bool disable;
     GameLayer* _gameLayer;
     SettingsLayer* _settingsLayer;

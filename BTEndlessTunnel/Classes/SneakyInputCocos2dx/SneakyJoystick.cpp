@@ -142,7 +142,7 @@ bool SneakyJoystick::ccTouchBegan(CCTouch *touch, CCEvent *event)
         return true;
     }
     
-    getBaseStick()->getBackgroundSprite()->setPosition(location);
+    // getBaseStick()->getBackgroundSprite()->setPosition(location);
     // getBaseStick()->getThumbSprite()->setPosition(location);
     
     _beganPoint = location;

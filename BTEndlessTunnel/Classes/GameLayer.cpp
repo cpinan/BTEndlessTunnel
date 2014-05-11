@@ -1083,7 +1083,8 @@ void GameLayer::update(float dt)
     {
         if(_player->numberOfRunningActions() == 0)
         {
-            
+            CCLog("kGameFinish");
+            _gameState = kGameEnd;
             SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
             
             _checkAchievements();
@@ -1095,11 +1096,17 @@ void GameLayer::update(float dt)
             _menuPause->setVisible(false);
             _popUpLoseLayer->updateScore(_gameLevel, _obstaclesAvoided * kScoreFactor, _obstaclesAvoided);
             _popUpLoseLayer->runAction(CCMoveBy::create(0.25f, ccp(0, WIN_SIZE.height)));
-            NativeUtils::showAd();
+            this->runAction(CCSequence::create(CCDelayTime::create(0.25f), CCCallFunc::create(this, callfunc_selector(GameLayer::_showAds)), NULL));
             unscheduleUpdate();
         }
     }
 
+}
+
+void GameLayer::_showAds()
+{
+    NativeUtils::showAdBuddiz();
+    NativeUtils::showAd();
 }
 
 void GameLayer::_gameIsReady()
@@ -1516,7 +1523,7 @@ void GameLayer::_playAgain()
 void GameLayer::_goHome()
 {
     SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
-    CCScene* scene = HomeScene::scene(kGameModeHome);
+    CCScene* scene = HomeScene::scene(kGameModeHome, kGameLevelNone, true);
     CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, scene));
 }
 

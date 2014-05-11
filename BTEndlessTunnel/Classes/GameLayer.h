@@ -36,7 +36,8 @@ enum GameState
     kGameReady = 2,
     kGamePause = 3,
     kGameFinish = 4,
-    kGameTutorial = 5
+    kGameTutorial = 5,
+    kGameEnd = 6
 };
 
 enum GameLevel
@@ -64,7 +65,7 @@ enum GameDeep
     kDeepTutorial = 2200
 };
 
-#define kScoreFactor 50.0f
+#define kScoreFactor 100.0f
 
 #include "cocos2d.h"
 
@@ -127,6 +128,7 @@ private:
     void _gameIsReady();
     void _showTutorial();
     void _finishTutorial(cocos2d::CCObject* object);
+    void _showAds();
     
     
 private:

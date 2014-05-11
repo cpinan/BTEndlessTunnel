@@ -11,7 +11,7 @@
 
 using namespace cocos2d;
 
-HomeScene::HomeScene(GameMode gameMode, GameLevel gameLevel)
+HomeScene::HomeScene(GameMode gameMode, GameLevel gameLevel, bool showAds)
 {
     
     HudLayer* hudLayer = new HudLayer();
@@ -25,16 +25,16 @@ HomeScene::HomeScene(GameMode gameMode, GameLevel gameLevel)
     
     if(gameMode == kGameModeHome)
     {
-        HomeLayer* homeLayer = new HomeLayer(gameLayer);
+        HomeLayer* homeLayer = new HomeLayer(gameLayer, showAds);
         homeLayer->setVisible(!TEST_OBSTACLE);
         homeLayer->autorelease();
         addChild(homeLayer, kZHomeLayer);
     }
 }
 
-HomeScene* HomeScene::scene(GameMode gameMode, GameLevel gameLevel)
+HomeScene* HomeScene::scene(GameMode gameMode, GameLevel gameLevel, bool showAds)
 {
-    HomeScene* scene = new HomeScene(gameMode, gameLevel);
+    HomeScene* scene = new HomeScene(gameMode, gameLevel, showAds);
     scene->autorelease();
     return scene;
 }

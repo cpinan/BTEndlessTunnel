@@ -206,7 +206,8 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/SettingsLayer.o: \
  jni/../../Classes/AppMacros.h jni/../../Classes/LocalStorageManager.h \
  jni/../../Classes/Constants.h jni/../../Classes/PlayGameConstants.h \
  /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h \
- /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h
+ /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h \
+ jni/../../Classes/NativeUtils.h jni/../../Classes/JNIHelpers.h
 
 jni/../../Classes/SettingsLayer.h:
 
@@ -627,3 +628,7 @@ jni/../../Classes/PlayGameConstants.h:
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/SimpleAudioEngine.h:
 
 /Users/mac/Documents/cocos2d-x-2.1.5/CocosDenshion/android/../include/Export.h:
+
+jni/../../Classes/NativeUtils.h:
+
+jni/../../Classes/JNIHelpers.h:

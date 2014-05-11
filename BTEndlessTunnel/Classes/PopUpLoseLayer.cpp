@@ -203,15 +203,22 @@ void PopUpLoseLayer::_onOptionPressed(CCObject *pSender)
     
     switch (item->getTag()) {
         case kTagPlayAgain:
+            NativeUtils::sendAnalytics("Game Over - Play Again");
             CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFICATION_PLAY_AGAIN);
             break;
             
-        case kTagGoHome:
-            CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFICATION_GO_HOME);
+        case kTagSendScore:
+            NativeUtils::sendAnalytics("Game Over - Share Facebook");
+            NativeUtils::shareOnFacebook(_score, _level, _obstaclesAvoided);
             break;
             
-        case kTagSendScore:
-            NativeUtils::shareOnFacebook(_score, _level, _obstaclesAvoided);
+        case kTagGoHome:
+            NativeUtils::sendAnalytics("Game Over - Home Button");
+
+            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            CCScene* scene = HomeScene::scene(kGameModeHome);
+            CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, scene));
+            
             break;
 
     }

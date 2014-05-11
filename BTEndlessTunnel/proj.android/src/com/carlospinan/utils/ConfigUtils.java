@@ -19,5 +19,7 @@ public class ConfigUtils {
 
 	// Use ADMOB
 	public static final boolean USE_AD_MOB = true;
+	public static final boolean USE_ADBUDDIZ = true;
+	public static final boolean TEST_ADBUDDIZ = false;
 
 }
