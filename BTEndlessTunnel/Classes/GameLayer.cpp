@@ -50,6 +50,8 @@ using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace std;
 
+static int counter_ads = 0;
+
 #pragma mark - Level Definition, Constructor and Destructor
 
 // Level definition
@@ -178,6 +180,8 @@ GameLayer::GameLayer(HudLayer* hudLayer, GameMode gameMode, GameLevel gameLevel)
         obs->setPositionY(OBSTACLE_DOBLE_AIR_Y);
         addChild(obs, -100);
     }
+    
+    this->setKeypadEnabled(true);
     
 }
 
@@ -1105,7 +1109,13 @@ void GameLayer::update(float dt)
 
 void GameLayer::_showAds()
 {
-    NativeUtils::showAdBuddiz();
+    if(counter_ads == 0)
+        NativeUtils::showAdBuddiz();
+    counter_ads++;
+    
+    if(counter_ads >= COUNT_ADS)
+        counter_ads = 0;
+    
     NativeUtils::showAd();
 }
 
@@ -1549,4 +1559,19 @@ void GameLayer::_resumeAllActions()
         if(sprite != NULL)
             sprite->resumeSchedulerAndActions();
     }
+}
+
+
+void GameLayer::keyBackClicked()
+{
+    
+    CCDirector::sharedDirector()->stopAnimation();
+    SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->stopAllEffects();
+    CCDirector::sharedDirector()->end();
+    NativeUtils::killApp();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
 }

@@ -31,9 +31,6 @@ class HomeLayer : public cocos2d::CCLayer
 public:
     HomeLayer(GameLayer* gameLayer, bool showAds = false);
     virtual ~HomeLayer();
-    
-    void keyBackClicked();
-    
     void onEnterTransitionDidFinish();
     
 private:

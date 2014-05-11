@@ -18,10 +18,19 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
+static int counter_ads = 0;
+
 void HomeLayer::onEnterTransitionDidFinish()
 {
     if(_showAds)
-        NativeUtils::showAdBuddiz();
+    {
+        if(counter_ads == 0)
+            NativeUtils::showAdBuddiz();
+        counter_ads++;
+        
+        if(counter_ads >= COUNT_ADS)
+            counter_ads = 0;
+    }
 }
 
 HomeLayer::HomeLayer(GameLayer* gameLayer, bool showAds) : _gameLayer(gameLayer)
@@ -164,9 +173,6 @@ HomeLayer::HomeLayer(GameLayer* gameLayer, bool showAds) : _gameLayer(gameLayer)
     addChild(_settingsLayer, 9999);
     
     NativeUtils::showAd();
-    
-    this->setKeypadEnabled(true);
-    
 }
 
 void HomeLayer::_manageMusic(cocos2d::CCObject* pSender)
@@ -312,18 +318,4 @@ void HomeLayer::_manageHowToPlay()
 {
     bool state = !LocalStorageManager::showTutorial();
     menuHowToPlay->setVisible(state);
-}
-
-void HomeLayer::keyBackClicked()
-{
-    this->setKeypadEnabled(false);
-    
-    CCDirector::sharedDirector()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->stopAllEffects();
-    CCDirector::sharedDirector()->end();
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
 }

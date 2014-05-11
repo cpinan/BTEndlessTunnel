@@ -386,6 +386,10 @@ public class NativeUtils {
 		});
 	}
 
+	public static void killApp() {
+		app.killApp();
+	}
+
 	/*
 	 * Ouya support Note: For Ouya support need uncomment the <category
 	 * android:name="tv.ouya.intent.category.GAME" /> in the AndroidManifest.xml

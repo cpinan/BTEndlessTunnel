@@ -225,3 +225,12 @@ void NativeUtils::shareOnFacebook(long score, int level, int obstacles)
     PlayGameSingleton::sharedInstance().shareOnFacebook(score, level, obstacles);
 #endif
 }
+
+void NativeUtils::killApp()
+{
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	JniHelpers::jniCommonVoidCall(
+                                  "killApp",
+                                  CLASS_NAME);
+#endif
+}

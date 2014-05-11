@@ -1,7 +1,5 @@
 package com.carlospinan.utils;
 
-import java.util.HashMap;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +25,7 @@ import com.facebook.widget.WebDialog.OnCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -52,7 +51,7 @@ public class UtilActivity extends BaseGameActivity {
 	public static final String TAG = "UtilActivity";
 	private UiLifecycleHelper uiHelper;
 	private Tracker tracker;
-	private static final String HIT_TYPE = "TurboRaceAndroid";
+	private static final String HIT_TYPE = "Turbo Race Android";
 
 	private Session.StatusCallback statusCallback = new Session.StatusCallback() {
 		@Override
@@ -102,13 +101,8 @@ public class UtilActivity extends BaseGameActivity {
 
 	public void sendAnalyticData(String screen_name) {
 
-		// Log.d(UtilActivity.TAG, screen_name);
-
-		HashMap<String, String> hitParameters = new HashMap<String, String>();
-		hitParameters.put(Fields.HIT_TYPE, HIT_TYPE);
-		hitParameters.put(Fields.SCREEN_NAME, screen_name);
-
-		tracker.send(hitParameters);
+		tracker.send(MapBuilder.createAppView()
+				.set(Fields.SCREEN_NAME, HIT_TYPE + ": " + screen_name).build());
 	}
 
 	public void showAdbuddiz() {
@@ -301,6 +295,10 @@ public class UtilActivity extends BaseGameActivity {
 						Log.i("Activity", "Success!");
 					}
 				});
+	}
+
+	public void killApp() {
+		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
 	public void shareOnFacebook(int level, long score, int obstacles) {

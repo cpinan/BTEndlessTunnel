@@ -56,6 +56,8 @@ public:
     static void sendAnalytics(const char* screen);
     
     static void shareOnFacebook(long score, int level, int obstacles);
+    
+    static void killApp();
 	
 	/*
 	* Ouya connection

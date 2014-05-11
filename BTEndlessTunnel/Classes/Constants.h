@@ -13,6 +13,7 @@
 #include "PlayGameConstants.h"
 #include "AppMacros.h"
 
+#define COUNT_ADS 0
 #define FONT_GAME !IOS() ? "Carton_Six.ttf" : "CartonSix"
 #define FONT_GAME_BMP "CartonSixBMP.fnt"
 #define SIZE_SCORE_GAME 45.0f * CC_CONTENT_SCALE_FACTOR()

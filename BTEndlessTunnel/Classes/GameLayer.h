@@ -99,6 +99,8 @@ public:
     
     void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
     
+    void keyBackClicked();
+    
 private:
     void _createMap();
     void _initLayers();
